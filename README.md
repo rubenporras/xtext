@@ -10,14 +10,14 @@ More information can be found on [xtext.org](http://xtext.org).
 
 This repository contains the [website](https://www.eclipse.org/Xtext/) and documentation of Xtext, which is tracked in the [website-published](https://github.com/eclipse/xtext/tree/website-published) branch. The actual Xtext code is available in the following modules:
 
-- [xtext-core](https://github.com/eclipse/xtext-core): The core framework and [Language Server](https://github.com/Microsoft/language-server-protocol) support
-- [xtext-lib](https://github.com/eclipse/xtext-lib): Libraries for [Xbase](https://www.eclipse.org/Xtext/documentation/305_xbase.html) and [Xtend](http://www.xtend-lang.org)
-- [xtext-extras](https://github.com/eclipse/xtext-extras): Additional editor-independent features, mostly Java support
-- [xtext-eclipse](https://github.com/eclipse/xtext-eclipse): Plug-ins for [Eclipse](http://eclipse.org)
-- [xtext-web](https://github.com/eclipse/xtext-web): Support for [Orion](http://eclipse.org/orion/), [Ace](http://ace.c9.io) and [CodeMirror](https://codemirror.net)
-- [xtext-maven](https://github.com/eclipse/xtext-maven): Support for [Maven](https://maven.apache.org)
-- [xtext-xtend](https://github.com/eclipse/xtext-xtend): The [Xtend](http://www.xtend-lang.org) language
-- [xtext-umbrella](https://github.com/eclipse/xtext-umbrella): Common Eclipse features and P2 update sites
+- [![Build Status](https://ci.eclipse.org/xtext/buildStatus/icon?job=xtext-core/master)](https://ci.eclipse.org/xtext/job/xtext-core/master) [xtext-core](https://github.com/eclipse/xtext-core): The core framework and [Language Server](https://github.com/Microsoft/language-server-protocol) support
+- [![Build Status](https://ci.eclipse.org/xtext/job/xtext-lib/job/master/lastBuild/buildStatus)](https://ci.eclipse.org/xtext/job/xtext-lib/master) [xtext-lib](https://github.com/eclipse/xtext-lib): Libraries for [Xbase](https://www.eclipse.org/Xtext/documentation/305_xbase.html) and [Xtend](http://www.xtend-lang.org)
+- [![Build Status](https://ci.eclipse.org/xtext/buildStatus/icon?job=xtext-extras/master)](https://ci.eclipse.org/xtext/job/xtext-extras/master) [xtext-extras](https://github.com/eclipse/xtext-extras): Additional editor-independent features, mostly Java support
+- [![Build Status](https://ci.eclipse.org/xtext/buildStatus/icon?job=xtext-eclipse/master)](https://ci.eclipse.org/xtext/job/xtext-eclipse/master) [xtext-eclipse](https://github.com/eclipse/xtext-eclipse): Plug-ins for [Eclipse](http://eclipse.org)
+- [![Build Status](https://ci.eclipse.org/xtext/buildStatus/icon?job=xtext-web/master)](https://ci.eclipse.org/xtext/job/xtext-web/master) [xtext-web](https://github.com/eclipse/xtext-web): Support for [Orion](http://eclipse.org/orion/), [Ace](http://ace.c9.io) and [CodeMirror](https://codemirror.net)
+- [![Build Status](https://ci.eclipse.org/xtext/buildStatus/icon?job=xtext-maven/master)](https://ci.eclipse.org/xtext/job/xtext-maven/master) [xtext-maven](https://github.com/eclipse/xtext-maven): Support for [Maven](https://maven.apache.org)
+- [![Build Status](https://ci.eclipse.org/xtext/buildStatus/icon?job=xtext-xtend/master)](https://ci.eclipse.org/xtext/job/xtext-xtend/master) [xtext-xtend](https://github.com/eclipse/xtext-xtend): The [Xtend](http://www.xtend-lang.org) language
+- [![Build Status](https://ci.eclipse.org/xtext/buildStatus/icon?job=xtext-umbrella/master)](https://ci.eclipse.org/xtext/job/xtext-umbrella/master) [xtext-umbrella](https://github.com/eclipse/xtext-umbrella): Common Eclipse features and P2 update sites
 
 Please check the individual repositories for instructions for building and contributing.
 
