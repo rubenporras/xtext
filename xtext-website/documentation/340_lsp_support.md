@@ -79,6 +79,15 @@ Xtext supports the generation of language servers that comply to the [Language S
 
 Currently, Xtext supports the following LSP language features:
 
+
+|X|B|
+|a|✅|
+|y|:white_check_mark:|
+|z|⬜️|
+
+
+
+
 <table class="table table-bordered">
 	<thead>
 		<tr>
