@@ -101,7 +101,7 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 
 	@Inject
 	private GeneratorIdProvider generatorIdProvider;
-	
+
 	@Inject
 	private IShouldGenerate shouldGenerate;
 
@@ -155,13 +155,13 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 
 	/**
 	 * @since 2.2
-	 * @deprecated use {@link #getGenerator2()} instead. 
+	 * @deprecated use {@link #getGenerator2()} instead.
 	 */
 	@Deprecated
 	public IGenerator getGenerator() {
 		return generatorDelegate;
 	}
-	
+
 	/**
 	 * @since 2.9
 	 */
@@ -231,16 +231,16 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 		if (deltas.isEmpty()) {
 			return;
 		}
-		
+
 		StoppedTask task = Stopwatches.forTask("org.eclipse.xtext.builder.BuilderParticipant.build(IBuildContext, IProgressMonitor)");
 		try {
 			task.start();
-			
+
 			// monitor handling
 			if (monitor.isCanceled())
 				throw new OperationCanceledException();
 			SubMonitor subMonitor = SubMonitor.convert(monitor, context.getBuildType() == BuildType.RECOVERY ? 5 : 3);
-	
+
 			EclipseResourceFileSystemAccess2 access = fileSystemAccessProvider.get();
 			IProject builtProject = context.getBuiltProject();
 			access.setProject(builtProject);
@@ -269,11 +269,11 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 			task.stop();
 		}
 	}
-	
+
 	/**
 	 * @since 2.7
 	 */
-	protected void doBuild(List<IResourceDescription.Delta> deltas, 
+	protected void doBuild(List<IResourceDescription.Delta> deltas,
 			Map<String, OutputConfiguration> outputConfigurations,
 			Map<OutputConfiguration, Iterable<IMarker>> generatorMarkers, IBuildContext context,
 			EclipseResourceFileSystemAccess2 access, IProgressMonitor progressMonitor) throws CoreException {
@@ -283,7 +283,7 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 		int clusterIndex = 0;
 		for (int i = 0; i < numberOfDeltas; i++) {
 			IResourceDescription.Delta delta = deltas.get(i);
-			
+
 			if (subMonitor.isCanceled()) {
 				throw new OperationCanceledException();
 			}
@@ -299,12 +299,12 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 
 			Set<IFile> derivedResources = getDerivedResources(delta, outputConfigurations, generatorMarkers);
 			access.setPostProcessor(getPostProcessor(delta, context, derivedResources));
-			
+
 			if (doGenerate(delta, context, access)) {
 				clusterIndex++;
 				access.flushSourceTraces();
 			}
-			
+
 			cleanDerivedResources(delta, derivedResources, context, access, currentMonitor);
 		}
 	}
@@ -326,7 +326,7 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 			resourceSet.eSetDeliver(wasDeliver);
 		}
 	}
-	
+
 	/**
 	 * @since 2.7
 	 */
@@ -338,7 +338,7 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 			} else {
 				resource = storage.getSecond();
 			}
-			if (resource != null) { 
+			if (resource != null) {
 				try {
 					IMarker marker = resource.createMarker(MarkerTypes.NORMAL_VALIDATION);
 					marker.setAttribute(IMarker.MESSAGE, e.getMessage() + " - See error log for details");
@@ -421,7 +421,7 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 	/**
 	 * @since 2.7
 	 */
-	protected Set<IFile> getDerivedResources(Delta delta, 
+	protected Set<IFile> getDerivedResources(Delta delta,
 			final Map<String, OutputConfiguration> outputConfigurations,
 			Map<OutputConfiguration, Iterable<IMarker>> generatorMarkers) {
 		String uri = delta.getUri().toString();
@@ -445,7 +445,7 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 	protected boolean isEnabled(final IBuildContext context) {
 		return builderPreferenceAccess.isAutoBuildEnabled(context.getBuiltProject());
 	}
-	
+
 	/**
 	 * @since 2.3
 	 */
@@ -584,7 +584,6 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 			return;
 		Resource resource = context.getResourceSet().getResource(delta.getUri(), true);
 		registerCurrentSourceFolder(context, delta, fileSystemAccess);
-		saveResourceStorage(resource, fileSystemAccess);
 		if (shouldGenerate(resource, context)) {
 			try {
 				IProgressMonitor fsaMonitor = fileSystemAccess.getMonitor();
@@ -606,7 +605,7 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 			}
 		}
 	}
-	
+
 	/**
 	 * @since 2.6
 	 */
@@ -659,7 +658,7 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 		outputConfigurationCache.put(builtProject.getName(), result);
 		return result;
 	}
-	
+
 	/**
 	 * @since 2.6
 	 */
@@ -670,17 +669,5 @@ public class BuilderParticipant implements IXtextBuilderParticipant {
 			outputs.add(output);
 		}
 		return outputs;
-	}
-	
-	/**
-	 * @since 2.8
-	 */
-	protected void saveResourceStorage(Resource resource, IFileSystemAccess access) {
-		if (resource instanceof StorageAwareResource && access instanceof IFileSystemAccessExtension3) {
-			IResourceStorageFacade storageFacade = ((StorageAwareResource) resource).getResourceStorageFacade();
-			if (storageFacade != null) {
-				storageFacade.saveResource((StorageAwareResource)resource, (IFileSystemAccessExtension3)access);
-			}
-		}
 	}
 }

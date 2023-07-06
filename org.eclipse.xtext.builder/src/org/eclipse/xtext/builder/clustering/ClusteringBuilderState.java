@@ -70,37 +70,35 @@ public class ClusteringBuilderState extends AbstractBuilderState {
 
     public static final String RESOURCELOADER_CROSS_LINKING = "org.eclipse.xtext.builder.resourceloader.crossLinking";
 
-    public static final String RESOURCELOADER_GLOBAL_INDEX = "org.eclipse.xtext.builder.resourceloader.globalIndex";
-
-    /** Class-wide logger. */
+        public static final String RESOURCELOADER_GLOBAL_INDEX = "org.eclipse.xtext.builder.resourceloader.globalIndex";
+  /*    /** Class-wide logger. */
     private static final Logger LOGGER = Logger.getLogger(ClusteringBuilderState.class);
-
-    @Inject
+Injec    @Inject
     private IResourceServiceProvider.Registry managerRegistry;
-
-    @Inject
+ct
+        @Inject
     private org.eclipse.xtext.resource.clustering.IResourceClusteringPolicy clusteringPolicy;
-
-    @Inject
+  @Nam    @Inject
     @Named(RESOURCELOADER_GLOBAL_INDEX)
     private IResourceLoader globalIndexResourceLoader;
+med(RESOURCELOADER_CROSS_LINKING)
+    private IResourceLoader crossLinkingResourceLoader;
 
     @Inject
-    @Named(RESOURCELOADER_CROSS_LINKING)
-    private IResourceLoader crossLinkingResourceLoader;
-    
-    @Inject
     private IWorkspace workspace;
-    
+
     @Inject
     private IResourceServiceProvider.Registry resourceServiceProviderRegistry;
-    
+
     @Inject
-	private CompilerPhases compilerPhases;
-    
-    @Inject 
+    private CompilerPhases compilerPhases;
+
+    @Inject
     private IBuildLogger buildLogger;
-    
+
+    @Inject(optional = true)
+    private IFileSystemAccess fileSystemAccess;
+
     /**
      * Actually do the build.
      *
@@ -116,11 +114,11 @@ public class ClusteringBuilderState extends AbstractBuilderState {
     @Override
     protected Collection<Delta> doUpdate(BuildData buildData, ResourceDescriptionsData newData, IProgressMonitor monitor) {
         // We assume that we have 101 ticks to work with:
-    	// 20 for writeNewResourceDescription
-    	// 1 for queueAffectedResources
-    	// 80 for updating and queueAffectedResources
-    	// Within the mentioned 80 ticks we assume that 2/3 is spent for updating and 1/3 for queueAffectedResources
-    	final SubMonitor progress = SubMonitor.convert(monitor, 101);
+      // 20 for writeNewResourceDescription
+      // 1 for queueAffectedResources
+      // 80 for updating and queueAffectedResources
+      // Within the mentioned 80 ticks we assume that 2/3 is spent for updating and 1/3 for queueAffectedResources
+      final SubMonitor progress = SubMonitor.convert(monitor, 101);
 
 
         // Step 1: Clean the set of deleted URIs. If any of them are also added, they're not deleted.
@@ -181,8 +179,8 @@ public class ClusteringBuilderState extends AbstractBuilderState {
         LoadOperation loadOperation = null;
         try {
             Queue<URI> queue = buildData.getURIQueue();
-            
-			loadOperation = crossLinkingResourceLoader.create(resourceSet, currentProject);
+
+            loadOperation = crossLinkingResourceLoader.create(resourceSet, currentProject);
             loadOperation.load(queue);
 
             // Step 6: Iteratively got through the queue. For each resource, create a new resource description and queue all depending
@@ -191,10 +189,10 @@ public class ClusteringBuilderState extends AbstractBuilderState {
             CancelIndicator cancelMonitor = new MonitorBasedCancelIndicator(progress);
 
             while (!queue.isEmpty()) {
-            	// heuristic: we multiply the size of the queue by 3 and spent 2 ticks for updating
-            	// and 1 tick for queueAffectedResources since we assume that loading etc. is 
-            	// slower than queueAffectedResources.
-            	subProgress.setWorkRemaining((queue.size() + 1) * 3);
+              // heuristic: we multiply the size of the queue by 3 and spent 2 ticks for updating
+              // and 1 tick for queueAffectedResources since we assume that loading etc. is
+              // slower than queueAffectedResources.
+              subProgress.setWorkRemaining((queue.size() + 1) * 3);
                 int clusterIndex = 0;
                 final List<Delta> changedDeltas = Lists.newArrayList();
                 while (!queue.isEmpty()) {
@@ -218,7 +216,7 @@ public class ClusteringBuilderState extends AbstractBuilderState {
                         resource = addResource(loadResult.getResource(), resourceSet);
                         subProgress.subTask("Updating resource " + resource.getURI().lastSegment());
                         if (LOGGER.isDebugEnabled()) {
-                        	LOGGER.debug("Update resource description " + actualResourceURI);
+                          LOGGER.debug("Update resource description " + actualResourceURI);
                         }
                         queue.remove(changedURI);
                         if(toBeDeleted.contains(changedURI)) {
@@ -228,39 +226,39 @@ public class ClusteringBuilderState extends AbstractBuilderState {
                         final IResourceDescription.Manager manager = getResourceDescriptionManager(actualResourceURI);
                         if (manager != null) {
                             // Resolve links here!
-                        	try {
-	                            EcoreUtil2.resolveLazyCrossReferences(resource, cancelMonitor);
-	                            final IResourceDescription description = manager.getResourceDescription(resource);
-	                            final IResourceDescription copiedDescription = BuilderStateUtil.create(description);
-	                            newDelta = manager.createDelta(this.getResourceDescription(actualResourceURI), copiedDescription);
-                        	} catch (OperationCanceledException e) {
-                        		loadOperation.cancel();
-                        		throw e;
-                        	} catch (WrappedException e) {
-                        		throw e;
-                        	} catch (RuntimeException e) {
-                        		LOGGER.error("Error resolving cross references on resource '"+actualResourceURI+"'", e);
-                        		throw new LoadOperationException(actualResourceURI, e);
-                        	}
+                          try {
+                              EcoreUtil2.resolveLazyCrossReferences(resource, cancelMonitor);
+                              final IResourceDescription description = manager.getResourceDescription(resource);
+                              final IResourceDescription copiedDescription = BuilderStateUtil.create(description);
+                              newDelta = manager.createDelta(this.getResourceDescription(actualResourceURI), copiedDescription);
+                          } catch (OperationCanceledException e) {
+                            loadOperation.cancel();
+                            throw e;
+                          } catch (WrappedException e) {
+                            throw e;
+                          } catch (RuntimeException e) {
+                            LOGGER.error("Error resolving cross references on resource '"+actualResourceURI+"'", e);
+                            throw new LoadOperationException(actualResourceURI, e);
+                          }
                         }
                     } catch (final WrappedException ex) {
                         if(ex instanceof LoadOperationException) {
                             changedURI = ((LoadOperationException) ex).getUri();
-                        } 
+                        }
                         Throwable cause = ex.getCause();
                         boolean wasResourceNotFound = false;
-                    	if (cause instanceof CoreException) {
-                    		if (IResourceStatus.RESOURCE_NOT_FOUND == ((CoreException) cause).getStatus().getCode()) {
-                    			wasResourceNotFound = true;
-                    		}
-                    	}
+                      if (cause instanceof CoreException) {
+                        if (IResourceStatus.RESOURCE_NOT_FOUND == ((CoreException) cause).getStatus().getCode()) {
+                          wasResourceNotFound = true;
+                        }
+                      }
                         if(changedURI == null) {
                             LOGGER.error("Error loading resource", ex); //$NON-NLS-1$
                         } else {
                             queue.remove(changedURI);
                             if(toBeDeleted.contains(changedURI)) break;
                             if (!wasResourceNotFound)
-                            	LOGGER.error("Error loading resource from: " + changedURI.toString(), ex); //$NON-NLS-1$
+                              LOGGER.error("Error loading resource from: " + changedURI.toString(), ex); //$NON-NLS-1$
                             if (resource != null) {
                                 resourceSet.getResources().remove(resource);
                             }
@@ -274,23 +272,24 @@ public class ClusteringBuilderState extends AbstractBuilderState {
                     }
                     if (newDelta != null) {
                         allDeltas.add(newDelta);
-                    	clusterIndex++;
+                      clusterIndex++;
                         if (newDelta.haveEObjectDescriptionsChanged())
                             changedDeltas.add(newDelta);
                         // Make the new resource description known and update the map.
                         newState.register(newDelta);
                         // Validate now.
                         if (!buildData.isIndexingOnly()) {
-	                        try {
-	                        	updateMarkers(newDelta, resourceSet, subProgress);
-	                        } catch (OperationCanceledException e) {
-	                        	loadOperation.cancel();
-	                        	throw e;
-	                        } catch (Exception e) {
-	                        	LOGGER.error("Error validating "+newDelta.getUri(), e);
-	                        }
+                          try {
+                            updateMarkers(newDelta, resourceSet, subProgress);
+                          } catch (OperationCanceledException e) {
+                            loadOperation.cancel();
+                            throw e;
+                          } catch (Exception e) {
+                            LOGGER.error("Error validating "+newDelta.getUri(), e);
+                          }
                         }
                     }
+                    saveResourceStorage(resource, fsa);
                     // 2 ticks for updating since updating makes 2/3 of the work
                     subProgress.split(2);
                 }
@@ -311,30 +310,42 @@ public class ClusteringBuilderState extends AbstractBuilderState {
         } finally {
             if(loadOperation != null) loadOperation.cancel();
             if (!progress.isCanceled())
-            	progress.done();
+              progress.done();
         }
         return allDeltas;
     }
 
-	protected void installSourceLevelURIs(BuildData buildData) {
-		ResourceSet resourceSet = buildData.getResourceSet();
-		Iterable<URI> sourceLevelUris = Iterables.concat(buildData.getToBeUpdated(), buildData.getURIQueue());
-		Set<URI> sourceUris = newHashSet();
-		for (URI uri : sourceLevelUris) {
-			if (buildData.getSourceLevelURICache().getOrComputeIsSource(uri, resourceServiceProviderRegistry)) {
-				sourceUris.add(uri);
-				// unload resources loaded from storage previously
-				Resource resource = resourceSet.getResource(uri, false);
-				if (resource instanceof StorageAwareResource) {
-					if (((StorageAwareResource) resource).isLoadedFromStorage()) {
-						resource.unload();
-					}
-				}
-			}
-		}
-		SourceLevelURIsAdapter.setSourceLevelUris(resourceSet, sourceUris);
-	}
-    
+  /**
+   * @since 2.8
+   */
+  protected void saveResourceStorage(Resource resource) {
+    if (resource instanceof StorageAwareResource && fileSystemAccess instanceof IFileSystemAccessExtension3) {
+      IResourceStorageFacade storageFacade = ((StorageAwareResource) resource).getResourceStorageFacade();
+      if (storageFacade != null) {
+        storageFacade.saveResource((StorageAwareResource)resource, (IFileSystemAccessExtension3)fileSystemAccess);
+      }
+    }
+  }
+
+  protected void installSourceLevelURIs(BuildData buildData) {
+    ResourceSet resourceSet = buildData.getResourceSet();
+    Iterable<URI> sourceLevelUris = Iterables.concat(buildData.getToBeUpdated(), buildData.getURIQueue());
+    Set<URI> sourceUris = newHashSet();
+    for (URI uri : sourceLevelUris) {
+      if (buildData.getSourceLevelURICache().getOrComputeIsSource(uri, resourceServiceProviderRegistry)) {
+        sourceUris.add(uri);
+        // unload resources loaded from storage previously
+        Resource resource = resourceSet.getResource(uri, false);
+        if (resource instanceof StorageAwareResource) {
+          if (((StorageAwareResource) resource).isLoadedFromStorage()) {
+            resource.unload();
+          }
+        }
+      }
+    }
+    SourceLevelURIsAdapter.setSourceLevelUris(resourceSet, sourceUris);
+  }
+
     /**
      * Create new resource descriptions for a set of resources given by their URIs.
      *
@@ -359,7 +370,7 @@ public class ClusteringBuilderState extends AbstractBuilderState {
         IProject currentProject = getBuiltProject(buildData);
         LoadOperation loadOperation = null;
         try {
-        	compilerPhases.setIndexing(resourceSet, true);
+          compilerPhases.setIndexing(resourceSet, true);
             loadOperation = globalIndexResourceLoader.create(resourceSet, currentProject);
             loadOperation.load(toBeUpdated);
 
@@ -381,7 +392,7 @@ public class ClusteringBuilderState extends AbstractBuilderState {
                     resource = addResource(loadResult.getResource(), resourceSet);
                     subMonitor.subTask("Writing new resource description " + resource.getURI().lastSegment());
                     if (LOGGER.isDebugEnabled()) {
-                    	LOGGER.debug("Writing new resource description " + uri);
+                      LOGGER.debug("Writing new resource description " + uri);
                     }
 
                     final IResourceDescription.Manager manager = getResourceDescriptionManager(uri);
@@ -420,16 +431,16 @@ public class ClusteringBuilderState extends AbstractBuilderState {
                 subMonitor.split(1);
             }
         } finally {
-        	compilerPhases.setIndexing(resourceSet, false);
+          compilerPhases.setIndexing(resourceSet, false);
             if(loadOperation != null) loadOperation.cancel();
         }
     }
 
-	protected IProject getBuiltProject(BuildData buildData) {
-		if (Strings.isEmpty(buildData.getProjectName()))
-			return null;
-		return workspace.getRoot().getProject(buildData.getProjectName());
-	}
+  protected IProject getBuiltProject(BuildData buildData) {
+    if (Strings.isEmpty(buildData.getProjectName()))
+      return null;
+    return workspace.getRoot().getProject(buildData.getProjectName());
+  }
 
     /**
      * Clears the content of the resource set without sending notifications.
@@ -465,7 +476,7 @@ public class ClusteringBuilderState extends AbstractBuilderState {
             return r;
         }
     }
-    
+
     /**
      * Put all resources that depend on some changes onto the queue of resources to be processed.
      * Updates notInDelta by removing all URIs put into the queue.
@@ -478,8 +489,8 @@ public class ClusteringBuilderState extends AbstractBuilderState {
      *            The current state
      * @param changedDeltas
      *            the deltas that have changed {@link IEObjectDescription}s
-     * @param allDeltas 
-     *            All deltas 
+     * @param allDeltas
+     *            All deltas
      * @param buildData
      *            the underlying data for this build run.
      * @param monitor
@@ -510,16 +521,16 @@ public class ClusteringBuilderState extends AbstractBuilderState {
                 // If there is no description in the old state, there's no need to re-check this over and over.
                 iter.remove();
             } else {
-            	boolean affected;
-            	if ((manager instanceof IResourceDescription.Manager.AllChangeAware)) {
-            		affected = ((AllChangeAware) manager).isAffectedByAny(allDeltas, candidateDescription, newState);
-            	} else {
-            		if (changedDeltas.isEmpty()) {
-            			affected = false;
-            		} else {
-            			affected = manager.isAffected(changedDeltas, candidateDescription, newState);
-            		}
-            	}
+              boolean affected;
+              if ((manager instanceof IResourceDescription.Manager.AllChangeAware)) {
+                affected = ((AllChangeAware) manager).isAffectedByAny(allDeltas, candidateDescription, newState);
+              } else {
+                if (changedDeltas.isEmpty()) {
+                  affected = false;
+                } else {
+                  affected = manager.isAffected(changedDeltas, candidateDescription, newState);
+                }
+              }
                 if (affected) {
                     buildData.queueURI(candidateURI);
                     iter.remove();
