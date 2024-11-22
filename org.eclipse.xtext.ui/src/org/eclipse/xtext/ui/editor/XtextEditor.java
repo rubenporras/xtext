@@ -591,12 +591,18 @@ public class XtextEditor extends TextEditor implements IDirtyStateEditorSupportC
 		}
 	}
 
-	private void installHighlightingHelper() {
+	/**
+	 * @since 2.38
+	 */
+	protected void installHighlightingHelper() {
 		if (highlightingHelper != null)
 			highlightingHelper.install(this, (XtextSourceViewer) getSourceViewer());
 	}
 
-	private void uninstallHighlightingHelper() {
+	/**
+	 * @since 2.38
+	 */
+	protected void uninstallHighlightingHelper() {
 		if (highlightingHelper != null)
 			highlightingHelper.uninstall();
 	}
