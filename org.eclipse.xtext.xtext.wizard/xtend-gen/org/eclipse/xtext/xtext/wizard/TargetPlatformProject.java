@@ -16,6 +16,7 @@ import java.util.Set;
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.util.JUnitVersion;
+import org.eclipse.xtext.util.JavaVersion;
 import org.eclipse.xtext.util.XtextVersion;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
@@ -86,6 +87,18 @@ public class TargetPlatformProject extends ProjectDescriptor {
     _builder.append(_name);
     _builder.append("\" sequenceNumber=\"1\">");
     _builder.newLineIfNotEmpty();
+    {
+      boolean _isAtLeast = this.getConfig().getJavaVersion().isAtLeast(JavaVersion.JAVA21);
+      if (_isAtLeast) {
+        _builder.append("\t");
+        _builder.append("<targetJRE path=\"org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21\"/>");
+        _builder.newLine();
+      } else {
+        _builder.append("\t");
+        _builder.append("<targetJRE path=\"org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17\"/>");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t");
     _builder.append("<locations>");
     _builder.newLine();
@@ -107,9 +120,18 @@ public class TargetPlatformProject extends ProjectDescriptor {
     _builder.append("\t\t\t");
     _builder.append("<unit id=\"org.eclipse.emf.sdk.feature.group\" version=\"0.0.0\"/>");
     _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("<repository location=\"https://download.eclipse.org/releases/2025-03\"/>");
-    _builder.newLine();
+    {
+      boolean _isAtLeast_1 = this.getConfig().getJavaVersion().isAtLeast(JavaVersion.JAVA21);
+      if (_isAtLeast_1) {
+        _builder.append("\t\t\t");
+        _builder.append("<repository location=\"https://download.eclipse.org/releases/2025-03\"/>");
+        _builder.newLine();
+      } else {
+        _builder.append("\t\t\t");
+        _builder.append("<repository location=\"https://download.eclipse.org/releases/2024-12\"/>");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t");
     _builder.append("</location>");
     _builder.newLine();

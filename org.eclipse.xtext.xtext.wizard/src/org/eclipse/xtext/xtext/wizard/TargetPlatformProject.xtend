@@ -10,6 +10,7 @@ package org.eclipse.xtext.xtext.wizard
 
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.eclipse.xtext.util.JUnitVersion
+import org.eclipse.xtext.util.JavaVersion
 
 @FinalFieldsConstructor
 class TargetPlatformProject extends ProjectDescriptor {
@@ -53,6 +54,11 @@ class TargetPlatformProject extends ProjectDescriptor {
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<?pde version="3.8"?>
 		<target name="«name»" sequenceNumber="1">
+			«IF config.javaVersion.isAtLeast(JavaVersion.JAVA21)»
+				<targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21"/>
+			«ELSE»
+				<targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
+			«ENDIF»
 			<locations>
 				<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 					<unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
@@ -60,7 +66,11 @@ class TargetPlatformProject extends ProjectDescriptor {
 					<unit id="org.eclipse.pde.feature.group" version="0.0.0"/>
 					<unit id="org.eclipse.draw2d.feature.group" version="0.0.0"/>
 					<unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
-					<repository location="https://download.eclipse.org/releases/2025-03"/>
+					«IF config.javaVersion.isAtLeast(JavaVersion.JAVA21)»
+						<repository location="https://download.eclipse.org/releases/2025-03"/>
+					«ELSE»
+						<repository location="https://download.eclipse.org/releases/2024-12"/>
+					«ENDIF»
 				</location>
 				<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 					<unit id="org.eclipse.emf.mwe2.launcher.feature.group" version="0.0.0"/>
