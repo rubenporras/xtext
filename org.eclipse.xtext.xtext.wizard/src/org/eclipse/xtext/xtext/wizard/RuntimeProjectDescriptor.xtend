@@ -361,8 +361,8 @@ class RuntimeProjectDescriptor extends TestedProjectDescriptor {
 								<dependencies>
 									<dependency>
 										<groupId>org.eclipse.xtext</groupId>
-										<artifactId>xtext-antlr-generator</artifactId>
-										<version>«config.xtextVersion.antlrGeneratorVersion»</version>
+										<artifactId>org.eclipse.xtext.xtext.generator.dependencies</artifactId>
+										<version>${xtextVersion}</version>
 									</dependency>
 								</dependencies>
 							«ENDIF»

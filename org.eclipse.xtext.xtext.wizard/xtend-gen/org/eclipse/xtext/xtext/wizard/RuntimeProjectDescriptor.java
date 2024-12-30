@@ -850,15 +850,12 @@ public class RuntimeProjectDescriptor extends TestedProjectDescriptor {
           _builder.newLine();
           _builder.append("\t\t\t");
           _builder.append("\t\t");
-          _builder.append("<artifactId>xtext-antlr-generator</artifactId>");
+          _builder.append("<artifactId>org.eclipse.xtext.xtext.generator.dependencies</artifactId>");
           _builder.newLine();
           _builder.append("\t\t\t");
           _builder.append("\t\t");
-          _builder.append("<version>");
-          String _antlrGeneratorVersion = this.getConfig().getXtextVersion().getAntlrGeneratorVersion();
-          _builder.append(_antlrGeneratorVersion, "\t\t\t\t\t");
-          _builder.append("</version>");
-          _builder.newLineIfNotEmpty();
+          _builder.append("<version>${xtextVersion}</version>");
+          _builder.newLine();
           _builder.append("\t\t\t");
           _builder.append("\t");
           _builder.append("</dependency>");
