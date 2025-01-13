@@ -68,7 +68,7 @@ public class GrammarTest extends AbstractXtextTests {
 	private AbstractRule checkConcreteImplRule(Grammar grammar, String ruleName) {
 		AbstractRule concreteRule = GrammarUtil.findRuleForName(grammar, ruleName);
 		assertNotNull(concreteRule);
-		EClassifier returnType = ((ParserRule)concreteRule).getType().getClassifier();
+		EClassifier returnType = concreteRule.getType().getClassifier();
 		String returnTypeName = getClassifierName(returnType);
 		assertEquals(ruleName, returnTypeName + "_Impl");
 		List<Assignment> assignments = GrammarUtil.containedAssignments(concreteRule);

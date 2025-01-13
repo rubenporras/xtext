@@ -74,7 +74,7 @@ public class XtextTemplateContextTypeRegistry extends org.eclipse.jface.text.tem
 		}
 		Collections.sort(allContextTypes);
 		for (XtextTemplateContextType templateContextType: allContextTypes) {
-			((ContextTypeRegistry) this).addContextType(templateContextType);
+			this.addContextType(templateContextType);
 		}
 	}
 	

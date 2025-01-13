@@ -73,7 +73,7 @@ public class EmbeddedEditorModelAccess {
 				lock = new Object();
 				((ISynchronizable) document).setLockObject(lock);
 			}
-			((ISynchronizable) annotationModel).setLockObject(lock);
+			annotationModel.setLockObject(lock);
 		}
 		this.viewer.setDocument(document, annotationModel, prefix.length(), editablePart.length());
 	}

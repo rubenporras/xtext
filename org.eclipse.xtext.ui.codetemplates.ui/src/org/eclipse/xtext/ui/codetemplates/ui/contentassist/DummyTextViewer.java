@@ -32,7 +32,6 @@ import org.eclipse.swt.graphics.Point;
 /**
  * @author Sebastian Zarnekow - Initial contribution and API
  */
-@SuppressWarnings("deprecation")
 public class DummyTextViewer implements ITextViewer, ISelectionProvider {
 	
 	private final ISelection selection;

@@ -156,7 +156,7 @@ public abstract class AbstractTextEditComposerTest extends AbstractXtextTests {
 		TextEdit edit = composer.endRecording();
 
 		assertTrue(edit instanceof MultiTextEdit);
-		TextEdit[] children = ((MultiTextEdit) edit).getChildren();
+		TextEdit[] children = edit.getChildren();
 		assertEquals(2, children.length);
 		assertMatches("'bar' | 'baz'", children[0]);
 		assertMatches("Bar: 'foo' ;", children[1]);
