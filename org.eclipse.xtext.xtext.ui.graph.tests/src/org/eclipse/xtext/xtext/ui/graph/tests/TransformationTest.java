@@ -249,7 +249,7 @@ public class TransformationTest {
 		
 		public TreeVerificationBuilder child(int index) {
 			assertTrue("Index " + index + " out of bounds", currentFigure.getChildren().size() > index && index >= 0);
-			currentFigure = (IFigure) currentFigure.getChildren().get(index);
+			currentFigure = currentFigure.getChildren().get(index);
 			return this;
 		}
 		

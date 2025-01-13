@@ -181,7 +181,7 @@ public class EPackageChooser {
 				@Override
 				public boolean visit(IResource resource) throws CoreException {
 					if (resource instanceof IFile) {
-						String fileExtension = ((IFile) resource).getFileExtension();
+						String fileExtension = resource.getFileExtension();
 						if ("genmodel".equals(fileExtension) || "xcore".equals(fileExtension)) {
 							filteredResources.add(resource);
 						}

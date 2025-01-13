@@ -53,7 +53,7 @@ public class TextChangeCombiner {
 		visitCompositeChange((CompositeChange) masterChange, resource2textChange, otherChanges, editorsToSave);
 		CompositeChange compositeChange = new FilteringCompositeChange(masterChange.getName());
 		for (TextChange combinedTextChange : resource2textChange.values()) {
-			if(((MultiTextEdit) combinedTextChange.getEdit()).getChildrenSize() >0) {
+			if(combinedTextChange.getEdit().getChildrenSize() >0) {
 				if(combinedTextChange instanceof EditorDocumentChange) {
 					((EditorDocumentChange) combinedTextChange).setDoSave(editorsToSave.contains(((EditorDocumentChange) combinedTextChange).getEditor()));
 					compositeChange.add(combinedTextChange);
@@ -94,7 +94,7 @@ public class TextChangeCombiner {
 				MultiTextEdit combinedEdits = (MultiTextEdit) textChange.getEdit();
 				TextEdit newEdit = ((TextChange) sourceChange).getEdit().copy();
 				if (newEdit instanceof MultiTextEdit) {
-					for (TextEdit newTextEdit : ((MultiTextEdit) newEdit).getChildren()) {
+					for (TextEdit newTextEdit : newEdit.getChildren()) {
 						addIfNotDuplicate(combinedEdits, newTextEdit);
 					}
 				} else {

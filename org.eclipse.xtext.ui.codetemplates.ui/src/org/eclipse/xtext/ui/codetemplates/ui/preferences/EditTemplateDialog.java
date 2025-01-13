@@ -93,7 +93,7 @@ public class EditTemplateDialog extends StatusDialog implements IEditTemplateDia
 		fIsNameModifiable= isNameModifiable;
 
 		List<String[]> contexts= Lists.newArrayList();
-		for (Iterator<TemplateContextType> it= Iterators.filter(((ContextTypeRegistry)registry).contextTypes(), TemplateContextType.class); it.hasNext();) {
+		for (Iterator<TemplateContextType> it= Iterators.filter(registry.contextTypes(), TemplateContextType.class); it.hasNext();) {
 			TemplateContextType type= it.next();
 			contexts.add(new String[] { type.getId(), type.getName() });
 		}

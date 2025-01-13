@@ -66,7 +66,7 @@ public class AdvancedTemplatesPreferencePage extends XtextTemplatePreferencePage
 			TemplatePersistenceData data= (TemplatePersistenceData) selection.getFirstElement();
 			Template template= data.getTemplate();
 			String name = template.getName();
-			TemplateContextType contextType = ((ContextTypeRegistry)getContextTypeRegistry()).getContextType(template.getContextTypeId());
+			TemplateContextType contextType = getContextTypeRegistry().getContextType(template.getContextTypeId());
 			if (contextType != null) {
 				String prefix = 
 						"templates for " + grammarAccess.getGrammar().getName() +

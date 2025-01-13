@@ -29,7 +29,7 @@ public class FileOpenerSelector extends TwoPaneElementSelector {
 
 		@Override
 		public Image getImage(Object element) {
-			return (Image) resourceManager.get(((FileOpener) element).getImageDescriptor());
+			return resourceManager.get(((FileOpener) element).getImageDescriptor());
 		}
 	}
 

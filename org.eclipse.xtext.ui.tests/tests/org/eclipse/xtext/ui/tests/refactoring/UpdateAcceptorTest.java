@@ -57,7 +57,7 @@ public class UpdateAcceptorTest extends Assert {
 		assertTrue(change1.getTextEdit() instanceof MultiTextEdit);
 		assertEquals(
 				3,
-				((MultiTextEdit) change0.getTextEdit()).getChildrenSize()
-						+ ((MultiTextEdit) change1.getTextEdit()).getChildrenSize());
+				change0.getTextEdit().getChildrenSize()
+						+ change1.getTextEdit().getChildrenSize());
 	}
 }
