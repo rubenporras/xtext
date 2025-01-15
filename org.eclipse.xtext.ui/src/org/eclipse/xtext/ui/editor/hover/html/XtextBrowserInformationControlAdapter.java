@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2024 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2012, 2025 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -9,7 +9,6 @@
 package org.eclipse.xtext.ui.editor.hover.html;
 
 
-import org.apache.log4j.Logger;
 import org.eclipse.jface.internal.text.html.BrowserInformationControl;
 import org.eclipse.jface.internal.text.html.BrowserInformationControlInput;
 import org.eclipse.jface.text.IInputChangedListener;
@@ -26,8 +25,6 @@ import org.eclipse.swt.graphics.Point;
  * @since 2.3
  */
 public class XtextBrowserInformationControlAdapter implements IXtextBrowserInformationControl {
-	
-	private static final Logger LOG = Logger.getLogger(XtextBrowserInformationControlAdapter.class);
 	
 	private final BrowserInformationControl control;
 
