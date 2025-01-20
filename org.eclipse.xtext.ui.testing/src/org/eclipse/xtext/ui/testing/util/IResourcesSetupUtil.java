@@ -383,7 +383,7 @@ public class IResourcesSetupUtil {
 	}
 	
 	public static void waitForBuild() {
-		waitForBuild(null);
+		waitForBuild(new ConsoleLoggingProgressMonitor("BUILD"));
 	}
 	
 	public static boolean isAutobuild(boolean enable) {
@@ -406,6 +406,7 @@ public class IResourcesSetupUtil {
 	
 	public static void waitForBuild(IProgressMonitor monitor) {
 		try {
+			waitForJdtIndex();
 			ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.INCREMENTAL_BUILD, monitor);
 		} catch (CoreException e) {
 			OperationCanceledException operationCanceledException = new OperationCanceledException(e.getMessage());
