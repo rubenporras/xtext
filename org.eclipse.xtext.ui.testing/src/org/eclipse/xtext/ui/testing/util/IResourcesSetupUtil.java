@@ -363,16 +363,21 @@ public class IResourcesSetupUtil {
 		reallyWaitForAutoBuild();
 	}
 	
+
+	public static void reallyWaitForAutoBuild() {
+		reallyWaitForAutoBuild(new ConsoleLoggingProgressMonitor("AUTOBUILD"));
+	}
+
 	/**
 	 * A test that really should test the mechanism including the delay
 	 * after the resource change event, could wait for the auto build.
 	 */
-	public static void reallyWaitForAutoBuild() {
+	public static void reallyWaitForAutoBuild(IProgressMonitor monitor) {
 		boolean wasInterrupted = false;
 		do {
 			try {
 				Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD,
-						null);
+						monitor);
 				wasInterrupted = false;
 			} catch (OperationCanceledException e) {
 				e.printStackTrace();
@@ -408,6 +413,7 @@ public class IResourcesSetupUtil {
 		try {
 			waitForJdtIndex();
 			ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.INCREMENTAL_BUILD, monitor);
+			reallyWaitForAutoBuild(new ConsoleLoggingProgressMonitor("AFTER BUILD"));
 		} catch (CoreException e) {
 			OperationCanceledException operationCanceledException = new OperationCanceledException(e.getMessage());
 			operationCanceledException.addSuppressed(e);
