@@ -37,6 +37,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jdt.internal.core.JavaModelManager;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 import org.eclipse.xtext.util.StringInputStream;
@@ -49,6 +50,33 @@ import com.google.common.io.ByteStreams;
  * @since 2.12
  */
 public class IResourcesSetupUtil {
+
+	/**
+	 * @author Lorenzo Bettini - Initial contribution and API
+	 */
+	public static class ConsoleLoggingProgressMonitor extends NullProgressMonitor {
+
+		private String prefix;
+
+		public ConsoleLoggingProgressMonitor(String prefix) {
+			this.prefix = prefix + ": ";
+		}
+
+		@Override
+		public void beginTask(String name, int totalWork) {
+			System.out.println(prefix + name + " totalWork " + totalWork);
+		}
+
+		@Override
+		public void subTask(String name) {
+			System.out.println(prefix + name);
+		}
+
+		@Override
+		public void done() {
+			System.out.println(prefix + "DONE");
+		}
+	}
 
 	public static IWorkspaceRoot root() {
 		return ResourcesPlugin.getWorkspace().getRoot();
@@ -424,5 +452,11 @@ public class IResourcesSetupUtil {
 			result.append(marker.getAttribute(IMarker.MESSAGE));
 		}
 		return result.toString();
+	}
+
+	@SuppressWarnings("restriction")
+	public static void waitForJdtIndex() {
+		JavaModelManager.getIndexManager().waitForIndex(true,
+				new ConsoleLoggingProgressMonitor("JDT INDEX"));
 	}
 }
