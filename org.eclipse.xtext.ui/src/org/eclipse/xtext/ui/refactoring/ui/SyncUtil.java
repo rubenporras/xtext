@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jdt.internal.core.JavaModelManager;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
@@ -148,12 +149,18 @@ public class SyncUtil {
 
 	public void waitForBuild(IProgressMonitor monitor) {
 		try {
+			waitForJdtIndex(monitor);
 			workspace.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, monitor);
 		} catch (CoreException e) {
 			throw new OperationCanceledException(e.getMessage());
 		}
 	}
-	
+
+	@SuppressWarnings("restriction")
+	public void waitForJdtIndex(IProgressMonitor monitor) {
+		JavaModelManager.getIndexManager().waitForIndex(true, monitor);
+	}
+
 	/**
 	 * @deprecated we should not rely on auto build to be triggered. Use {@link #waitForBuild(IProgressMonitor)}
 	 *             instead.
