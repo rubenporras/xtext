@@ -347,10 +347,12 @@ public class IResourcesSetupUtil {
 	}
 
 	public static void fullBuild() throws CoreException {
+		waitForJdtIndex();
 		ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.FULL_BUILD, monitor());
 	}
 	
 	public static void cleanBuild() throws CoreException {
+		waitForJdtIndex();
 		ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.CLEAN_BUILD, monitor());
 	}
 
