@@ -76,6 +76,7 @@ public class QuickDebugSourceInstallingCompilationParticipantTest extends Abstra
       IResourcesSetupUtil.waitForBuild();
       final IFile clazz = source.getProject().getFile("bin/somePackage/Outer.class");
       Assert.assertTrue("bytecode not found", clazz.exists());
+      IResourcesSetupUtil.waitForJdtIndex();
       final AtomicBoolean debugInfoFound = new AtomicBoolean(false);
       try (final InputStream in = new Function0<InputStream>() {
         @Override

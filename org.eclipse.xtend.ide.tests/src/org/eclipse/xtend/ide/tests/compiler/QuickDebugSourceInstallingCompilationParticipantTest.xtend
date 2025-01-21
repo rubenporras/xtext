@@ -47,8 +47,13 @@ class QuickDebugSourceInstallingCompilationParticipantTest extends AbstractXtend
 			}
 		''')
 		waitForBuild()
+
 		val clazz = source.project.getFile("bin/somePackage/Outer.class")
 		assertTrue("bytecode not found", clazz.exists)
+
+		// the visitSource below seems to get "debug" as null sometimes (flaky)
+		// let's wait for JDT index to finish to make sure the contents are there
+		waitForJdtIndex
 
 		val debugInfoFound = new AtomicBoolean(false)
 		try (val in = clazz.getContents()) {
