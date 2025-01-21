@@ -385,7 +385,7 @@ public class IResourcesSetupUtil {
 	}
 	
 	public static void waitForBuild() {
-		waitForBuild(new ConsoleLoggingProgressMonitor("BUILD"));
+		waitForBuild(null);
 	}
 	
 	public static boolean isAutobuild(boolean enable) {
@@ -408,7 +408,7 @@ public class IResourcesSetupUtil {
 	
 	public static void waitForBuild(IProgressMonitor monitor) {
 		try {
-			waitForJdtIndex();
+			waitForJdtIndex(monitor);
 			ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.INCREMENTAL_BUILD, monitor);
 		} catch (CoreException e) {
 			OperationCanceledException operationCanceledException = new OperationCanceledException(e.getMessage());
@@ -457,9 +457,12 @@ public class IResourcesSetupUtil {
 		return result.toString();
 	}
 
-	@SuppressWarnings("restriction")
 	public static void waitForJdtIndex() {
-		JavaModelManager.getIndexManager().waitForIndex(true,
-				new ConsoleLoggingProgressMonitor("JDT INDEX"));
+		waitForJdtIndex(null);
+	}
+
+	@SuppressWarnings("restriction")
+	public static void waitForJdtIndex(IProgressMonitor monitor) {
+		JavaModelManager.getIndexManager().waitForIndex(true, monitor);
 	}
 }
