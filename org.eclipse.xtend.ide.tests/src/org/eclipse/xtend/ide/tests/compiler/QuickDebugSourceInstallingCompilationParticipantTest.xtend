@@ -13,8 +13,6 @@ import com.google.inject.Inject
 import java.util.concurrent.atomic.AtomicBoolean
 import org.eclipse.xtend.ide.tests.AbstractXtendUITestCase
 import org.eclipse.xtend.ide.tests.WorkbenchTestHelper
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor
@@ -29,10 +27,6 @@ class QuickDebugSourceInstallingCompilationParticipantTest extends AbstractXtend
 
 	@Inject
 	WorkbenchTestHelper workbenchTestHelper;
-
-	@Before @After def void cleanUp() {
-		workbenchTestHelper.tearDown
-	}
 
 	@Test def void testIfThereIsAnyStatum() {
 		val source = workbenchTestHelper.createFile('somePackage/Outer.xtend', '''

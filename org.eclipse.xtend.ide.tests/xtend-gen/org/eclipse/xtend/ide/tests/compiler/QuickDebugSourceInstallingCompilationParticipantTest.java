@@ -20,9 +20,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -35,16 +33,6 @@ import org.objectweb.asm.Opcodes;
 public class QuickDebugSourceInstallingCompilationParticipantTest extends AbstractXtendUITestCase {
   @Inject
   private WorkbenchTestHelper workbenchTestHelper;
-
-  @Before
-  @After
-  public void cleanUp() {
-    try {
-      this.workbenchTestHelper.tearDown();
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
 
   @Test
   public void testIfThereIsAnyStatum() {
