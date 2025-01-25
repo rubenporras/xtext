@@ -29,6 +29,15 @@ class QuickDebugSourceInstallingCompilationParticipantTest extends AbstractXtend
 	WorkbenchTestHelper workbenchTestHelper;
 
 	@Test def void testIfThereIsAnyStatum() {
+		// ensure JDT is fully functional and its participants registered
+		workbenchTestHelper.createFile('hello/Hello.java', '''
+			package hello;
+			
+			public class Hello {
+			}
+		''')
+		waitForBuild()
+
 		val source = workbenchTestHelper.createFile('somePackage/Outer.xtend', '''
 			package somePackage
 			
@@ -44,10 +53,6 @@ class QuickDebugSourceInstallingCompilationParticipantTest extends AbstractXtend
 
 		val clazz = source.project.getFile("bin/somePackage/Outer.class")
 		assertTrue("bytecode not found", clazz.exists)
-
-		// the visitSource below seems to get "debug" as null sometimes (flaky)
-		// let's wait for JDT index to finish to make sure the contents are there
-		waitForJdtIndex
 
 		val debugInfoFound = new AtomicBoolean(false)
 		try (val in = clazz.getContents()) {
