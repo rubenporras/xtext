@@ -460,12 +460,18 @@ public class IResourcesSetupUtil {
 		return result.toString();
 	}
 
-	private static void waitForJdtIndex() {
+	/**
+	 * @since 2.38
+	 */
+	public static void waitForJdtIndex() {
 		waitForJdtIndex(null);
 	}
 
+	/**
+	 * @since 2.38
+	 */
 	@SuppressWarnings("restriction")
-	private static void waitForJdtIndex(IProgressMonitor monitor) {
+	public static void waitForJdtIndex(IProgressMonitor monitor) {
 		JavaModelManager.getIndexManager().waitForIndex(true, monitor);
 	}
 }
