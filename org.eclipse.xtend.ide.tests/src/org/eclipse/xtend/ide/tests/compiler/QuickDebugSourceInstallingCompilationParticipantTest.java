@@ -52,6 +52,9 @@ public class QuickDebugSourceInstallingCompilationParticipantTest extends Abstra
 			}
 		""");
 		IResourcesSetupUtil.waitForBuild();
+
+		IResourcesSetupUtil.reallyWaitForAutoBuild();
+
 		final IFile clazz = source.getProject().getFile("bin/somePackage/Outer.class");
 		assertTrue("bytecode not found", clazz.exists());
 		final AtomicBoolean debugInfoFound = new AtomicBoolean(false);
