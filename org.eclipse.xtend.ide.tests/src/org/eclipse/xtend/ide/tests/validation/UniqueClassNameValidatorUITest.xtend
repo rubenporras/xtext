@@ -50,7 +50,7 @@ class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
 				}
 			''')
 		runInWorkspace [
-			first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, emptyStringMap, null)
+			first.incrementalBuild(XtextBuilder.BUILDER_ID)
 		]
 		val firstFileMarkers = firstFile.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE)
 		assertEquals(printMarker(firstFileMarkers), 1, firstFileMarkers.length)
@@ -74,7 +74,7 @@ class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
 				}
 			''')
 		runInWorkspace [
-			first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, emptyStringMap, null)
+			first.incrementalBuild(XtextBuilder.BUILDER_ID)
 		]
 		val firstFileMarkers = firstFile.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE)
 		assertEquals(printMarker(firstFileMarkers), 0, firstFileMarkers.length)
@@ -96,8 +96,8 @@ class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
 				}
 			''')
 		runInWorkspace [
-			first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, emptyStringMap, null)
-			first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, JavaCore.BUILDER_ID, emptyStringMap, null)
+			first.incrementalBuild(XtextBuilder.BUILDER_ID)
+			first.incrementalBuild(JavaCore.BUILDER_ID)
 		]
 		val secondFileMarkers = secondFile.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE).onlyErrors
 		assertEquals(printMarker(secondFileMarkers), 1, secondFileMarkers.length)
@@ -118,8 +118,8 @@ class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
 				}
 			''')
 		runInWorkspace [
-			first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, emptyStringMap, null)
-			first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, JavaCore.BUILDER_ID, emptyStringMap, null)
+			first.incrementalBuild(XtextBuilder.BUILDER_ID)
+			first.incrementalBuild(JavaCore.BUILDER_ID)
 		]
 		val secondFileMarkers = secondFile.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE)
 		assertEquals(printMarker(secondFileMarkers), 0, secondFileMarkers.length)
@@ -133,7 +133,7 @@ class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
 				class A {
 				}
 			''')
-		first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, emptyStringMap, null)
+		first.incrementalBuild(XtextBuilder.BUILDER_ID)
 		val javaFile = createFile('first.p384008/src/acme/A.java',
 			'''
 				package acme;
@@ -141,11 +141,11 @@ class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
 				}
 			''')
 		
-		first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, JavaCore.BUILDER_ID, emptyStringMap, null)
-		first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, emptyStringMap, null)
+		first.incrementalBuild(JavaCore.BUILDER_ID)
+		first.incrementalBuild(XtextBuilder.BUILDER_ID)
 		javaFile.setContents(new StringInputStream("package acme; class A{}"), false, false, null)
-		first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, JavaCore.BUILDER_ID, emptyStringMap, null)
-		first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, emptyStringMap, null)
+		first.incrementalBuild(JavaCore.BUILDER_ID)
+		first.incrementalBuild(XtextBuilder.BUILDER_ID)
 		val markers = firstFile.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE)
 		assertEquals(printMarker(markers), 1, markers.length)
 		assertEquals('The type A is already defined in A.java.', markers.head.getAttribute(IMarker.MESSAGE))
@@ -176,5 +176,9 @@ class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
 	private def runInWorkspace(IWorkspaceRunnable r) {
 		ResourcesPlugin.workspace.run(r, new NullProgressMonitor)
 	}
-	
+
+	private def incrementalBuild(IProject project, String builderName) {
+		waitForJdtIndex
+		project.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, builderName, emptyStringMap, null)
+	}
 }

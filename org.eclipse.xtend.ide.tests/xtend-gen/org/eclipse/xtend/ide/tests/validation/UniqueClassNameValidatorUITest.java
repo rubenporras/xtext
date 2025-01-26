@@ -67,7 +67,7 @@ public class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
       _builder_1.newLine();
       final IFile secondFile = IResourcesSetupUtil.createFile("first.p384008/src/acme/B.xtend", _builder_1.toString());
       final IWorkspaceRunnable _function = (IProgressMonitor it) -> {
-        this.first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, UniqueClassNameValidatorUITest.emptyStringMap(), null);
+        this.incrementalBuild(this.first, XtextBuilder.BUILDER_ID);
       };
       this.runInWorkspace(_function);
       final IMarker[] firstFileMarkers = firstFile.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
@@ -101,7 +101,7 @@ public class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
       _builder_1.newLine();
       final IFile secondFile = IResourcesSetupUtil.createFile("second.p384008/src/acme/B.xtend", _builder_1.toString());
       final IWorkspaceRunnable _function = (IProgressMonitor it) -> {
-        this.first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, UniqueClassNameValidatorUITest.emptyStringMap(), null);
+        this.incrementalBuild(this.first, XtextBuilder.BUILDER_ID);
       };
       this.runInWorkspace(_function);
       final IMarker[] firstFileMarkers = firstFile.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
@@ -133,8 +133,8 @@ public class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
       _builder_1.newLine();
       final IFile secondFile = IResourcesSetupUtil.createFile("first.p384008/src/acme/B.xtend", _builder_1.toString());
       final IWorkspaceRunnable _function = (IProgressMonitor it) -> {
-        this.first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, UniqueClassNameValidatorUITest.emptyStringMap(), null);
-        this.first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, JavaCore.BUILDER_ID, UniqueClassNameValidatorUITest.emptyStringMap(), null);
+        this.incrementalBuild(this.first, XtextBuilder.BUILDER_ID);
+        this.incrementalBuild(this.first, JavaCore.BUILDER_ID);
       };
       this.runInWorkspace(_function);
       final Iterable<IMarker> secondFileMarkers = this.onlyErrors(((Iterable<IMarker>)Conversions.doWrapArray(secondFile.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE))));
@@ -165,8 +165,8 @@ public class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
       _builder_1.newLine();
       final IFile secondFile = IResourcesSetupUtil.createFile("second.p384008/src/acme/B.xtend", _builder_1.toString());
       final IWorkspaceRunnable _function = (IProgressMonitor it) -> {
-        this.first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, UniqueClassNameValidatorUITest.emptyStringMap(), null);
-        this.first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, JavaCore.BUILDER_ID, UniqueClassNameValidatorUITest.emptyStringMap(), null);
+        this.incrementalBuild(this.first, XtextBuilder.BUILDER_ID);
+        this.incrementalBuild(this.first, JavaCore.BUILDER_ID);
       };
       this.runInWorkspace(_function);
       final IMarker[] secondFileMarkers = secondFile.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
@@ -188,7 +188,7 @@ public class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
       _builder.append("}");
       _builder.newLine();
       final IFile firstFile = IResourcesSetupUtil.createFile("first.p384008/src/acme/B.xtend", _builder.toString());
-      this.first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, UniqueClassNameValidatorUITest.emptyStringMap(), null);
+      this.incrementalBuild(this.first, XtextBuilder.BUILDER_ID);
       StringConcatenation _builder_1 = new StringConcatenation();
       _builder_1.append("package acme;");
       _builder_1.newLine();
@@ -197,12 +197,12 @@ public class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
       _builder_1.append("}");
       _builder_1.newLine();
       final IFile javaFile = IResourcesSetupUtil.createFile("first.p384008/src/acme/A.java", _builder_1.toString());
-      this.first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, JavaCore.BUILDER_ID, UniqueClassNameValidatorUITest.emptyStringMap(), null);
-      this.first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, UniqueClassNameValidatorUITest.emptyStringMap(), null);
+      this.incrementalBuild(this.first, JavaCore.BUILDER_ID);
+      this.incrementalBuild(this.first, XtextBuilder.BUILDER_ID);
       StringInputStream _stringInputStream = new StringInputStream("package acme; class A{}");
       javaFile.setContents(_stringInputStream, false, false, null);
-      this.first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, JavaCore.BUILDER_ID, UniqueClassNameValidatorUITest.emptyStringMap(), null);
-      this.first.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, XtextBuilder.BUILDER_ID, UniqueClassNameValidatorUITest.emptyStringMap(), null);
+      this.incrementalBuild(this.first, JavaCore.BUILDER_ID);
+      this.incrementalBuild(this.first, XtextBuilder.BUILDER_ID);
       final IMarker[] markers = firstFile.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
       Assert.assertEquals(IResourcesSetupUtil.printMarker(markers), 1, markers.length);
       Assert.assertEquals("The type A is already defined in A.java.", IterableExtensions.<IMarker>head(((Iterable<IMarker>)Conversions.doWrapArray(markers))).getAttribute(IMarker.MESSAGE));
@@ -248,6 +248,15 @@ public class UniqueClassNameValidatorUITest extends AbstractXtendUITestCase {
       IWorkspace _workspace = ResourcesPlugin.getWorkspace();
       NullProgressMonitor _nullProgressMonitor = new NullProgressMonitor();
       _workspace.run(r, _nullProgressMonitor);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+
+  private void incrementalBuild(final IProject project, final String builderName) {
+    try {
+      IResourcesSetupUtil.waitForJdtIndex();
+      project.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, builderName, UniqueClassNameValidatorUITest.emptyStringMap(), null);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
