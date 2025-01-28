@@ -53,7 +53,9 @@ public class QuickDebugSourceInstallingCompilationParticipantTest extends Abstra
 		""");
 		IResourcesSetupUtil.waitForBuild();
 
-		IResourcesSetupUtil.reallyWaitForAutoBuild();
+		// ensure also JDT builder finished its jobs
+		IResourcesSetupUtil.waitForBuild(
+			new IResourcesSetupUtil.ConsoleLoggingProgressMonitor("ANOTHER BUILD"));
 
 		final IFile clazz = source.getProject().getFile("bin/somePackage/Outer.class");
 		assertTrue("bytecode not found", clazz.exists());
