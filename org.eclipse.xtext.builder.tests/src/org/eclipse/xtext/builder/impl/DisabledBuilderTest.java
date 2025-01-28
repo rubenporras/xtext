@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
@@ -42,12 +41,12 @@ public class DisabledBuilderTest extends AbstractBuilderTest {
 		URI uri = URI.createURI("platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore");
 		assertNull(descriptions.getResourceDescription(uri));
 		
-		IProject foo = createPluginProject("foo", false, null);
-		foo.getWorkspace().build(IncrementalProjectBuilder.FULL_BUILD, new NullProgressMonitor());
+		createPluginProject("foo", false, null);
+		fullBuild();
 		assertNull(descriptions.getResourceDescription(uri));
 
 		createPluginProject("bar", true, "foo");
-		foo.getWorkspace().build(IncrementalProjectBuilder.FULL_BUILD, new NullProgressMonitor());
+		fullBuild();
 		assertNotNull(descriptions.getResourceDescription(uri));
 	}
 	

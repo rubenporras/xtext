@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2024 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2009, 2024, 2025 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -37,6 +37,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jdt.internal.core.JavaModelManager;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 import org.eclipse.xtext.util.StringInputStream;
@@ -49,6 +50,36 @@ import com.google.common.io.ByteStreams;
  * @since 2.12
  */
 public class IResourcesSetupUtil {
+
+	/**
+	 * A utility monitor that prints the status on System.out
+	 * 
+	 * @author Lorenzo Bettini - Initial contribution and API
+	 * @since 2.38
+	 */
+	public static class ConsoleLoggingProgressMonitor extends NullProgressMonitor {
+
+		private String prefix;
+
+		public ConsoleLoggingProgressMonitor(String prefix) {
+			this.prefix = prefix + ": ";
+		}
+
+		@Override
+		public void beginTask(String name, int totalWork) {
+			System.out.println(prefix + name + " totalWork " + totalWork);
+		}
+
+		@Override
+		public void subTask(String name) {
+			System.out.println(prefix + name);
+		}
+
+		@Override
+		public void done() {
+			System.out.println(prefix + "DONE");
+		}
+	}
 
 	public static IWorkspaceRoot root() {
 		return ResourcesPlugin.getWorkspace().getRoot();
@@ -319,10 +350,12 @@ public class IResourcesSetupUtil {
 	}
 
 	public static void fullBuild() throws CoreException {
+		waitForJdtIndex();
 		ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.FULL_BUILD, monitor());
 	}
 	
 	public static void cleanBuild() throws CoreException {
+		waitForJdtIndex();
 		ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.CLEAN_BUILD, monitor());
 	}
 
@@ -378,6 +411,7 @@ public class IResourcesSetupUtil {
 	
 	public static void waitForBuild(IProgressMonitor monitor) {
 		try {
+			waitForJdtIndex(monitor);
 			ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.INCREMENTAL_BUILD, monitor);
 		} catch (CoreException e) {
 			OperationCanceledException operationCanceledException = new OperationCanceledException(e.getMessage());
@@ -424,5 +458,20 @@ public class IResourcesSetupUtil {
 			result.append(marker.getAttribute(IMarker.MESSAGE));
 		}
 		return result.toString();
+	}
+
+	/**
+	 * @since 2.38
+	 */
+	public static void waitForJdtIndex() {
+		waitForJdtIndex(null);
+	}
+
+	/**
+	 * @since 2.38
+	 */
+	@SuppressWarnings("restriction")
+	public static void waitForJdtIndex(IProgressMonitor monitor) {
+		JavaModelManager.getIndexManager().waitForIndex(true, monitor);
 	}
 }

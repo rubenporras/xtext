@@ -162,7 +162,7 @@ public class Storage2UriMapperJavaImplTest extends Assert {
 				createProjectTimeMs.set(sw.elapsed(TimeUnit.MILLISECONDS));
 			}
 		}.run(null);
-		
+		IResourcesSetupUtil.waitForBuild();
 		URI uri = URI.createPlatformPluginURI("doesntExist/some.file", false);
 		Stopwatch sw = Stopwatch.createStarted();
 		// simulate ToBeBuiltComputer.updateProject -> removeProject

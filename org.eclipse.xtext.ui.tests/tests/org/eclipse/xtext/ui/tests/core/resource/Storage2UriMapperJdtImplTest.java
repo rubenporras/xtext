@@ -243,6 +243,9 @@ public class Storage2UriMapperJdtImplTest extends Assert {
 		IFile file2 = externalFolder.getFile("b.nonindexed");
 		file2.create(new StringInputStream("content"), true, monitor());
 		IClasspathEntry classpathEntry = addExternalFolderToClasspath(project, externalFolder);
+
+		waitForBuild();
+
 		IPackageFragmentRoot packageFragmentRoot = project.findPackageFragmentRoots(classpathEntry)[0];
 		Assert.assertTrue(packageFragmentRoot.getPath().toFile().setLastModified(456L));
 		Storage2UriMapperJavaImpl impl = getStorage2UriMapper();
