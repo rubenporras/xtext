@@ -38,7 +38,8 @@ public class QuickDebugSourceInstallingCompilationParticipantTest extends Abstra
 			public class Hello {
 			}
 		""");
-		IResourcesSetupUtil.waitForBuild();
+		IResourcesSetupUtil.waitForBuild(
+				new IResourcesSetupUtil.ConsoleLoggingProgressMonitor("JAVA BUILD"));
 
 		final IFile source = workbenchTestHelper.createFile("somePackage/Outer.xtend", """
 			package somePackage
@@ -51,7 +52,8 @@ public class QuickDebugSourceInstallingCompilationParticipantTest extends Abstra
 			  }
 			}
 		""");
-		IResourcesSetupUtil.waitForBuild();
+		IResourcesSetupUtil.waitForBuild(
+				new IResourcesSetupUtil.ConsoleLoggingProgressMonitor("XTEND BUILD"));
 
 		// ensure also JDT builder finished its jobs
 		IResourcesSetupUtil.waitForBuild(
