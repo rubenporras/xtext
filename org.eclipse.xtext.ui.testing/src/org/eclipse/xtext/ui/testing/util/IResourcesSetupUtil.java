@@ -390,9 +390,20 @@ public class IResourcesSetupUtil {
 	public static void waitForBuild() {
 		waitForBuild(null);
 	}
-	
-	public static boolean isAutobuild(boolean enable) {
+
+	/**
+	 * @since 2.38
+	 */
+	public static boolean isAutobuild() {
 		return ResourcesPlugin.getWorkspace().getDescription().isAutoBuilding();
+	}
+
+	/**
+	 * @deprecated use {@link #isAutobuild()} instead (the boolean parameter is unused).
+	 */
+	@Deprecated(forRemoval = true)
+	public static boolean isAutobuild(boolean enable) {
+		return isAutobuild();
 	}
 
 	public static boolean setAutobuild(boolean enable) {
