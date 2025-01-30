@@ -178,7 +178,7 @@ public class InternalBuilderTest {
 		} while (wasInterrupted);
 	}
 
-	public static void setAutoBuild(boolean b) {
+	private static void setAutoBuild(boolean b) {
 		System.out.println("Setting auto-build to " + b);
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
