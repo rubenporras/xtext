@@ -140,6 +140,7 @@ public class XtendHoverInEditorTest extends AbstractXtendUITestCase {
       final IFile fileBar = this.helper.createFile("Bar.xtend", contentBar);
       this._syncUtil.waitForBuild(null);
       final XtextEditor editor = this.helper.openEditor(fileBar);
+      this._syncUtil.waitForReconciler(editor);
       final Runnable _function = () -> {
         ISourceViewer _internalSourceViewer = editor.getInternalSourceViewer();
         Region _region = new Region(19, 1);
