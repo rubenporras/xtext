@@ -31,12 +31,27 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.internal.core.JavaModelManager;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.ui.texteditor.MarkerUtilities;
+import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author dhuebner - Initial contribution and API
  */
 public class InternalBuilderTest {
+
+	private boolean wasAutoBuild;
+
+	@Before
+	public void saveAutoBuild() {
+		wasAutoBuild = IResourcesSetupUtil.isAutobuild();
+	}
+
+	@After
+	public void resetAutoBuild() {
+		setAutoBuild(wasAutoBuild);
+	}
 
 	@Test
 	public void test() throws CoreException, FileNotFoundException {
@@ -163,7 +178,7 @@ public class InternalBuilderTest {
 		} while (wasInterrupted);
 	}
 
-	public static void setAutoBuild(boolean b) {
+	private static void setAutoBuild(boolean b) {
 		System.out.println("Setting auto-build to " + b);
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();

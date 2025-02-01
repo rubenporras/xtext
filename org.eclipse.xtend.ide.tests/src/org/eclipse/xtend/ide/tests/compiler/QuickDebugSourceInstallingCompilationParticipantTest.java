@@ -11,6 +11,7 @@ package org.eclipse.xtend.ide.tests.compiler;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.xtend.ide.tests.AbstractXtendUITestCase;
 import org.eclipse.xtend.ide.tests.WorkbenchTestHelper;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
@@ -31,15 +32,6 @@ public class QuickDebugSourceInstallingCompilationParticipantTest extends Abstra
 
 	@Test
 	public void testIfThereIsAnyStatum() throws Exception {
-		// ensure JDT is fully functional and its participants registered
-		workbenchTestHelper.createFile("hello/Hello.java", """
-			package hello;
-
-			public class Hello {
-			}
-		""");
-		IResourcesSetupUtil.waitForBuild();
-
 		final IFile source = workbenchTestHelper.createFile("somePackage/Outer.xtend", """
 			package somePackage
 
@@ -51,11 +43,11 @@ public class QuickDebugSourceInstallingCompilationParticipantTest extends Abstra
 			  }
 			}
 		""");
-		IResourcesSetupUtil.waitForBuild();
-
-		// ensure also JDT builder finished its jobs
 		IResourcesSetupUtil.waitForBuild(
-			new IResourcesSetupUtil.ConsoleLoggingProgressMonitor("ANOTHER BUILD"));
+				new IResourcesSetupUtil.ConsoleLoggingProgressMonitor("XTEND BUILD"));
+
+		source.getProject().refreshLocal(IResource.DEPTH_INFINITE,
+				new IResourcesSetupUtil.ConsoleLoggingProgressMonitor("REFRESH"));
 
 		final IFile clazz = source.getProject().getFile("bin/somePackage/Outer.class");
 		assertTrue("bytecode not found", clazz.exists());

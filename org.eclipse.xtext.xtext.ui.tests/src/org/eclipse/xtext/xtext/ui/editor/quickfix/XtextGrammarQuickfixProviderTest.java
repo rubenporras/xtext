@@ -263,7 +263,6 @@ public class XtextGrammarQuickfixProviderTest extends AbstractQuickfixTest {
 
 	private void assertAndApplyAllResolutions(XtextEditor xtextEditor, String issueCode, int issueDataCount, int issueCount,
 			String resolutionLabel) throws CoreException {
-		InternalBuilderTest.setAutoBuild(true);
 		if (xtextEditor.isDirty()) {
 			xtextEditor.doSave(new NullProgressMonitor());
 		}
