@@ -45,8 +45,8 @@ public class XtextEditorErrorTickUpdater extends IXtextEditorCallback.NullImpl i
 	private IImageHelper imageHelper;
 	@Inject
 	private IssueUtil issueUtil;
-	private Image defaultImage;
-	private XtextEditor editor;
+	private volatile Image defaultImage;
+	private volatile XtextEditor editor;
 	private IAnnotationModel annotationModel;
 
 	@Override
@@ -94,14 +94,17 @@ public class XtextEditorErrorTickUpdater extends IXtextEditorCallback.NullImpl i
 
 	protected void updateEditorImage(XtextEditor xtextEditor) {
 		Severity severity = getSeverity(xtextEditor);
-		if (severity != null && severity != Severity.INFO) {
-			ImageDescriptor descriptor = severity == Severity.ERROR ? XtextPluginImages.DESC_OVR_ERROR
-					: XtextPluginImages.DESC_OVR_WARNING;
-			DecorationOverlayIcon decorationOverlayIcon = new DecorationOverlayIcon(defaultImage, descriptor,
-					IDecoration.BOTTOM_LEFT);
-			scheduleUpdateEditor(decorationOverlayIcon);
-		} else {
-			scheduleUpdateEditor(defaultImage);
+		Image locImage = defaultImage;
+		if (locImage != null && !locImage.isDisposed()) {
+			if (severity != null && severity != Severity.INFO) {
+				ImageDescriptor descriptor = severity == Severity.ERROR ? XtextPluginImages.DESC_OVR_ERROR
+						: XtextPluginImages.DESC_OVR_WARNING;
+				DecorationOverlayIcon decorationOverlayIcon = new DecorationOverlayIcon(locImage, descriptor,
+						IDecoration.BOTTOM_LEFT);
+				scheduleUpdateEditor(decorationOverlayIcon);
+			} else {
+				scheduleUpdateEditor(locImage);
+			}
 		}
 	}
 
@@ -144,10 +147,11 @@ public class XtextEditorErrorTickUpdater extends IXtextEditorCallback.NullImpl i
 		display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				if (editor != null) {
+				XtextEditor locEditor = editor;
+				if (locEditor != null) {
 					Image image = imageHelper.getImage(titleImageDescription);
-					if (editor.getTitleImage() != image) {
-						editor.updatedTitleImage(image);
+					if (locEditor.getTitleImage() != image) {
+						locEditor.updatedTitleImage(image);
 					}
 				}
 			}
@@ -163,9 +167,10 @@ public class XtextEditorErrorTickUpdater extends IXtextEditorCallback.NullImpl i
 		display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				if (editor != null) {
-					if (editor.getTitleImage() != titleImage) {
-						editor.updatedTitleImage(titleImage);
+				XtextEditor locEditor = editor;
+				if (locEditor != null) {
+					if (locEditor.getTitleImage() != titleImage) {
+						locEditor.updatedTitleImage(titleImage);
 					}
 				}
 			}
@@ -210,16 +215,17 @@ public class XtextEditorErrorTickUpdater extends IXtextEditorCallback.NullImpl i
 
 		@Override
 		public IStatus runInUIThread(final IProgressMonitor monitor) {
-			IEditorSite site = null != editor ? editor.getEditorSite() : null;
+			XtextEditor locEditor = editor; 
+			IEditorSite site = null != locEditor ? locEditor.getEditorSite() : null;
 			if (site != null) {
-				if (!monitor.isCanceled() && editor != null) {
+				if (!monitor.isCanceled() && locEditor != null) {
 					if (titleImage != null && !titleImage.isDisposed()) {
-						editor.updatedTitleImage(titleImage);
+						locEditor.updatedTitleImage(titleImage);
 						titleImage = null;
 					} else if (titleImageDescription != null) {
 						Image image = imageHelper.getImage(titleImageDescription);
-						if (editor.getTitleImage() != image) {
-							editor.updatedTitleImage(image);
+						if (locEditor.getTitleImage() != image) {
+							locEditor.updatedTitleImage(image);
 						}
 						titleImageDescription = null;
 					}
