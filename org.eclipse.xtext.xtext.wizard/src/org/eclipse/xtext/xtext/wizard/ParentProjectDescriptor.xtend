@@ -95,10 +95,10 @@ class ParentProjectDescriptor extends ProjectDescriptor {
 						mavenCentral()
 						«IF config.xtextVersion.isSnapshot»
 							maven {
-								url 'https://oss.sonatype.org/content/repositories/snapshots'
+								url = 'https://oss.sonatype.org/content/repositories/snapshots'
 							}
 «««							maven {
-«««								url 'https://ci.eclipse.org/xtext/job/xtext/job/<branch>/lastSuccessfulBuild/artifact/build/maven-repository/'
+«««								url = 'https://ci.eclipse.org/xtext/job/xtext/job/<branch>/lastSuccessfulBuild/artifact/build/maven-repository/'
 «««							}
 						«ENDIF»
 					}
