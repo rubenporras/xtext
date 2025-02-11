@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2025 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -311,7 +311,7 @@ class IdeProjectDescriptor extends ProjectDescriptor {
 			pluginsSection = '''
 				«IF config.languageServer === LanguageServer.FATJAR»
 					plugins {
-						id 'com.github.johnrengelman.shadow' version '8.1.1'
+						id 'com.gradleup.shadow' version '8.3.6'
 					}
 					
 				«ENDIF»
@@ -321,7 +321,7 @@ class IdeProjectDescriptor extends ProjectDescriptor {
 					
 					apply plugin: 'application'
 					«IF config.languageServer === LanguageServer.FATJAR»
-						apply plugin: 'com.github.johnrengelman.shadow'
+						apply plugin: 'com.gradleup.shadow'
 					«ENDIF»
 					application {
 						mainClass = "org.eclipse.xtext.ide.server.ServerLauncher"

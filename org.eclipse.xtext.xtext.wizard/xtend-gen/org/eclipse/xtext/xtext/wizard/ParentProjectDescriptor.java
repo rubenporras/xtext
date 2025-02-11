@@ -172,7 +172,7 @@ public class ParentProjectDescriptor extends ProjectDescriptor {
           _builder.newLine();
           _builder.append("\t\t");
           _builder.append("\t");
-          _builder.append("url \'https://oss.sonatype.org/content/repositories/snapshots\'");
+          _builder.append("url = \'https://oss.sonatype.org/content/repositories/snapshots\'");
           _builder.newLine();
           _builder.append("\t\t");
           _builder.append("}");

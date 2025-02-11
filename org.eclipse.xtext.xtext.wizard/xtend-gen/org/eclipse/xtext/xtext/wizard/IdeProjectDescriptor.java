@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, 2024 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2025 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -1094,7 +1094,7 @@ public class IdeProjectDescriptor extends ProjectDescriptor {
           _builder.append("plugins {");
           _builder.newLine();
           _builder.append("\t");
-          _builder.append("id \'com.github.johnrengelman.shadow\' version \'8.1.1\'");
+          _builder.append("id \'com.gradleup.shadow\' version \'8.3.6\'");
           _builder.newLine();
           _builder.append("}");
           _builder.newLine();
@@ -1114,7 +1114,7 @@ public class IdeProjectDescriptor extends ProjectDescriptor {
             LanguageServer _languageServer_2 = this.getConfig().getLanguageServer();
             boolean _tripleEquals_1 = (_languageServer_2 == LanguageServer.FATJAR);
             if (_tripleEquals_1) {
-              _builder_1.append("apply plugin: \'com.github.johnrengelman.shadow\'");
+              _builder_1.append("apply plugin: \'com.gradleup.shadow\'");
               _builder_1.newLine();
             }
           }
