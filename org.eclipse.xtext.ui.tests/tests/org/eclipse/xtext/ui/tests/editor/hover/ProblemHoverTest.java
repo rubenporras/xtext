@@ -32,6 +32,7 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.hover.ProblemAnnotationHover;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.validation.MarkerCreator;
+import org.eclipse.xtext.ui.refactoring.ui.SyncUtil;
 import org.eclipse.xtext.ui.testing.AbstractEditorTest;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
 import org.eclipse.xtext.ui.tests.internal.TestsActivator;
@@ -39,6 +40,8 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.Issue;
 import org.junit.Test;
+
+import com.google.inject.Injector;
 
 /**
  * @author Christoph Kulla - Initial contribution and API
@@ -65,7 +68,9 @@ public class ProblemHoverTest extends AbstractEditorTest {
 		IFile file = IResourcesSetupUtil.createFile("test/test.testlanguage", modelAsText);
 		editor = openEditor(file);
 		document = editor.getDocument();
-		hover = TestsActivator.getInstance().getInjector(getEditorId()).getInstance(ProblemAnnotationHover.class);
+		Injector injector = TestsActivator.getInstance().getInjector(getEditorId());
+		injector.getInstance(SyncUtil.class).waitForReconciler(editor);
+		hover = injector.getInstance(ProblemAnnotationHover.class);
 		hover.setSourceViewer(editor.getInternalSourceViewer());
 		List<Issue> issues = document.readOnly(new IUnitOfWork<List<Issue>, XtextResource>() {
 			@Override
@@ -73,7 +78,7 @@ public class ProblemHoverTest extends AbstractEditorTest {
 				return state.getResourceServiceProvider().getResourceValidator().validate(state, CheckMode.ALL, null);
 			}	
 		});
-		MarkerCreator markerCreator =  TestsActivator.getInstance().getInjector(getEditorId()).getInstance(MarkerCreator.class);
+		MarkerCreator markerCreator =  injector.getInstance(MarkerCreator.class);
 		for (Issue issue : issues) {
 			markerCreator.createMarker(issue, file, MarkerTypes.forCheckType(issue.getType()));
 		}
@@ -94,27 +99,27 @@ public class ProblemHoverTest extends AbstractEditorTest {
 		String expected1 = "Multiple markers at this line\n";
 		String expected2 = "- Couldn't resolve reference to Stuff '_mystuff'.";
 		String expected3 = "- Couldn't resolve reference to Stuff '_yourstuff'.";
-		assertTrue(hoverInfo.startsWith(expected1));
-		assertTrue(hoverInfo.contains(expected2));
-		assertTrue(hoverInfo.contains(expected3));
+		assertHoverInfoStartsWith(hoverInfo, expected1);
+		assertHoverInfoContains(hoverInfo, expected2);
+		assertHoverInfoContains(hoverInfo, expected3);
 	}
-	
+
 	@Test public void testBug357516_warning() throws Exception {
 		IResource resource = editor.getResource();
 		createCustomMarkerOnResource(resource, IMarker.SEVERITY_WARNING);
 		String hoverInfo = hover.getHoverInfo(editor.getInternalSourceViewer(), 0);
 		assertNotNull(hoverInfo);
-		assertTrue(hoverInfo.contains(CUSTOM_MARKER_TEST_MESSAGE));
+		assertHoverInfoContains(hoverInfo, CUSTOM_MARKER_TEST_MESSAGE);
 	}
-	
+
 	@Test public void testBug357516_error() throws Exception {
 		IResource resource = editor.getResource();
 		createCustomMarkerOnResource(resource, IMarker.SEVERITY_ERROR);
 		String hoverInfo = hover.getHoverInfo(editor.getInternalSourceViewer(), 0);
 		assertNotNull(hoverInfo);
-		assertTrue(hoverInfo.contains(CUSTOM_MARKER_TEST_MESSAGE));
+		assertHoverInfoContains(hoverInfo, CUSTOM_MARKER_TEST_MESSAGE);
 	}
-	
+
 	@Test public void testBug357516_info() throws Exception {
 		IResource resource = editor.getResource();
 		createCustomMarkerOnResource(resource, IMarker.SEVERITY_INFO);
@@ -122,7 +127,7 @@ public class ProblemHoverTest extends AbstractEditorTest {
 		assertNotNull(hoverInfo);
 		assertEquals(CUSTOM_MARKER_TEST_MESSAGE, hoverInfo);
 	}
-	
+
 	@Test public void testBug357516_bookmark() throws Exception {
 		IResource resource = editor.getResource();
 		HashMap<String, Object> attributes = new HashMap<String, Object>();
@@ -138,9 +143,9 @@ public class ProblemHoverTest extends AbstractEditorTest {
 		}
 		String hoverInfo = hover.getHoverInfo(editor.getInternalSourceViewer(), 0);
 		assertNotNull(hoverInfo);
-		assertTrue(hoverInfo.contains(CUSTOM_MARKER_TEST_MESSAGE));
+		assertHoverInfoContains(hoverInfo, CUSTOM_MARKER_TEST_MESSAGE);
 	}
-	
+
 	private void createCustomMarkerOnResource(IResource resource, int severenity) throws CoreException{
 		HashMap<String, Object> attributes = new HashMap<String, Object>();
 		attributes.put(IMarker.MESSAGE, CUSTOM_MARKER_TEST_MESSAGE);
@@ -149,11 +154,19 @@ public class ProblemHoverTest extends AbstractEditorTest {
 		attributes.put(IMarker.SEVERITY, severenity); 
 		MarkerUtilities.createMarker(resource, attributes, CUSTOM_MARKER_ID);
 	}
-	
-	
+
 
 	protected void activate(IWorkbenchPart part) {
 		editor.getSite().getPage().activate(part);
 	}
-		
+
+	private void assertHoverInfoStartsWith(String hoverInfo, String contains) {
+		assertTrue("HOVER INFO: " + hoverInfo,
+			hoverInfo.startsWith(contains));
+	}
+
+	private void assertHoverInfoContains(String hoverInfo, String contains) {
+		assertTrue("HOVER INFO: " + hoverInfo,
+			hoverInfo.contains(contains));
+	}
 }
