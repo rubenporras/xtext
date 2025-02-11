@@ -62,7 +62,7 @@ public class OverrideIndicatorModelListener extends NullImpl implements IXtextMo
 	public static final String JOB_NAME = "Override Indicator Updater";
 	private static ISchedulingRule SCHEDULING_RULE = SchedulingRuleFactory.INSTANCE.newSequence();
 
-	private XtextEditor xtextEditor;
+	private volatile XtextEditor xtextEditor;
 	private Set<Annotation> overrideIndicatorAnnotations = Sets.newHashSet();
 
 	private Job currentJob;
@@ -124,12 +124,13 @@ public class OverrideIndicatorModelListener extends NullImpl implements IXtextMo
 	}
 
 	private IStatus updateAnnotationModel(IProgressMonitor monitor) {
-		if (xtextEditor == null || xtextEditor.getDocument() == null
-				|| xtextEditor.getInternalSourceViewer().getAnnotationModel() == null) {
+		XtextEditor locXtextEditor = xtextEditor;
+		if (locXtextEditor == null || locXtextEditor.getDocument() == null
+				|| locXtextEditor.getInternalSourceViewer().getAnnotationModel() == null) {
 			return Status.OK_STATUS;
 		}
-		IXtextDocument xtextDocument = xtextEditor.getDocument();
-		IAnnotationModel annotationModel = xtextEditor.getInternalSourceViewer().getAnnotationModel();
+		IXtextDocument xtextDocument = locXtextEditor.getDocument();
+		IAnnotationModel annotationModel = locXtextEditor.getInternalSourceViewer().getAnnotationModel();
 		Map<Annotation, Position> annotationToPosition = xtextDocument
 				.readOnly(new CancelableUnitOfWork<Map<Annotation, Position>, XtextResource>() {
 					@Override
