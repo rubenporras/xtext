@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2025 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -91,7 +91,7 @@ class TargetPlatformProject extends ProjectDescriptor {
 					«ENDIF»
 				</location>
 				<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-					<unit id="com.google.gson" version="2.11.0"/>
+					<unit id="com.google.gson" version="2.12.1"/>
 					<unit id="com.google.inject" version="7.0.0"/>
 					<unit id="jakarta.inject.jakarta.inject-api" version="2.0.1"/>
 					<unit id="org.antlr.runtime" version="3.2.0.v20230929-1400"/>
