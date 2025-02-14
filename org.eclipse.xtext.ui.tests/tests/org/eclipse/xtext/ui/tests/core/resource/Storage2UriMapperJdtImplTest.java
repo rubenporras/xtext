@@ -60,7 +60,9 @@ public class Storage2UriMapperJdtImplTest extends Assert {
 		IFile file = project.getProject().getFile("foo.jar");
 		file.create(jarInputStream(new TextFile("foo/bar.notindexed", "//empty")), true, monitor());
 		addJarToClasspath(project, file);
-		
+
+		waitForBuild();
+
 		Storage2UriMapperJavaImpl impl = getStorage2UriMapper();
 		IPackageFragmentRoot root = project.getPackageFragmentRoot(file);
 		IPackageFragment foo = root.getPackageFragment("foo");
@@ -81,7 +83,9 @@ public class Storage2UriMapperJdtImplTest extends Assert {
 		IFile file = project.getProject().getFile("foo.jar");
 		file.create(jarInputStream(new TextFile("do/not", "care")), true, monitor());
 		addJarToClasspath(project, file);
-		
+
+		waitForBuild();
+
 		Storage2UriMapperJavaImpl impl = getStorage2UriMapper();
 		IPackageFragmentRoot root = project.getPackageFragmentRoot(file);
 		IPackageFragment foo = root.getPackageFragment("unknown");
@@ -97,7 +101,9 @@ public class Storage2UriMapperJdtImplTest extends Assert {
 		IFile file = project.getProject().getFile("foo.jar");
 		file.create(jarInputStream(new TextFile("foo/bar.notindexed", "//empty")), true, monitor());
 		addJarToClasspath(project, file);
-		
+
+		waitForBuild();
+
 		Storage2UriMapperJavaImpl impl = getStorage2UriMapper();
 		IPackageFragmentRoot root = project.getPackageFragmentRoot(file);
 		IPackageFragment foo = root.getPackageFragment("foo");
@@ -116,7 +122,9 @@ public class Storage2UriMapperJdtImplTest extends Assert {
 		IJavaProject project = createJavaProject("foo");
 		IFile file = project.getProject().getFile("foo.jar");
 		file.create(jarInputStream(new TextFile("foo/bar.notindexed", "//empty")), true, monitor());
-		
+
+		waitForBuild();
+
 		Storage2UriMapperJavaImpl impl = getStorage2UriMapper();
 		IPackageFragmentRoot root = JarPackageFragmentRootTestUtil.getJarPackageFragmentRoot(file, (JavaProject) project);
 		IPackageFragment foo = root.getPackageFragment("foo");
@@ -136,7 +144,9 @@ public class Storage2UriMapperJdtImplTest extends Assert {
 		IFile file = project.getProject().getFile("foo.jar");
 		file.create(jarInputStream(new TextFile("foo/bar.notindexed", "//empty")), true, monitor());
 		addJarToClasspath(project, file);
-		
+
+		waitForBuild();
+
 		Storage2UriMapperJavaImpl impl = getStorage2UriMapper();
 		
 		IPackageFragmentRoot root = JarPackageFragmentRootTestUtil.getJarPackageFragmentRoot(file, (JavaProject) project);
@@ -158,7 +168,9 @@ public class Storage2UriMapperJdtImplTest extends Assert {
 		IJavaProject project = createJavaProject("foo");
 		
 		addExternalFolderToClasspath(project, externalFolder);
-		
+
+		waitForBuild();
+
 		Storage2UriMapperJavaImpl impl = getStorage2UriMapper();
 		IPackageFragmentRoot root = project.getPackageFragmentRoot(externalFolder);
 		IPackageFragment foo = root.getPackageFragment("foo");
@@ -171,6 +183,9 @@ public class Storage2UriMapperJdtImplTest extends Assert {
 	
 	@Test public void testBug463258_05() throws Exception {
 		IJavaProject project = createJavaProject("foo");
+
+		waitForBuild();
+
 		final Storage2UriMapperJavaImpl impl = getStorage2UriMapper();
 		IPackageFragmentRoot root = project.getPackageFragmentRoot("does/not/exist.jar");
 		IPackageFragment foo = root.getPackageFragment("foo");
@@ -193,7 +208,9 @@ public class Storage2UriMapperJdtImplTest extends Assert {
 		// that's why we fake the timestamp here
 		file.setLocalTimeStamp(123L);
 		addJarToClasspath(project, file);
-		
+
+		waitForBuild();
+
 		Storage2UriMapperJavaImpl impl = getStorage2UriMapper();
 		
 		IPackageFragmentRoot root = project.getPackageFragmentRoot(file);
@@ -215,7 +232,9 @@ public class Storage2UriMapperJdtImplTest extends Assert {
 				), true, monitor());
 		file.setLocalTimeStamp(678L);
 		addJarToClasspath(project, file);
-		
+
+		waitForBuild();
+
 		Storage2UriMapperJavaImpl impl = getStorage2UriMapper();
 		
 		IPackageFragmentRoot root = project.getPackageFragmentRoot(file);

@@ -13,7 +13,6 @@ import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.eclipse.xtext.ui.editor.quickfix.QuickAssistCompletionProposal
 import org.eclipse.xtext.ui.testing.AbstractMultiQuickfixTest
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -83,7 +82,6 @@ class EqualsWithNullMultiQuickfixTest extends AbstractMultiQuickfixTest {
 
 	override setUp() {
 		super.setUp
-		TargetPlatformUtil.setTargetPlatform(EqualsWithNullMultiQuickfixTest)
 		projectName.createPluginProject
 	}
 
