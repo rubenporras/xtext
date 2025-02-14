@@ -66,6 +66,7 @@ public class ProblemHoverTest extends AbstractEditorTest {
 		super.setUp();
 		modelAsText = "stuff mystuff\nstuff yourstuff refs _mystuff stuff hisstuff refs _yourstuff// Comment";
 		IFile file = IResourcesSetupUtil.createFile("test/test.testlanguage", modelAsText);
+		IResourcesSetupUtil.waitForBuild();
 		editor = openEditor(file);
 		document = editor.getDocument();
 		Injector injector = TestsActivator.getInstance().getInjector(getEditorId());
@@ -76,7 +77,7 @@ public class ProblemHoverTest extends AbstractEditorTest {
 			@Override
 			public List<Issue> exec(XtextResource state) throws Exception {
 				return state.getResourceServiceProvider().getResourceValidator().validate(state, CheckMode.ALL, null);
-			}	
+			}
 		});
 		MarkerCreator markerCreator =  injector.getInstance(MarkerCreator.class);
 		for (Issue issue : issues) {
