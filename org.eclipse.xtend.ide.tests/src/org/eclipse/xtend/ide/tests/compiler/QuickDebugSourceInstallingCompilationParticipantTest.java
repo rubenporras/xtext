@@ -8,12 +8,19 @@
  */
 package org.eclipse.xtend.ide.tests.compiler;
 
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.xtend.ide.tests.AbstractXtendUITestCase;
 import org.eclipse.xtend.ide.tests.WorkbenchTestHelper;
+import org.eclipse.xtext.builder.impl.XtextBuilder;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
 import org.junit.Test;
 import org.objectweb.asm.ClassReader;
@@ -43,13 +50,16 @@ public class QuickDebugSourceInstallingCompilationParticipantTest extends Abstra
 			  }
 			}
 		""");
-		IResourcesSetupUtil.waitForBuild(
-				new IResourcesSetupUtil.ConsoleLoggingProgressMonitor("XTEND BUILD"));
+		var project = source.getProject();
+		incrementalBuild(project, XtextBuilder.BUILDER_ID,
+				new IResourcesSetupUtil.ConsoleLoggingProgressMonitor("XTEXT BUILD"));
+		incrementalBuild(project, JavaCore.BUILDER_ID,
+				new IResourcesSetupUtil.ConsoleLoggingProgressMonitor("JAVA BUILD"));
 
-		source.getProject().refreshLocal(IResource.DEPTH_INFINITE,
+		project.refreshLocal(IResource.DEPTH_INFINITE,
 				new IResourcesSetupUtil.ConsoleLoggingProgressMonitor("REFRESH"));
 
-		final IFile clazz = source.getProject().getFile("bin/somePackage/Outer.class");
+		final IFile clazz = project.getFile("bin/somePackage/Outer.class");
 		assertTrue("bytecode not found", clazz.exists());
 		final AtomicBoolean debugInfoFound = new AtomicBoolean(false);
 		try (var in = clazz.getContents()) {
@@ -84,5 +94,10 @@ public class QuickDebugSourceInstallingCompilationParticipantTest extends Abstra
 				fail("No source attribute found in bytecode");
 			}
 		}
+	}
+
+	private void incrementalBuild(IProject project, String builderName, IProgressMonitor monitor) throws CoreException {
+		IResourcesSetupUtil.waitForJdtIndex(monitor);
+		project.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, builderName, new HashMap<>(), monitor);
 	}
 }
