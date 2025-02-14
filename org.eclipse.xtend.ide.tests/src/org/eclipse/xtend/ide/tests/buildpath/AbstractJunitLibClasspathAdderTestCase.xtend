@@ -17,14 +17,11 @@ import org.eclipse.jdt.core.IClasspathEntry
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtend.ide.buildpath.XtendClasspathContainer
 import org.eclipse.xtend.ide.buildpath.XtendLibClasspathAdder
-import org.eclipse.xtend.ide.tests.AbstractXtendTestCase
 import org.eclipse.xtend.ide.tests.WorkbenchTestHelper
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil
 import org.eclipse.xtext.util.MergeableManifest2
 import org.junit.AfterClass
 import org.junit.Before
-import org.junit.BeforeClass
 
 import static org.junit.Assert.assertTrue
 
@@ -36,12 +33,6 @@ abstract class AbstractJunitLibClasspathAdderTestCase {
     @Inject protected extension WorkbenchTestHelper workbenchHelper
 
     @Inject extension XtendLibClasspathAdder xtendLibAdder
-    
-    
-    @BeforeClass
-    def static void setUp() throws Exception {
-        TargetPlatformUtil.setTargetPlatform(AbstractXtendTestCase)
-    }
 
     @Before
     def void setUpProject() throws Exception {

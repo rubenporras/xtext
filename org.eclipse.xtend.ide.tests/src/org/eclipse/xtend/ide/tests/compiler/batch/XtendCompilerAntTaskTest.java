@@ -18,11 +18,9 @@ import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
 import org.apache.tools.ant.types.selectors.FilenameSelector;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -34,11 +32,6 @@ public class XtendCompilerAntTaskTest {
 	private StringBuffer errBuffer;
 	private BuildException buildException;
 	private AntTestListener antTestListener;
-	
-	@BeforeClass
-	public static void setupTargetPlaform() throws Exception {
-		TargetPlatformUtil.setTargetPlatform(XtendCompilerAntTaskTest.class);
-	}
 
 	@Before
 	public void setUp() {

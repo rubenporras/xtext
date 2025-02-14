@@ -45,11 +45,9 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameElementContext;
 import org.eclipse.xtext.ui.refactoring.ui.RenameRefactoringController;
 import org.eclipse.xtext.ui.testing.AbstractLinkedEditingIntegrationTest;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.util.SimpleAttributeResolver;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.eclipse.xtext.xtext.ui.XtextUiInjectorProvider;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -83,12 +81,7 @@ public class XtextGrammarRefactoringIntegrationTest extends AbstractLinkedEditin
 	protected Change undoChange;
 	private URI greetingParserRuleUri;
 	private URI modelParserRuleUri;
-	
-	@BeforeClass
-	public static void setupTargetPlatform() throws Exception {
-		TargetPlatformUtil.setTargetPlatform(XtextGrammarRefactoringIntegrationTest.class);
-	}
-	
+
 	@Inject
 	private Provider<ResourceSet> resourceSetProvider;
 

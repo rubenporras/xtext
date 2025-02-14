@@ -23,11 +23,9 @@ import org.eclipse.xtext.resource.IResourceDescription.Event;
 import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.ui.XtextProjectHelper;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.ui.testing.util.TestedWorkspaceWithoutJdt;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -49,11 +47,6 @@ public abstract class AbstractBuilderTest extends Assert implements IResourceDes
 	@Extension
 	public TestedWorkspaceWithoutJdt workspace;
 
-	@BeforeClass
-	public static void setupTargetPlatform() throws Exception {
-		TargetPlatformUtil.setTargetPlatform(AbstractBuilderTest.class);
-	}
-	
 	private volatile List<Event> events = Lists.newArrayList();
 	
 	@Override

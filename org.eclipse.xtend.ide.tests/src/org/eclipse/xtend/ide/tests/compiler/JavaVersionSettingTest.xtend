@@ -20,7 +20,6 @@ import org.eclipse.ui.texteditor.MarkerUtilities
 import org.eclipse.xtend.ide.internal.XtendActivator
 import org.eclipse.xtend.ide.tests.WorkbenchTestHelper
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil
 import org.eclipse.xtext.util.JavaVersion
 import org.junit.After
 import org.junit.AfterClass
@@ -46,7 +45,6 @@ class JavaVersionSettingTest extends Assert {
 	
 	@BeforeClass
 	static def setUpProject() throws Exception {
-		TargetPlatformUtil.setTargetPlatform(JavaVersionSettingTest)
 		IResourcesSetupUtil.cleanWorkspace();
 	}
 

@@ -22,7 +22,6 @@ import org.eclipse.xtext.builder.debug.XtextBuildConsole
 import org.eclipse.xtext.builder.impl.QueuedBuildData
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil
 import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil
 import org.eclipse.xtext.util.StringInputStream
 import org.junit.After
 import org.junit.AfterClass
@@ -31,8 +30,9 @@ import org.junit.BeforeClass
 import org.junit.Test
 
 import static org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil.*
-import static extension org.eclipse.xtext.util.Strings.*
 import static org.junit.Assert.*
+
+import static extension org.eclipse.xtext.util.Strings.*
 
 /**
  * @author Jan Koehnlein - Initial contribution and API
@@ -51,7 +51,6 @@ class BuildAffectionTest {
 	 
 	@BeforeClass 
 	def static void setUpProject() throws Exception {
-		TargetPlatformUtil.setTargetPlatform(BuildAffectionTest)
 		cleanWorkspace();
 		// disable auto build
 		val workspace = ResourcesPlugin.workspace

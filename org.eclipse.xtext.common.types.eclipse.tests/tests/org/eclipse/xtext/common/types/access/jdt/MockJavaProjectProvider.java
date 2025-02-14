@@ -38,7 +38,6 @@ import org.eclipse.xtext.common.types.eclipse.tests.internal.TestsActivator;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
 import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil;
 import org.eclipse.xtext.ui.testing.util.PluginUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.ui.util.JREContainerProvider;
 import org.eclipse.xtext.util.Strings;
 
@@ -69,7 +68,6 @@ public class MockJavaProjectProvider implements IJavaProjectProvider {
 	public static void setUp() throws Exception {
 		if(javaProject != null)
 			return;
-		TargetPlatformUtil.setTargetPlatform(MockJavaProjectProvider.class);
 		javaProject = createJavaProject("projectWithoutSources",
 				new String[] {
 						JavaCore.NATURE_ID,

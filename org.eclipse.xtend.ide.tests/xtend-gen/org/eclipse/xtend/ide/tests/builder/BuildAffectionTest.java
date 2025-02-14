@@ -26,7 +26,6 @@ import org.eclipse.xtext.builder.debug.XtextBuildConsole;
 import org.eclipse.xtext.builder.impl.QueuedBuildData;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
 import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.util.StringInputStream;
 import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -59,7 +58,6 @@ public class BuildAffectionTest {
 
   @BeforeClass
   public static void setUpProject() throws Exception {
-    TargetPlatformUtil.setTargetPlatform(BuildAffectionTest.class);
     IResourcesSetupUtil.cleanWorkspace();
     final IWorkspace workspace = ResourcesPlugin.getWorkspace();
     final IWorkspaceDescription description = workspace.getDescription();

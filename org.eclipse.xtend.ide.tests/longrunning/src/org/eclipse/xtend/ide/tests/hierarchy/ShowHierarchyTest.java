@@ -27,9 +27,7 @@ import org.eclipse.xtend.ide.internal.XtendActivator;
 import org.eclipse.xtend.ide.tests.WorkbenchTestHelper;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.testing.AbstractEditorTest;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.xbase.ui.editor.AbstractJvmElementHandler;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.inject.Inject;
@@ -50,12 +48,7 @@ public class ShowHierarchyTest extends AbstractEditorTest {
 	
 	@Inject
 	private WorkbenchTestHelper testHelper;
-	
-	@BeforeClass
-	public static void setupEclipse() throws Exception {
-		TargetPlatformUtil.setTargetPlatform(ShowHierarchyTest.class);
-	}
-	
+
 	@Override
 	public void setUp() throws Exception {
 		getInjector().injectMembers(this);

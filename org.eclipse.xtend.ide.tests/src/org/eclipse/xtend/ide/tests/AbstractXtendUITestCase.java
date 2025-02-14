@@ -16,7 +16,6 @@ import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
 import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.util.JavaVersion;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.junit.After;
@@ -52,7 +51,6 @@ public abstract class AbstractXtendUITestCase extends Assert {
 
 	@BeforeClass
 	public static void setUpProject() throws Exception {
-		TargetPlatformUtil.setTargetPlatform(AbstractXtendTestCase.class);
 		IResourcesSetupUtil.cleanWorkspace();
 		WorkbenchTestHelper.createPluginProject(WorkbenchTestHelper.TESTPROJECT_NAME);
 		IResourcesSetupUtil.waitForBuild();

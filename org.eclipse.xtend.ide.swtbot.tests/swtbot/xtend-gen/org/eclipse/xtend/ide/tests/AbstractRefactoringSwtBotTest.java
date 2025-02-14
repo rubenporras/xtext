@@ -24,7 +24,6 @@ import org.eclipse.xtend.ide.internal.XtendActivator;
 import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences;
 import org.eclipse.xtext.ui.refactoring.ui.RenameRefactoringController;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
@@ -45,7 +44,6 @@ public abstract class AbstractRefactoringSwtBotTest {
   @BeforeClass
   public static void initialize() {
     try {
-      TargetPlatformUtil.setTargetPlatform(AbstractRefactoringSwtBotTest.class);
       IResourcesSetupUtil.cleanWorkspace();
       SWTWorkbenchBot _sWTWorkbenchBot = new SWTWorkbenchBot();
       AbstractRefactoringSwtBotTest.bot = _sWTWorkbenchBot;

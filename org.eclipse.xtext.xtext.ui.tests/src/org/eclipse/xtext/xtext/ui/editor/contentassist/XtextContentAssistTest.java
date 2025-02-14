@@ -28,14 +28,12 @@ import org.eclipse.xtext.ui.refactoring.ui.SyncUtil;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
 import org.eclipse.xtext.ui.testing.ContentAssistProcessorTestBuilder;
 import org.eclipse.xtext.ui.testing.util.ResourceLoadHelper;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.ui.util.PluginProjectFactory;
 import org.eclipse.xtext.util.Modules2;
 import org.eclipse.xtext.xtext.ui.Activator;
 import org.eclipse.xtext.xtext.ui.internal.XtextUIModuleInternal;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
@@ -60,11 +58,6 @@ public class XtextContentAssistTest extends AbstractXtextTests implements Resour
 	private static final String TEST_PROJECT = "TestProject";
 	private static final String MODEL_FILE_NAME = "mytestmodel";
 	private static IProject project;
-	
-	@BeforeClass
-	public static void setupTargetPlatform() throws Exception {
-		TargetPlatformUtil.setTargetPlatform(XtextContentAssistTest.class);
-	}
 
 	@Before
 	public void doSetupProject() throws Exception{

@@ -23,10 +23,8 @@ import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescription.Event;
 import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.XtextRunner;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.ui.testing.util.TestedWorkspaceWithJDT;
 import org.eclipse.xtext.xbase.lib.Extension;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -48,11 +46,6 @@ public abstract class AbstractBuilderTest implements IResourceDescription.Event.
 	@Extension
 	public TestedWorkspaceWithJDT workspace;
 
-	@BeforeClass
-	public static void setupTargetPlatform() throws Exception {
-		TargetPlatformUtil.setTargetPlatform(AbstractBuilderTest.class);
-	}
-	
 	private volatile List<Event> events = Lists.newArrayList();
 	
 	@Override
