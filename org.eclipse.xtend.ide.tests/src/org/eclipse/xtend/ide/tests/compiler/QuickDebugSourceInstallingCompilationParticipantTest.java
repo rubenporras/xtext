@@ -8,6 +8,8 @@
  */
 package org.eclipse.xtend.ide.tests.compiler;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -62,7 +64,8 @@ public class QuickDebugSourceInstallingCompilationParticipantTest extends Abstra
 		final IFile clazz = project.getFile("bin/somePackage/Outer.class");
 		assertTrue("bytecode not found", clazz.exists());
 		final AtomicBoolean debugInfoFound = new AtomicBoolean(false);
-		try (var in = clazz.getContents()) {
+		Path classFile = clazz.getLocation().toPath();
+		try (var in = Files.newInputStream(classFile)) {
 			final byte[] bytes = ByteStreams.toByteArray(in);
 			final ClassReader r = new ClassReader(bytes);
 			r.accept(new ClassVisitor(Opcodes.ASM9) {
