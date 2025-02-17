@@ -15,7 +15,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -29,7 +28,6 @@ public class AbstractSwtBotTest {
 	@BeforeClass
 	public static void initialize() throws Exception {
 		closeWelcomePage();
-		TargetPlatformUtil.setTargetPlatform(AbstractSwtBotTest.class);
 		IResourcesSetupUtil.cleanWorkspace();
 		UIThreadRunnable.syncExec(new VoidResult() {
 			@Override

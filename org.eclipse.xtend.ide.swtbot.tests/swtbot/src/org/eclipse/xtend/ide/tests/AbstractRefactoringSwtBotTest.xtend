@@ -23,9 +23,9 @@ import org.eclipse.text.undo.DocumentUndoManagerRegistry
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.texteditor.ITextEditor
 import org.eclipse.xtend.ide.internal.XtendActivator
+import org.eclipse.xtend.lib.Property
 import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences
 import org.eclipse.xtext.ui.refactoring.ui.RenameRefactoringController
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil
 import org.junit.After
 import org.junit.AfterClass
 import org.junit.Assert
@@ -46,7 +46,6 @@ abstract class AbstractRefactoringSwtBotTest {
 	
 	@BeforeClass
 	static def void initialize() {
-		TargetPlatformUtil.setTargetPlatform(AbstractRefactoringSwtBotTest)
 		cleanWorkspace
 		bot = new SWTWorkbenchBot
 		UIThreadRunnable.syncExec(new VoidResult() {

@@ -36,7 +36,6 @@ import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.ui.editor.hover.html.IEObjectHoverDocumentationProvider;
 import org.eclipse.xtext.ui.resource.XtextResourceSetProvider;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.JavaVersion;
 import org.eclipse.xtext.util.StringInputStream;
@@ -197,7 +196,6 @@ public class ActiveAnnotationsProcessingInIDETest extends AbstractReusableActive
   @BeforeClass
   public static void createProjects() {
     try {
-      TargetPlatformUtil.setTargetPlatform(ActiveAnnotationsProcessingInIDETest.class);
       ActiveAnnotationsProcessingInIDETest.macroProject = JavaCore.create(WorkbenchTestHelper.createPluginProject("macroProject", JavaVersion.JAVA8));
       ActiveAnnotationsProcessingInIDETest.userProject = JavaCore.create(
         WorkbenchTestHelper.createPluginProject("userProject", JavaVersion.JAVA8, "com.google.inject", "org.eclipse.xtend.lib", 

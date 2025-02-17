@@ -30,7 +30,6 @@ import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.eclipse.xtext.ui.editor.hover.html.IEObjectHoverDocumentationProvider
 import org.eclipse.xtext.ui.resource.XtextResourceSetProvider
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil
 import org.eclipse.xtext.util.CancelIndicator
 import org.eclipse.xtext.util.JavaVersion
 import org.eclipse.xtext.util.StringInputStream
@@ -128,7 +127,6 @@ class ActiveAnnotationsProcessingInIDETest extends AbstractReusableActiveAnnotat
 	
 	@BeforeClass
 	static def void createProjects() {
-		TargetPlatformUtil.setTargetPlatform(ActiveAnnotationsProcessingInIDETest)
 		macroProject = JavaCore.create(createPluginProject("macroProject", JavaVersion.JAVA8))
 		userProject = JavaCore::create(
 			createPluginProject("userProject", JavaVersion.JAVA8, "com.google.inject", "org.eclipse.xtend.lib",

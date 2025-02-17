@@ -17,11 +17,9 @@ import org.eclipse.xtend.ide.tests.StopwatchRule;
 import org.eclipse.xtend.ide.tests.WorkbenchTestHelper;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.util.StringInputStream;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -32,11 +30,6 @@ import org.junit.Test;
 public class Bug457681Test {
   @Rule
   public StopwatchRule stopwatch = new StopwatchRule(true);
-
-  @BeforeClass
-  public static void prepareEclipse() throws Exception {
-    TargetPlatformUtil.setTargetPlatform(Bug457681Test.class);
-  }
 
   @After
   public void tearDown() throws Exception {

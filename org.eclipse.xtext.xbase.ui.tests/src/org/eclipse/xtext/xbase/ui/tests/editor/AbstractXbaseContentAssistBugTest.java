@@ -21,7 +21,6 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.ui.testing.ContentAssistProcessorTestBuilder;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
 import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.xbase.ui.tests.AbstractXbaseUITestCase;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -37,7 +36,6 @@ public abstract class AbstractXbaseContentAssistBugTest extends AbstractXbaseUIT
 
 	@BeforeClass
 	public static void createTestProject() throws Exception {
-		TargetPlatformUtil.setTargetPlatform(AbstractXbaseContentAssistBugTest.class);
 		staticProject = AbstractXbaseUITestCase
 				.createPluginProject(AbstractXbaseContentAssistBugTest.class.getName());
 		IResourcesSetupUtil.waitForBuild();

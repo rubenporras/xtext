@@ -21,11 +21,9 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.xtend.ide.buildpath.XtendClasspathContainer;
 import org.eclipse.xtend.ide.buildpath.XtendLibClasspathAdder;
-import org.eclipse.xtend.ide.tests.AbstractXtendTestCase;
 import org.eclipse.xtend.ide.tests.WorkbenchTestHelper;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.util.MergeableManifest2;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -36,7 +34,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 
 /**
  * @author vivienjovet - Initial contribution and API
@@ -50,11 +47,6 @@ public abstract class AbstractJunitLibClasspathAdderTestCase {
   @Inject
   @Extension
   private XtendLibClasspathAdder xtendLibAdder;
-
-  @BeforeClass
-  public static void setUp() throws Exception {
-    TargetPlatformUtil.setTargetPlatform(AbstractXtendTestCase.class);
-  }
 
   @Before
   public void setUpProject() throws Exception {

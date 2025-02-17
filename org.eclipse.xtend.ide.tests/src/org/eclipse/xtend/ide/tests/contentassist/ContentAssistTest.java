@@ -24,9 +24,8 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.xtend.ide.internal.XtendActivator;
 import org.eclipse.xtend.ide.tests.WorkbenchTestHelper;
-import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.ui.XtextProjectHelper;
+import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil;
 import org.eclipse.xtext.ui.util.JREContainerProvider;
 import org.eclipse.xtext.ui.util.PluginProjectFactory;
 import org.junit.AfterClass;
@@ -63,7 +62,6 @@ public class ContentAssistTest extends AbstractXbaseContentAssistInBlockTest {
 	
 	@BeforeClass
 	public static void setUpProject() throws Exception {
-		TargetPlatformUtil.setTargetPlatform(ContentAssistTest.class);
 		project = createPluginProject(PROJECT_NAME);
 		doInitFeatures(JavaCore.create(project));
 	}

@@ -35,7 +35,6 @@ import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
 import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.util.StringInputStream;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -44,7 +43,6 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -55,15 +53,6 @@ import org.junit.runner.RunWith;
 @InjectWith(XtendIDEInjectorProvider.class)
 @SuppressWarnings("all")
 public class WorkspaceScenariosTest {
-  @BeforeClass
-  public static void setupTargetPlatform() {
-    try {
-      TargetPlatformUtil.setTargetPlatform(WorkspaceScenariosTest.class);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-
   @Inject
   @Named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)
   private Provider<IResourceDescriptions> persistedResourceDescriptions;

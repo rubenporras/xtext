@@ -23,7 +23,6 @@ import org.eclipse.xtend.ide.tests.StopwatchRule;
 import org.eclipse.xtext.builder.nature.ToggleXtextNatureCommand;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
 import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.util.StringInputStream;
 import org.eclipse.xtext.util.internal.Stopwatches;
 import org.junit.AfterClass;
@@ -42,13 +41,6 @@ public class PerformanceTest extends AbstractXtendUITestCase {
 	public static void createTestProject() throws Exception {
 		// This shadows org.eclipse.xtend.ide.tests.AbstractXtendUITestCase.setUpProject()
 		// see https://junit.org/junit4/javadoc/latest/org/junit/BeforeClass.html
-		// The class passed to TargetPlatformUtil.setTargetPlatform must be in the same bundle
-		// of the running test, while AbstractXtendUITestCase is in another bundle.
-		// Manually setting the TP allows the Tycho build to succeed
-		// otherwise, the required bundles taken from the workspace
-		// have a wrong layout in "Plug-in Dependencies", and their
-		// classes cannot be resolved
-		TargetPlatformUtil.setTargetPlatform(PerformanceTest.class);
 		PerformanceTestProjectSetup.setUp();
 		IResourcesSetupUtil.waitForBuild();
 		PerformanceTest.assertNoErrorsInWorkspace();

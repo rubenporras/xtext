@@ -30,7 +30,10 @@ import org.osgi.framework.FrameworkUtil;
  * @author dietrich - Initial contribution and API
  * 
  * @since 2.12
+ * @deprecated with recent versions of Tycho and PDE, this is not needed anymore and it
+ * only increases build time.
  */
+@Deprecated
 public class TargetPlatformUtil {
 	
 	/**
@@ -47,7 +50,11 @@ public class TargetPlatformUtil {
 	 * the class must be in the same bundle of the test to execute; if the class is in a required
 	 * bundle it will not work.
 	 * @since 2.14
+	 * @deprecated with recent versions of Tycho and PDE, this is not needed anymore and it
+	 * only increases build time.
 	 */
+	@SuppressWarnings("restriction")
+	@Deprecated
 	public static void setTargetPlatform(Class<?> context) throws Exception {
 		if (isPdeLaunch()) {
 			return;

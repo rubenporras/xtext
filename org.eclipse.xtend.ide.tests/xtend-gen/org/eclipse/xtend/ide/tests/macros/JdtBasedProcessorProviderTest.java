@@ -22,13 +22,11 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.ui.XtextProjectHelper;
 import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil;
 import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil;
-import org.eclipse.xtext.ui.testing.util.TargetPlatformUtil;
 import org.eclipse.xtext.util.StringInputStream;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -36,15 +34,6 @@ import org.junit.Test;
  */
 @SuppressWarnings("all")
 public class JdtBasedProcessorProviderTest {
-  @BeforeClass
-  public static void createProjects() {
-    try {
-      TargetPlatformUtil.setTargetPlatform(JdtBasedProcessorProviderTest.class);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-
   @After
   public void tearDown() throws Exception {
     IResourcesSetupUtil.cleanWorkspace();
