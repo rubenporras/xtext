@@ -68,8 +68,8 @@ public class TraceForStorageProvider extends AbstractTraceForURIProvider<IFile, 
 		}
 
 		@Override
-		public long getTimestamp() {
-			return file.getLocalTimeStamp();
+		public long getModificationStamp() {
+			return file.getModificationStamp();
 		}
 
 		@Override
