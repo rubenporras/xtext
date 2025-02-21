@@ -54,7 +54,7 @@ public abstract class AbstractTraceForURIProvider<SomeFile, Trace extends Abstra
 	
 	protected interface PersistedTrace {
 		AbsoluteURI getPath();
-		long getTimestamp();
+		long getModificationstamp();
 		InputStream openStream() throws IOException;
 		boolean exists();
 	}
@@ -69,7 +69,7 @@ public abstract class AbstractTraceForURIProvider<SomeFile, Trace extends Abstra
 
 			public CacheKey(PersistedTrace source) {
 				this.path = source.getPath();
-				this.timestamp = source.getTimestamp();
+				this.timestamp = source.getModificationstamp();
 			}
 
 			@Override
