@@ -52,6 +52,7 @@ public abstract class AbstractXtendUITestCase extends Assert {
 	@BeforeClass
 	public static void setUpProject() throws Exception {
 		IResourcesSetupUtil.cleanWorkspace();
+		IResourcesSetupUtil.waitForBuild();
 		WorkbenchTestHelper.createPluginProject(WorkbenchTestHelper.TESTPROJECT_NAME);
 		IResourcesSetupUtil.waitForBuild();
 	}
@@ -59,6 +60,7 @@ public abstract class AbstractXtendUITestCase extends Assert {
 	@AfterClass
 	public static void tearDownProject() throws Exception {
 		IResourcesSetupUtil.cleanWorkspace();
+		IResourcesSetupUtil.waitForBuild();
 	}
 
 	public final Injector getInjector() {
