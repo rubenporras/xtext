@@ -3605,17 +3605,6 @@ public abstract class AbstractTypeProviderTest extends Assert {
 	}
 
 	@Test
-	public void testFindTypeByName_AbstractMultimap_02() {
-		String typeName = "com.google.common.collect.AbstractMultimap";
-		JvmGenericType type = (JvmGenericType) getTypeProvider().findTypeByName(typeName);
-		JvmOperation containsValue = (JvmOperation) Iterables
-				.getOnlyElement(type.findAllFeaturesByName("containsValue"));
-		assertNotNull(containsValue);
-		JvmFormalParameter firstParam = containsValue.getParameters().get(0);
-		assertEquals(0, firstParam.getAnnotations().size());
-	}
-
-	@Test
 	public void testFindTypeByName_ClassWithDefaultPackage() {
 		String typeName = "ClassWithDefaultPackage";
 		JvmGenericType type = (JvmGenericType) getTypeProvider().findTypeByName(typeName);

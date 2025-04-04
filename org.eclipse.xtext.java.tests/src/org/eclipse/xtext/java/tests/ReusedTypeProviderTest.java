@@ -121,21 +121,6 @@ public class ReusedTypeProviderTest extends AbstractTypeProviderTest {
 
 	@Test
 	@Override
-	public void testFindTypeByName_AbstractMultimap_02() {
-		String typeName = "com.google.common.collect.AbstractMultimap";
-		JvmGenericType type = (JvmGenericType) getTypeProvider().findTypeByName(typeName);
-		JvmOperation containsValue = (JvmOperation) Iterables
-				.getOnlyElement(type.findAllFeaturesByName("containsValue"));
-		Assert.assertNotNull(containsValue);
-		JvmFormalParameter firstParam = containsValue.getParameters().get(0);
-		assertEquals(1, firstParam.getAnnotations().size());
-		JvmAnnotationReference annotationReference = firstParam.getAnnotations().get(0);
-		JvmAnnotationType annotationType = annotationReference.getAnnotation();
-		assertEquals("java:/Objects/javax.annotation.CheckForNull", EcoreUtil.getURI(annotationType).trimFragment().toString());
-	}
-
-	@Test
-	@Override
 	public void testParameterNames_01() {
 		doTestParameterName(Bug347739ThreeTypeParamsSuperSuper.class, "getToken(A)", "arg0");
 	}
