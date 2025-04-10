@@ -11,6 +11,7 @@ package org.eclipse.xtend.ide.swtbot.api;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
+import org.eclipse.swtbot.swt.finder.matchers.WithRegex;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.xtend.ide.swtbot.api.preferences.PreferencesDialogAPI;
 import org.eclipse.xtend.ide.swtbot.lowlevel.XtextSWTWorkbenchBot;
@@ -46,7 +47,9 @@ public class MainMenuAPI {
 				dialog.open();
 			});
 		} else {
-			bot.menu("Window").menu("Preferences").click();
+			// see https://github.com/eclipse-xtext/xtext/issues/3404
+			// In newer versions instead of "Preferences" the label is "Preferences..."
+			bot.menu("Window").menu(WithRegex.withRegex("Preferences"), false, 0).click();
 		}
 		return new PreferencesDialogAPI(bot.shell("Preferences"));
 	}
