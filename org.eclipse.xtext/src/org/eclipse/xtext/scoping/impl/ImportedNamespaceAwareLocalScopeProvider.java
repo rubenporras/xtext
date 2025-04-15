@@ -11,7 +11,6 @@ package org.eclipse.xtext.scoping.impl;
 
 import static java.util.Collections.*;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notifier;
@@ -37,7 +36,6 @@ import org.eclipse.xtext.util.Tuples;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 /**
  * A local scope provider that understands namespace imports.
@@ -127,12 +125,8 @@ public class ImportedNamespaceAwareLocalScopeProvider extends AbstractGlobalScop
 	}
 
 	protected List<ImportNormalizer> getImportedNamespaceResolvers(final EObject context, final boolean ignoreCase) {
-		return cache.get(Tuples.create(context, ignoreCase, "imports"), context.eResource(), new Provider<List<ImportNormalizer>>() {
-			@Override
-			public List<ImportNormalizer> get() {
-				return internalGetImportedNamespaceResolvers(context, ignoreCase);
-			}
-		});
+		return cache.get(Tuples.create(context, ignoreCase, "imports"), context.eResource(), () ->
+				internalGetImportedNamespaceResolvers(context, ignoreCase));
 	}
 
 	protected List<ImportNormalizer> internalGetImportedNamespaceResolvers(final EObject context, boolean ignoreCase) {
@@ -225,21 +219,11 @@ public class ImportedNamespaceAwareLocalScopeProvider extends AbstractGlobalScop
 	}
 
 	protected ISelectable getAllDescriptions(final Resource resource) {
-		return cache.get("internalGetAllDescriptions", resource, new Provider<ISelectable>() {
-			@Override
-			public ISelectable get() {
-				return internalGetAllDescriptions(resource);
-			}
-		});
+		return cache.get("internalGetAllDescriptions", resource, () -> internalGetAllDescriptions(resource));
 	}
 	
 	protected ISelectable internalGetAllDescriptions(final Resource resource) {
-		Iterable<EObject> allContents = new Iterable<EObject>(){
-			@Override
-			public Iterator<EObject> iterator() {
-				return EcoreUtil.getAllContents(resource, false);
-			}
-		}; 
+		Iterable<EObject> allContents = () -> EcoreUtil.getAllContents(resource, false);
 		Iterable<IEObjectDescription> allDescriptions = Scopes.scopedElementsFor(allContents, qualifiedNameProvider);
 		return new MultimapBasedSelectable(allDescriptions);
 	}
