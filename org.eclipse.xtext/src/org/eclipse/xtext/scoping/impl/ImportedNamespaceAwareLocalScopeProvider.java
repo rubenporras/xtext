@@ -87,8 +87,9 @@ public class ImportedNamespaceAwareLocalScopeProvider extends AbstractGlobalScop
 
 	@Override
 	public IScope getScope(EObject context, EReference reference) {
-		if (context == null)
+		if (context == null) {
 			throw new NullPointerException("context");
+		}
 		IScope result = null;
 		if (context.eContainer() != null) {
 			result = getScope(context.eContainer(), reference);
@@ -114,8 +115,9 @@ public class ImportedNamespaceAwareLocalScopeProvider extends AbstractGlobalScop
 
 	protected IScope getResourceScope(final IScope parent, final EObject context, final EReference reference) {
 		// TODO: SZ - context may not be a proxy, may it?
-		if (context.eResource() == null)
+		if (context.eResource() == null) {
 			return parent;
+		}
 		ISelectable allDescriptions = getAllDescriptions(context.eResource());
 		return SelectableBasedScope.createScope(parent, allDescriptions, reference.getEReferenceType(), isIgnoreCase(reference));
 	}
@@ -135,8 +137,9 @@ public class ImportedNamespaceAwareLocalScopeProvider extends AbstractGlobalScop
 		for (EObject child : eContents) {
 			String value = getImportedNamespace(child);
 			ImportNormalizer resolver = createImportedNamespaceResolver(value, ignoreCase);
-			if (resolver != null)
+			if (resolver != null) {
 				importedNamespaceResolvers.add(resolver);
+			}
 		}
 		return importedNamespaceResolvers;
 	}
@@ -160,8 +163,9 @@ public class ImportedNamespaceAwareLocalScopeProvider extends AbstractGlobalScop
 	 * qualified name.
 	 */
 	protected ImportNormalizer createImportedNamespaceResolver(final String namespace, boolean ignoreCase) {
-		if (Strings.isEmpty(namespace))
+		if (Strings.isEmpty(namespace)) {
 			return null;
+		}
 		QualifiedName importedNamespace = qualifiedNameConverter.toQualifiedName(namespace);
 		if (importedNamespace == null || importedNamespace.isEmpty()) {
 			return null;
@@ -170,8 +174,9 @@ public class ImportedNamespaceAwareLocalScopeProvider extends AbstractGlobalScop
 				importedNamespace.getLastSegment().equalsIgnoreCase(getWildCard()) :
 				importedNamespace.getLastSegment().equals(getWildCard());
 		if (hasWildCard) {
-			if (importedNamespace.getSegmentCount() <= 1)
+			if (importedNamespace.getSegmentCount() <= 1) {
 				return null;
+			}
 			return doCreateImportNormalizer(importedNamespace.skipLast(1), true, ignoreCase);
 		} else {
 			return doCreateImportNormalizer(importedNamespace, false, ignoreCase);
