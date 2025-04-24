@@ -158,7 +158,12 @@ public class SyncUtil {
 
 	@SuppressWarnings("restriction")
 	public void waitForJdtIndex(IProgressMonitor monitor) {
-		JavaModelManager.getIndexManager().waitForIndex(true, monitor);
+		try {
+			JavaModelManager.getIndexManager().waitForIndex(true, monitor);
+		} catch (NoClassDefFoundError e) {
+			// ignore it (https://github.com/eclipse-xtext/xtext/issues/3381)
+			// jdt.core is an optional dependency
+		}
 	}
 
 	/**
