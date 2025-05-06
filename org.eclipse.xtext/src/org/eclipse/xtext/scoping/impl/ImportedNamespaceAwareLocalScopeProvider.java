@@ -11,10 +11,12 @@ package org.eclipse.xtext.scoping.impl;
 
 import static java.util.Collections.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -34,7 +36,6 @@ import org.eclipse.xtext.util.IResourceScopeCache;
 import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.util.Tuples;
 
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 /**
@@ -132,16 +133,10 @@ public class ImportedNamespaceAwareLocalScopeProvider extends AbstractGlobalScop
 	}
 
 	protected List<ImportNormalizer> internalGetImportedNamespaceResolvers(final EObject context, boolean ignoreCase) {
-		List<ImportNormalizer> importedNamespaceResolvers = Lists.newArrayList();
-		EList<EObject> eContents = context.eContents();
-		for (EObject child : eContents) {
-			String value = getImportedNamespace(child);
-			ImportNormalizer resolver = createImportedNamespaceResolver(value, ignoreCase);
-			if (resolver != null) {
-				importedNamespaceResolvers.add(resolver);
-			}
-		}
-		return importedNamespaceResolvers;
+		return context.eContents().stream()
+				.map(child -> createImportedNamespaceResolver(getImportedNamespace(child), ignoreCase))
+				.filter(Objects::nonNull)
+				.collect(Collectors.toCollection(() -> new ArrayList<>()));
 	}
 	
 	/**
