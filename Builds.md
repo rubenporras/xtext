@@ -55,11 +55,8 @@ Check the Update Site and Drop dirs to contain the new Milestone or Release
 1. Push the tag. `git push origin <tag_name>`
 
 1. As soon as Maven Central is updated - send notifications
-   * Newsgroup / Forum
+   * GitHub discussions https://github.com/eclipse-xtext/xtext/discussions/categories/milestones-and-releases
    * Mailing list
-   * Gitter
-   * Ecliape Chat / matrix.eclipse.org
-   * Twitter
 
 1. Bump the version number (for Releases only)
    * run the `scripts/fixVersions.sh -f '<old-version>` e.g ` ./scripts/fixVersions.sh -f '2.31.0'`.
