@@ -10,6 +10,8 @@
 	<artifactId>xtend-archetype</artifactId>
 	<packaging>maven-archetype</packaging>
 
+	<name>Xtend Archetype</name>
+
 	<properties>
 		<root-dir>${basedir}/..</root-dir>
 		<it-archetype-tests-skip>false</it-archetype-tests-skip>
