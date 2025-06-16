@@ -485,6 +485,14 @@
 			<id>sonatype-oss-release</id>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
+						<extensions>true</extensions>
+						<configuration>
+							<publishingServerId>central</publishingServerId>
+						</configuration>
+					</plugin>
 					<!-- the BOM is disconnected from our xtext-parent, so
 						the GPG signing must be enabled explicitly in the
 						homonymous profile -->
