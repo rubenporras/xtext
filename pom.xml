@@ -414,9 +414,6 @@
 									org.eclipse.xtend.ide.tests.data
 								</excludeArtifact>
 								<excludeArtifact>
-									org.eclipse.xtend.lib
-								</excludeArtifact>
-								<excludeArtifact>
 									org.eclipse.xtend.lib.gwt.test
 								</excludeArtifact>
 								<excludeArtifact>
@@ -580,12 +577,6 @@
 								</excludeArtifact>
 								<excludeArtifact>
 									org.eclipse.xtext.web.example.statemachine.ide
-								</excludeArtifact>
-								<excludeArtifact>
-									org.eclipse.xtext.xbase
-								</excludeArtifact>
-								<excludeArtifact>
-									org.eclipse.xtext.xbase.lib
 								</excludeArtifact>
 								<excludeArtifact>
 									org.eclipse.xtext.xbase.lib.tests
