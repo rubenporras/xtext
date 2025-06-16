@@ -95,6 +95,9 @@ class ParentProjectDescriptor extends ProjectDescriptor {
 						mavenCentral()
 						«IF config.xtextVersion.isSnapshot»
 							maven {
+								url = 'https://central.sonatype.com/repository/maven-snapshots'
+							}
+							maven {
 								url = 'https://oss.sonatype.org/content/repositories/snapshots'
 							}
 «««							maven {
@@ -458,6 +461,17 @@ class ParentProjectDescriptor extends ProjectDescriptor {
 					«ENDIF»
 					«IF config.xtextVersion.isSnapshot»
 						<repository>
+							<name>Central Portal Snapshots</name>
+							<id>central-portal-snapshots</id>
+							<url>https://central.sonatype.com/repository/maven-snapshots/</url>
+							<releases>
+								<enabled>false</enabled>
+							</releases>
+							<snapshots>
+								<enabled>true</enabled>
+							</snapshots>
+						</repository>
+						<repository>
 							<id>sonatype-snapshots</id>
 							<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 							<releases>
@@ -516,6 +530,17 @@ class ParentProjectDescriptor extends ProjectDescriptor {
 						</pluginRepository>
 					«ENDIF»
 					«IF config.xtextVersion.isSnapshot»
+						<pluginRepository>
+							<name>Central Portal Snapshots</name>
+							<id>central-portal-snapshots</id>
+							<url>https://central.sonatype.com/repository/maven-snapshots/</url>
+							<releases>
+								<enabled>false</enabled>
+							</releases>
+							<snapshots>
+								<enabled>true</enabled>
+							</snapshots>
+						</pluginRepository>
 						<pluginRepository>
 							<id>sonatype-snapshots</id>
 							<url>https://oss.sonatype.org/content/repositories/snapshots</url>
