@@ -45,7 +45,7 @@ MVN_ARGS+=(-PuseJenkinsSnapshots)
 
 MVN_ARGS+=("-Dmaven.home=$(./mvnw --version | grep "Maven home:" | cut -c 13-)")
 
-echo ./mvnw -B -f org.eclipse.xtext.full.releng ${MVN_ARGS[@]} $@
+echo ./mvnw -f org.eclipse.xtext.full.releng ${MVN_ARGS[@]} $@
 
 ./mvnw -B \
   -f org.eclipse.xtext.full.releng \
