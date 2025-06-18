@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 MVN_ARGS=(\
-  -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
   -Dit-archetype-tests-skip=true \
 )
 
