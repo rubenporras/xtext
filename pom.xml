@@ -412,6 +412,9 @@
 									org.eclipse.xtend.ide
 								</excludeArtifact>
 								<excludeArtifact>
+									org.eclipse.xtend.ide.tests
+								</excludeArtifact>
+								<excludeArtifact>
 									org.eclipse.xtend.ide.tests.data
 								</excludeArtifact>
 								<excludeArtifact>
@@ -430,6 +433,12 @@
 									org.eclipse.xtend.standalone
 								</excludeArtifact>
 								<excludeArtifact>
+									org.eclipse.xtend.performance.tests
+								</excludeArtifact>
+								<excludeArtifact>
+									org.eclipse.xtend.ide.swtbot.tests
+								</excludeArtifact>
+								<excludeArtifact>
 									org.eclipse.xtend.swtbot
 								</excludeArtifact>
 								<excludeArtifact>
@@ -440,6 +449,9 @@
 								</excludeArtifact>
 								<excludeArtifact>
 									org.eclipse.xtext.builder
+								</excludeArtifact>
+								<excludeArtifact>
+									org.eclipse.xtext.builder.tests
 								</excludeArtifact>
 								<excludeArtifact>
 									org.eclipse.xtext.builder.standalone.tests
@@ -460,6 +472,9 @@
 									org.eclipse.xtext.common.types.tests
 								</excludeArtifact>
 								<excludeArtifact>
+									org.eclipse.xtext.common.types.eclipse.tests
+								</excludeArtifact>
+								<excludeArtifact>
 									org.eclipse.xtext.common.types.ui
 								</excludeArtifact>
 								<excludeArtifact>
@@ -470,6 +485,9 @@
 								</excludeArtifact>
 								<excludeArtifact>
 									org.eclipse.xtext.examples
+								</excludeArtifact>
+								<excludeArtifact>
+									org.eclipse.xtext.eclipse.tests
 								</excludeArtifact>
 								<excludeArtifact>
 									org.eclipse.xtext.extras.tests
@@ -503,6 +521,9 @@
 								</excludeArtifact>
 								<excludeArtifact>
 									org.eclipse.xtext.purexbase.tests
+								</excludeArtifact>
+								<excludeArtifact>
+									org.eclipse.xtext.purexbase.eclipse.tests
 								</excludeArtifact>
 								<excludeArtifact>
 									org.eclipse.xtext.purexbase.ui
@@ -553,6 +574,9 @@
 									org.eclipse.xtext.ui.codetemplates.ide
 								</excludeArtifact>
 								<excludeArtifact>
+									org.eclipse.xtext.ui.codetemplates.tests
+								</excludeArtifact>
+								<excludeArtifact>
 									org.eclipse.xtext.ui.codetemplates.ui
 								</excludeArtifact>
 								<excludeArtifact>
@@ -563,6 +587,9 @@
 								</excludeArtifact>
 								<excludeArtifact>
 									org.eclipse.xtext.ui.testing
+								</excludeArtifact>
+								<excludeArtifact>
+									org.eclipse.xtext.ui.tests
 								</excludeArtifact>
 								<excludeArtifact>
 									org.eclipse.xtext.web.example.entities
@@ -598,6 +625,9 @@
 									org.eclipse.xtext.xbase.tests
 								</excludeArtifact>
 								<excludeArtifact>
+									org.eclipse.xtext.xbase.ui.tests
+								</excludeArtifact>
+								<excludeArtifact>
 									org.eclipse.xtext.xbase.ui
 								</excludeArtifact>
 								<excludeArtifact>
@@ -614,6 +644,12 @@
 								</excludeArtifact>
 								<excludeArtifact>
 									org.eclipse.xtext.xtext.ui.graph
+								</excludeArtifact>
+								<excludeArtifact>
+									org.eclipse.xtext.xtext.ui.graph.tests
+								</excludeArtifact>
+								<excludeArtifact>
+									org.eclipse.xtext.xtext.ui.tests
 								</excludeArtifact>
 							</excludeArtifacts>
 						</configuration>
