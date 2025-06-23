@@ -514,6 +514,9 @@
 									org.eclipse.xtext.maven.releng
 								</excludeArtifact>
 								<excludeArtifact>
+									org.eclipse.xtext.nodeploy.parent
+								</excludeArtifact>
+								<excludeArtifact>
 									org.eclipse.xtext.p2repository
 								</excludeArtifact>
 								<excludeArtifact>
