@@ -12,5 +12,10 @@
 	<packaging>eclipse-feature</packaging>
 
 	<name>Xtend Library Feature</name>
+	<description>Xtend Library Feature</description>
 
+	<properties>
+		<maven.deploy.skip>false</maven.deploy.skip>
+		<gpg.skip>false</gpg.skip>
+	</properties>
 </project>

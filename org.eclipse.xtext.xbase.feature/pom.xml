@@ -10,4 +10,12 @@
 	<packaging>eclipse-feature</packaging>
 	<groupId>org.eclipse.xtext.feature</groupId>
 	<artifactId>org.eclipse.xtext.xbase</artifactId>
+
+	<name>Xbase Feature</name>
+	<description>Xbase Feature</description>
+
+	<properties>
+		<maven.deploy.skip>false</maven.deploy.skip>
+		<gpg.skip>false</gpg.skip>
+	</properties>
 </project>
