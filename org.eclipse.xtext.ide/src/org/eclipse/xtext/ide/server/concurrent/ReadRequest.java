@@ -10,6 +10,7 @@ package org.eclipse.xtext.ide.server.concurrent;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 import org.apache.log4j.Logger;
 import org.eclipse.xtext.util.CancelIndicator;
@@ -31,9 +32,19 @@ public class ReadRequest<V> extends AbstractRequest<V> {
 
 	private final ExecutorService executor;
 
+	@Deprecated
 	public ReadRequest(RequestManager requestManager, Function1<? super CancelIndicator, ? extends V> readOperation,
 			ExecutorService executor) {
-		super(requestManager);
+		super(requestManager::isCancelException);
+		this.readOperation = readOperation;
+		this.executor = executor;
+		this.initializer = new CompletableFuture<>();
+		this.initializer.thenRun(this::doRun);
+	}
+	
+	public ReadRequest(Function<Throwable, Boolean> isCancelException, Function1<? super CancelIndicator, ? extends V> readOperation,
+			ExecutorService executor) {
+		super(isCancelException);
 		this.readOperation = readOperation;
 		this.executor = executor;
 		this.initializer = new CompletableFuture<>();

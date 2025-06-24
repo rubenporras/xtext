@@ -68,7 +68,7 @@ public class RequestManager {
 	 * Run the given cancellable logic as a read request.
 	 */
 	public synchronized <V> CompletableFuture<V> runRead(Function1<? super CancelIndicator, ? extends V> cancellable) {
-		return submit(new ReadRequest<>(this, cancellable, parallel));
+		return submit(new ReadRequest<>(this::isCancelException, cancellable, parallel));
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class RequestManager {
 	public synchronized <U, V> CompletableFuture<V> runWrite(
 			Function0<? extends U> nonCancellable,
 			Function2<? super CancelIndicator, ? super U, ? extends V> cancellable) {
-		return submit(new WriteRequest<>(this, nonCancellable, cancellable, cancel()));
+		return submit(new WriteRequest<>(this::isCancelException, nonCancellable, cancellable, cancel()));
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class RequestManager {
 		}
 		Throwable cause = t;
 		if (t instanceof CompletionException) {
-			cause = ((CompletionException) t).getCause();
+			cause = t.getCause();
 		}
 		return operationCanceledManager.isOperationCanceledException(cause);
 	}

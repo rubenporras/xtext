@@ -9,6 +9,7 @@
 package org.eclipse.xtext.ide.server.concurrent;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 import org.apache.log4j.Logger;
 import org.eclipse.xtext.util.CancelIndicator;
@@ -28,21 +29,31 @@ public class WriteRequest<U, V> extends AbstractRequest<V> {
 
 	private final CompletableFuture<Void> allPreviousRequests;
 
+	@Deprecated
 	public WriteRequest(RequestManager requestManager, Function0<? extends U> nonCancellable,
 			Function2<? super CancelIndicator, ? super U, ? extends V> cancellable,
 			CompletableFuture<Void> allPreviousRequests) {
-		super(requestManager);
+		super(requestManager::isCancelException);
 		this.nonCancellable = nonCancellable;
 		this.cancellable = cancellable;
 		this.allPreviousRequests = allPreviousRequests;
 	}
 
+	public WriteRequest(Function<Throwable, Boolean> isCancelException, Function0<? extends U> nonCancellable,
+			Function2<? super CancelIndicator, ? super U, ? extends V> cancellable,
+			CompletableFuture<Void> allPreviousRequests) {
+		super(isCancelException);
+		this.nonCancellable = nonCancellable;
+		this.cancellable = cancellable;
+		this.allPreviousRequests = allPreviousRequests;
+	}
+	
 	@Override
 	public void run() {
 		try {
 			allPreviousRequests.join();
 		} catch (Throwable t) {
-			if (!requestManager.isCancelException(t)) {
+			if (!isCancelException.apply(t)) {
 				LOG.error("Error during request: ", t);
 			}
 		}

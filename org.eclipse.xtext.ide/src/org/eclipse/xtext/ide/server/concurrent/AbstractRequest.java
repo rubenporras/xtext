@@ -9,6 +9,7 @@
 package org.eclipse.xtext.ide.server.concurrent;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 import org.apache.log4j.Logger;
 
@@ -19,7 +20,7 @@ import org.apache.log4j.Logger;
  * @since 2.11
  */
 public abstract class AbstractRequest<V> implements Runnable, Cancellable {
-	
+
 	private class ResultFuture extends CompletableFuture<V> {
 		@Override
 		public boolean cancel(boolean mayInterruptIfRunning) {
@@ -31,7 +32,7 @@ public abstract class AbstractRequest<V> implements Runnable, Cancellable {
 			super.cancel(mayInterruptIfRunning);
 		}
 	}
-	
+
 	/**
 	 * The underlying future.
 	 */
@@ -45,10 +46,31 @@ public abstract class AbstractRequest<V> implements Runnable, Cancellable {
 	/**
 	 * The request manager that is handling this request.
 	 */
+	@Deprecated
 	protected final RequestManager requestManager;
 
+	/**
+	 * A function to find if a Throwable is a cancellation exception.
+	 */
+	protected final Function<Throwable, Boolean> isCancelException;
+
+	/**
+	 * Deprecated, use {@link AbstractRequest#isCancelException}.
+	 */
+	@Deprecated
 	protected AbstractRequest(RequestManager requestManager) {
 		this.requestManager = requestManager;
+		this.isCancelException = (Throwable t) -> requestManager.isCancelException(t);
+		this.result = new ResultFuture();
+		this.cancelIndicator = new RequestCancelIndicator(this);
+	}
+
+	/**
+	 * @since 2.40
+	 */
+	protected AbstractRequest(Function<Throwable, Boolean> isCancelException) {
+		this.requestManager = null;
+		this.isCancelException = isCancelException;
 		this.result = new ResultFuture();
 		this.cancelIndicator = new RequestCancelIndicator(this);
 	}
@@ -64,11 +86,11 @@ public abstract class AbstractRequest<V> implements Runnable, Cancellable {
 	protected void complete(V value) {
 		result.complete(value);
 	}
-	
+
 	protected abstract Logger getLogger();
 
 	protected void logAndCompleteExceptionally(Throwable t) {
-		if (!requestManager.isCancelException(t)) {
+		if (!isCancelException.apply(t)) {
 			getLogger().error("Error during request: ", t);
 			result.completeExceptionally(t);
 		} else {
@@ -79,7 +101,7 @@ public abstract class AbstractRequest<V> implements Runnable, Cancellable {
 	protected void cancel(boolean mayInterruptIfRunning) {
 		cancelIndicator.doCancel();
 	}
-	
+
 	@Override
 	public final void cancel() {
 		cancel(true);
