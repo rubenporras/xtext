@@ -2,7 +2,7 @@
   <pluginExecutions>
     <pluginExecution>
       <pluginExecutionFilter>
-        <groupId>org.eclipse.xtend</groupId>
+        <groupId>org.eclipse.xtext</groupId>
         <artifactId>xtend-maven-plugin</artifactId>
         <versionRange>[2.2.0,)</versionRange>
         <goals>
@@ -11,10 +11,10 @@
         </goals>
       </pluginExecutionFilter>
       <action>
-           <configurator>
-             <id>org.eclipse.xtend.m2e.xtendConfigurator</id>
-           </configurator>
-         </action>
+        <configurator>
+          <id>org.eclipse.xtend.m2e.xtendConfigurator</id>
+        </configurator>
+      </action>
     </pluginExecution>
   </pluginExecutions>
 </lifecycleMappingMetadata>
