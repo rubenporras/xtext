@@ -57,7 +57,7 @@ pipeline {
 
   post {
     success {
-      archiveArtifacts artifacts: 'build/**, org.eclipse.xtext.p2repository/target/checkout/**'
+      archiveArtifacts artifacts: 'build/**, org.eclipse.xtext.p2repository/target/checkout/**, target/central-staging/**'
     }
   }
 }
