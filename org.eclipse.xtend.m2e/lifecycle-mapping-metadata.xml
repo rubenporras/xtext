@@ -8,6 +8,26 @@
         <goals>
           <goal>compile</goal>
           <goal>testCompile</goal>
+          <goal>xtend-test-install-debug-info</goal>
+          <goal>xtend-install-debug-info</goal>
+        </goals>
+      </pluginExecutionFilter>
+      <action>
+        <configurator>
+          <id>org.eclipse.xtend.m2e.xtendConfigurator</id>
+        </configurator>
+      </action>
+    </pluginExecution>
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <groupId>org.eclipse.xtend</groupId>
+        <artifactId>xtend-maven-plugin</artifactId>
+        <versionRange>[2.2.0,)</versionRange>
+        <goals>
+          <goal>compile</goal>
+          <goal>testCompile</goal>
+          <goal>xtend-test-install-debug-info</goal>
+          <goal>xtend-install-debug-info</goal>
         </goals>
       </pluginExecutionFilter>
       <action>
