@@ -168,10 +168,6 @@
 						<configuration>
 							<publishingServerId>central</publishingServerId>
 							<outputFilename>central-xtend-relocated-bundle.zip</outputFilename>
-							<!-- Currently, deployments to release are only visibile to the userid uploading
-								the zip bundle, i.e., Jenkins. Thus, for the moment, we have to manually upload
-								the zip bundle manually. -->
-							<skipPublishing>true</skipPublishing>
 						</configuration>
 					</plugin>
 					<plugin>

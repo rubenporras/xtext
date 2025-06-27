@@ -395,10 +395,6 @@
 						<extensions>true</extensions>
 						<configuration>
 							<publishingServerId>central</publishingServerId>
-							<!-- Currently, deployments to release are only visibile to the userid uploading
-								the zip bundle, i.e., Jenkins. Thus, for the moment, we have to manually upload
-								the zip bundle manually. -->
-							<skipPublishing>true</skipPublishing>
 							<excludeArtifacts>
 								<excludeArtifact>
 									org.eclipse.emf.mwe2.language.sdk
