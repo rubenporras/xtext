@@ -124,6 +124,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+
+		<build-helper-maven-plugin-version>3.3.0</build-helper-maven-plugin-version>
 	</properties>
 
 	<modules>
@@ -135,6 +137,23 @@
 		<module>org.eclipse.xtend.lib.relocated</module>
 		<module>org.eclipse.xtend.lib.macro.relocated</module>
 	</modules>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>${build-helper-maven-plugin-version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>2.14.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
 	<profiles>
 		<profile>

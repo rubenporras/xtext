@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# Process Xtend relocated artifacts
+./mvnw \
+  -f org.eclipse.xtend.relocated.parent \
+  build-helper:parse-version \
+  versions:set \
+  -DgenerateBackupPoms=false \
+  -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion}
 
 # First, update the version of the BOM, which is disconnected from the parent.
 # For example, 2.31.0-SNAPSHOT becomes 2.31.0
