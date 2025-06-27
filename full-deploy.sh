@@ -47,6 +47,14 @@ MVN_ARGS+=(-PuseJenkinsSnapshots)
 
 MVN_ARGS+=("-Dmaven.home=$(./mvnw --version | grep "Maven home:" | cut -c 13-)")
 
+echo ./mvnw -f org.eclipse.xtend.relocated.parent ${MVN_ARGS[@]} $@
+
+./mvnw -B \
+  -f org.eclipse.xtend.relocated.parent \
+  clean deploy \
+  ${MVN_ARGS[@]} \
+  $@
+
 echo ./mvnw -f org.eclipse.xtext.full.releng ${MVN_ARGS[@]} $@
 
 ./mvnw -B \
