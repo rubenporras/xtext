@@ -9,6 +9,9 @@
 package org.eclipse.xtext.example.homeautomation.ui.tests;
 
 import com.google.inject.Inject;
+
+import static org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil.createJavaProject;
+
 import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.ui.testing.AbstractHighlightingTest;
@@ -17,7 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-// import static extension org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil.createJavaProject; // Xtend specific
+import static org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil.createJavaProject;
 
 /**
  * @author miklossy - Initial contribution and API
@@ -35,7 +38,7 @@ public class RuleEngineHighlightingTest extends AbstractHighlightingTest {
 		/*
 		 * Xbase-based languages require java project
 		 */
-		// projectName.createJavaProject; // Xtend specific
+		createJavaProject(getProjectName());
 	}
 
 	@Test

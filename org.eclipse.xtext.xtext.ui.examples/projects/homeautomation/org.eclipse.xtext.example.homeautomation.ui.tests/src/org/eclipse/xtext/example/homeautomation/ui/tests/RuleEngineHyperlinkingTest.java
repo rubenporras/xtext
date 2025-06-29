@@ -15,8 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-// import static extension org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil.createJavaProject; // Xtend specific
-
+import static org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil.createJavaProject;
 /**
  * @author miklossy - Initial contribution and API
  */
@@ -30,7 +29,7 @@ public class RuleEngineHyperlinkingTest extends AbstractHyperlinkingTest {
 		/*
 		 * Xbase-based languages require java project
 		 */
-		// projectName.createJavaProject; // Xtend specific
+		createJavaProject(getProjectName());
 	}
 
 	@Test
