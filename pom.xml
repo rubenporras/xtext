@@ -899,7 +899,7 @@
 					<version>3.1.0</version>
 				</plugin>
 				<plugin>
-					<groupId>org.eclipse.xtend</groupId>
+					<groupId>org.eclipse.xtext</groupId>
 					<artifactId>xtend-maven-plugin</artifactId>
 					<version>${xtend-maven-plugin-version}</version>
 					<executions>
