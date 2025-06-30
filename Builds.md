@@ -13,13 +13,13 @@ Check the Update Site and Drop dirs to contain the new Milestone or Release
    * For milestones https://download.eclipse.org/modeling/tmf/xtext/updates/milestones/ and https://download.eclipse.org/modeling/tmf/xtext/downloads/drops/
    * For releases https://download.eclipse.org/modeling/tmf/xtext/updates/releases/ and https://download.eclipse.org/modeling/tmf/xtext/downloads/drops/
 
-1. Promote staged milestone/release on [s01.oss.sonatype.org](https://s01.oss.sonatype.org/). Can only be done by Xtext release engineer with the right credentials at sonatype
-   * Log in with your sonatype user.
-   * Select Staging Repositories
-   * Search for orgeclipsextext-NNNN and orgeclipsextend-NNNN with status open
-   * Select both and perform the Close toolbar action
-   * Wait until the checks have run successfully
-   * Select both repositories again the perform the Release toolbar action
+1. Upload and publish milestone/release Maven artifacts on [Maven Central Repository](https://central.sonatype.com/). Can only be done by Xtext release engineer with the right credentials at sonatype
+   * For milestones navigate to <https://ci.eclipse.org/xtext/job/xtext-monorepo-full-deploy-milestone/lastSuccessfulBuild/artifact/>, for releases, navigate to <https://ci.eclipse.org/xtext/job/xtext-monorepo-full-deploy-release/lastSuccessfulBuild/artifact/>.
+   * Download the zip files from `org.eclipse.xtend.relocated.parent/target/central-publishing` and `target/central-publishing`.
+   * Go to <https://central.sonatype.com/> and log in with your sonatype user.
+   * Navigate to <https://central.sonatype.com/publishing/deployments>, press "Publish Component", and upload one of the two downloaded zip files. Do the same for the other one.
+   * For each of them, wait for the validation and press "Publish".
+   * The publishing takes several minutes.
 
 1. Contribute milestone / release to Simrel Aggregation Build
     * Clone / pull `git@github.com:eclipse-simrel/simrel.build.git`
