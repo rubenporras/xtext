@@ -35,71 +35,71 @@ public class RuleEngineHyperlinkingTest extends AbstractHyperlinkingTest {
 	@Test
 	public void hyperlink_on_rule_when_part() {
 		hasHyperlinkTo("""
-			Device Window can be open, closed
-			Device Heater can be on, off, error
-			
-			Rule 'rule1' when <|>Window.open<|> then
-				fire(Heater.off)
+		Device Window can be open, closed
+		Device Heater can be on, off, error
+		
+		Rule 'rule1' when <|>Window.open<|> then
+			fire(Heater.off)
 		""", "Window.open");
 	}
 
 	@Test
 	public void hyperlink_on_device_name_in_rule_then_part() {
 		hasHyperlinkTo("""
-			Device Window can be open, closed
-			Device Heater can be on, off, error
-			
-			Rule 'rule1' when Window.open then
-				fire(<|>Heater<|>.off)
+		Device Window can be open, closed
+		Device Heater can be on, off, error
+		
+		Rule 'rule1' when Window.open then
+			fire(<|>Heater<|>.off)
 		""", "Heater");
 	}
 
 	@Test
 	public void hyperlink_on_device_state_in_rule_then_part() {
 		hasHyperlinkTo("""
-			Device Window can be open, closed
-			Device Heater can be on, off, error
-			
-			Rule 'rule1' when Window.open then
-				fire(Heater.<|>off<|>)
+		Device Window can be open, closed
+		Device Heater can be on, off, error
+		
+		Rule 'rule1' when Window.open then
+			fire(Heater.<|>off<|>)
 		""", "Heater.off");
 	}
 
 	@Test
 	public void hyperlink_on_link_in_javadoc1() {
 		hasHyperlinkTo("""
-			Device Window can be open, closed
-			Device Heater can be on, off, error
-			
-			/**
-			 * If the {@link <|>Window<|>} is open, the {@link Heater} should be turned off.
-			 */
-			Rule 'rule1' when Window.open then
-				fire(Heater.off)
+		Device Window can be open, closed
+		Device Heater can be on, off, error
+		
+		/**
+		 * If the {@link <|>Window<|>} is open, the {@link Heater} should be turned off.
+		 */
+		Rule 'rule1' when Window.open then
+			fire(Heater.off)
 		""", "Window");
 	}
 
 	@Test
 	public void hyperlink_on_link_in_javadoc2() {
 		hasHyperlinkTo("""
-			Device Window can be open, closed
-			Device Heater can be on, off, error
-			
-			/**
-			 * If the {@link Window} is open, the {@link <|>Heater<|>} should be turned off.
-			 */
-			Rule 'rule1' when Window.open then
-				fire(Heater.off)
+		Device Window can be open, closed
+		Device Heater can be on, off, error
+		
+		/**
+		 * If the {@link Window} is open, the {@link <|>Heater<|>} should be turned off.
+		 */
+		Rule 'rule1' when Window.open then
+			fire(Heater.off)
 		""", "Heater");
 	}
 
 	@Test
 	public void hyperlink_on_link_in_javadoc3() {
 		hasHyperlinkTo("""
-			/**
-			 * {@link <|>java.util.List<|>}
-			 */
-			Device Window can be open, closed
+		/**
+		 * {@link <|>java.util.List<|>}
+		 */
+		Device Window can be open, closed
 		""", "java.util.List");
 	}
 }
