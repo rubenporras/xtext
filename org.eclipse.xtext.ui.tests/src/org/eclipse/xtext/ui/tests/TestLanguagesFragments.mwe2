@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2017 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2010, 2025 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -10,8 +10,6 @@ module org.eclipse.xtext.ui.tests.TestLanguagesFragments
 
 import org.eclipse.xtext.xtext.generator.*
 import org.eclipse.xtext.xtext.generator.ui.*
-import de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
-import de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment
 
 var classSplitting = true
 var skipGenerate = false
