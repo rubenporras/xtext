@@ -45,9 +45,7 @@ public class RequestManager extends AbstractRequestManager {
 
 	private List<AbstractRequest<?>> requests = new ArrayList<>();
 
-	/**
-	 * An orderly shutdown of this request manager.
-	 */
+	@Override
 	public void shutdown() {
 		queue.shutdown();
 		parallel.shutdown();
