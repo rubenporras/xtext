@@ -22,6 +22,7 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.EObjectAtOffsetHelper;
 import org.eclipse.xtext.resource.ILocationInFileProvider;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.service.OperationCanceledManager;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.ITextRegion;
 
@@ -48,10 +49,14 @@ public class HoverService implements IHoverService {
 	@Inject
 	private IEObjectDocumentationProvider eObjectDocumentationProvider;
 
+	@Inject
+	private OperationCanceledManager operationCanceledManager;
+
 	@Override
 	public Hover hover(Document document, XtextResource resource, HoverParams params, CancelIndicator cancelIndicator) {
 		int offset = document.getOffSet(params.getPosition());
 		HoverContext context = createContext(document, resource, offset);
+		operationCanceledManager.checkCanceled(cancelIndicator);
 		return hover(context);
 	}
 
