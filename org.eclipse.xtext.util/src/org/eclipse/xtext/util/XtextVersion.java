@@ -59,7 +59,7 @@ public class XtextVersion {
 	 * @noreference
 	 */
 	public String getMweBuildNumber() {
-		return " S202508141036";
+		return "S202508141036";
 	}
 
 	public String getAntlrGeneratorVersion() {
