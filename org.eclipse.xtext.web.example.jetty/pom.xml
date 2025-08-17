@@ -10,7 +10,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<jetty-version>11.0.25</jetty-version>
+		<jetty-version>11.0.26</jetty-version>
 	</properties>
 
 	<dependencies>
