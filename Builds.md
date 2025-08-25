@@ -15,7 +15,7 @@ Check the Update Site and Drop dirs to contain the new Milestone or Release
 
 1. Upload and publish milestone/release Maven artifacts on [Maven Central Repository](https://central.sonatype.com/). Can only be done by Xtext release engineer with the right credentials at sonatype
    * Go to <https://central.sonatype.com/> and log in with your sonatype user.
-   * Navigate to <https://central.sonatype.com/publishing/deployments>, and publish both groups..
+   * Navigate to <https://central.sonatype.com/publishing/deployments>, and publish both groups.
    * For each of them, wait for the validation and press "Publish".
    * The publishing takes several minutes.
 
