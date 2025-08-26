@@ -133,7 +133,7 @@ public Class&lt;? extends IProjectCreator&gt; bindIProjectCreator() {
 }
 </code></pre>
 
-<p>Now your language and its IDE should now no longer depend on JDT.</p>
+<p>Now your language and its IDE should no longer depend on JDT.</p>
 
 <h2 id="expressions">Parsing Expressions with Xtext</h2>
 
@@ -143,7 +143,7 @@ public Class&lt;? extends IProjectCreator&gt; bindIProjectCreator() {
 
 <p><code>2 + 20 * 2</code></p>
 
-<p>If you know EBNF a bit and wouldn’t think about avoiding left recursion, operator precedence or associativity, you’ld probably write a grammar like this:</p>
+<p>If you know EBNF a bit and wouldn’t think about avoiding left recursion, operator precedence or associativity, you’d probably write a grammar like this:</p>
 
 <pre><code class="language-xtext">Expression :
   Expression '+' Expression |
