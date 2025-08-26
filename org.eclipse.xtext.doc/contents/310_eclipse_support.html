@@ -156,12 +156,11 @@ public void fixTypeName(Issue issue, IssueResolutionAcceptor acceptor) {
     "Capitalize name", // quick fix label
     "Capitalize name  of '" + issue.getData()[0] + "'", // description
     "upcase.png",      // quick fix icon
-    (IModificationContext context) -&gt; {
+    context -&gt; {
       IXtextDocument xtextDocument = context.getXtextDocument();
       String firstLetter = xtextDocument.get(issue.getOffset(), 1);
       xtextDocument.replace(issue.getOffset(), 1, Strings.toFirstUpper(firstLetter));
     });
-  );
 }
 </code></pre>
 
@@ -376,12 +375,13 @@ protected boolean _isLeaf(Feature feature) {
 private StylerFactory stylerFactory;
 
 public Object _text(Entity entity) {
-  if(entity.isAbstract()) {
+  if (entity.isAbstract()) {
     return new StyledString(entity.getName(), 
       stylerFactory
-        .createXtextStyleAdapterStyler(getTypeTextStyle())));
-  else
+        .createXtextStyleAdapterStyler(getTypeTextStyle()));
+  } else {
     return entity.getName();
+  }
 }
 
 protected TextStyle getTypeTextStyle() {

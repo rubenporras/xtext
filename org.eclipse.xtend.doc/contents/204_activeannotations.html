@@ -238,13 +238,13 @@ annotation Extract {}
 <pre><code>&lt;dependency&gt;
   &lt;groupId&gt;org.eclipse.xtend&lt;/groupId&gt;
   &lt;artifactId&gt;org.eclipse.xtend.core&lt;/artifactId&gt;
-  &lt;version&gt;2.38.0&lt;/version&gt;
+  &lt;version&gt;2.41.0&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;
 &lt;dependency&gt;
   &lt;groupId&gt;org.eclipse.xtext&lt;/groupId&gt;
   &lt;artifactId&gt;org.eclipse.xtext.xbase.testing&lt;/artifactId&gt;
-  &lt;version&gt;2.38.0&lt;/version&gt;
+  &lt;version&gt;2.41.0&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;
 </code></pre>
@@ -351,7 +351,7 @@ public void setName(final String name) {
 }
 </code></pre>
 
-<p>So by default a public getter and a public setter method is created. The <code>@Accessors</code> can be configured to tell that you only want one or the other and to change the visibility. this is done by means of <a href="https://github.com/eclipse-xtext/xtext/tree/main/org.eclipse.xtend.lib/src/org/eclipse/xtend/lib/annotations/Accessors.xtend">AccessorType</a> You can also use the annotation on class level to do the same for all fields.</p>
+<p>So by default a public getter and a public setter methods are created. The <code>@Accessors</code> can be configured to tell that you only want one or the other and to change the visibility. this is done by means of <a href="https://github.com/eclipse-xtext/xtext/tree/main/org.eclipse.xtend.lib/src/org/eclipse/xtend/lib/annotations/Accessors.xtend">AccessorType</a> You can also use the annotation on class level to do the same for all fields.</p>
 
 <p>Here is a more complex example, that shows how it works:</p>
 
@@ -425,14 +425,14 @@ public void setName(final String name) {
 
 <h2 id="delegate-annotation">@Delegate</h2>
 
-<p>The <a href="https://github.com/eclipse-xtext/xtext/tree/main/org.eclipse.xtend.lib/src/org/eclipse/xtend/lib/annotations/Delegate.xtend"><code>@Delegate</code></a> annotation automatically generated delegate methods for all interfaces shared between the delegate and the currently implemented class. You can optionally restrict it to explicitly stated interfaces.</p>
+<p>The <a href="https://github.com/eclipse-xtext/xtext/tree/main/org.eclipse.xtend.lib/src/org/eclipse/xtend/lib/annotations/Delegate.xtend"><code>@Delegate</code></a> annotation automatically generates delegate methods for all interfaces shared between the delegate and the currently implemented class. You can optionally restrict it to explicitly stated interfaces.</p>
 
 <p>Let’s start with a basic example:</p>
 
 <pre><code class="language-xtend">class MyClass implements SomeInterface {
 
-  // generates all methods of List and delegates to this field
-  @Delegate SomeSubTypeOfSumInterface myDelegate
+  // generates all methods of SomeInterface and delegates to this field
+  @Delegate SomeSubTypeOfSomeInterface myDelegate
 
 }
 </code></pre>
