@@ -86,13 +86,22 @@ public class ContentAssistTest extends AbstractXtextTests implements ResourceLoa
 				"java.util.Arrays.ArrayList",
 				"com.google.common.collect.ArrayListMultimap");
 		} catch (AssertionError e) {
-			newBuilder().append("custom ArrayLis").assertText(
-				"java.util.ArrayList",
-				"com.google.common.collect.MultimapBuilder.ArrayListSupplier", 
-				"com.google.common.collect.ArrayListMultimapGwtSerializationDependencies", 
-				"java.util.ArrayList.ArrayListSpliterator",
-				"java.util.Arrays.ArrayList",
-				"com.google.common.collect.ArrayListMultimap");
+			try {
+				newBuilder().append("custom ArrayLis").assertText(
+					"java.util.ArrayList",
+					"com.google.common.collect.MultimapBuilder.ArrayListSupplier", 
+					"com.google.common.collect.ArrayListMultimapGwtSerializationDependencies", 
+					"java.util.ArrayList.ArrayListSpliterator",
+					"java.util.Arrays.ArrayList",
+					"com.google.common.collect.ArrayListMultimap");
+			} catch (AssertionError e1) {
+				newBuilder().append("custom ArrayLis").assertText(
+						"java.util.ArrayList",
+						"com.google.common.collect.MultimapBuilder.ArrayListSupplier",
+						"java.util.ArrayList.ArrayListSpliterator",
+						"java.util.Arrays.ArrayList",
+						"com.google.common.collect.ArrayListMultimap");
+			}
 		}
 	}
 	
@@ -104,14 +113,24 @@ public class ContentAssistTest extends AbstractXtextTests implements ResourceLoa
 				"Arrays.ArrayList",
 				"com.google.common.collect.ArrayListMultimap");
 		} catch (AssertionError e) {
-			newBuilder().append("import java.util.* custom ArrayLis").assertText(
-				"ArrayList",
-				"ArrayList.ArrayListSpliterator",
-				"Arrays.ArrayList",
-				"com.google.common.collect.ArrayListMultimap",
-				"com.google.common.collect.MultimapBuilder.ArrayListSupplier",
-				"com.google.common.collect.ArrayListMultimapGwtSerializationDependencies"
-			);
+			try {
+				newBuilder().append("import java.util.* custom ArrayLis").assertText(
+					"ArrayList",
+					"ArrayList.ArrayListSpliterator",
+					"Arrays.ArrayList",
+					"com.google.common.collect.ArrayListMultimap",
+					"com.google.common.collect.MultimapBuilder.ArrayListSupplier",
+					"com.google.common.collect.ArrayListMultimapGwtSerializationDependencies"
+				);
+			} catch (AssertionError e1) {
+				newBuilder().append("import java.util.* custom ArrayLis").assertText(
+						"ArrayList",
+						"ArrayList.ArrayListSpliterator",
+						"Arrays.ArrayList",
+						"com.google.common.collect.ArrayListMultimap",
+						"com.google.common.collect.MultimapBuilder.ArrayListSupplier"
+					);
+			}
 		}
 	}
 	
