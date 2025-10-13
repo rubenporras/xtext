@@ -33,12 +33,12 @@
   </annotation>
   <setupTask
       xsi:type="jdt:JRETask"
-      version="JavaSE-17"
-      location="${jre.location-17}"/>
+      version="JavaSE-21"
+      location="${jre.location-21}"/>
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Xmx"
-      value="2g"
+      value="4g"
       vm="true"/>
   <setupTask
       xsi:type="setup:ResourceCreationTask"

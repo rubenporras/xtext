@@ -101,19 +101,20 @@ class TargetPlatformProject extends ProjectDescriptor {
 					<unit id="org.apache.commons.commons-logging" version="0.0.0"/>
 					«IF config.junitVersion == JUnitVersion.JUNIT_5»
 						<unit id="org.apiguardian.api" version="0.0.0"/>
-						<unit id="junit-jupiter-api" version="0.0.0"/>
-						<unit id="junit-jupiter-engine" version="0.0.0"/>
-						<unit id="junit-jupiter-migrationsupport" version="0.0.0"/>
-						<unit id="junit-jupiter-params" version="0.0.0"/>
-						<unit id="junit-platform-commons" version="0.0.0"/>
-						<unit id="junit-platform-engine" version="0.0.0"/>
-						<unit id="junit-platform-launcher" version="0.0.0"/>
-						<unit id="junit-platform-runner" version="0.0.0"/>
-						<unit id="junit-platform-suite-commons" version="0.0.0"/>
-						<unit id="junit-vintage-engine" version="0.0.0"/>
+						<unit id="junit-jupiter-api" version="[5.0.0,6.0.0)"/>
+						<unit id="junit-jupiter-engine" version="[5.0.0,6.0.0)"/>
+						<unit id="junit-jupiter-migrationsupport" version="[5.0.0,6.0.0)"/>
+						<unit id="junit-jupiter-params" version="[5.0.0,6.0.0)"/>
+						<unit id="junit-platform-commons" version="[1.0.0,2.0.0)"/>
+						<unit id="junit-platform-engine" version="[1.0.0,2.0.0)"/>
+						<unit id="junit-platform-launcher" version="[1.0.0,2.0.0)"/>
+						<unit id="junit-platform-runner" version="[1.0.0,2.0.0)"/>
+						<unit id="junit-platform-suite-api" version="[1.0.0,2.0.0)"/>
+						<unit id="junit-platform-suite-commons" version="[1.0.0,2.0.0)"/>
+						<unit id="junit-vintage-engine" version="[5.0.0,6.0.0)"/>
 						<unit id="org.opentest4j" version="0.0.0"/>
 					«ENDIF»
-					<unit id="org.objectweb.asm" version="9.8.0"/>
+					<unit id="org.objectweb.asm" version="9.9.0"/>
 					<unit id="io.github.classgraph.classgraph" version="0.0.0"/>
 					<repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2025-12"/>
 				</location>
