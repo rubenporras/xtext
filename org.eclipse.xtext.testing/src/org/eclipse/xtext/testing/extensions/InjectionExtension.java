@@ -73,7 +73,7 @@ public class InjectionExtension implements BeforeEachCallback, AfterEachCallback
 		}
 
 		@Override
-		public void close() throws Throwable {
+		public void close() throws Exception {
 			if (didSetup) {
 				resetter.restoreRegistry();
 				didSetup = false;
