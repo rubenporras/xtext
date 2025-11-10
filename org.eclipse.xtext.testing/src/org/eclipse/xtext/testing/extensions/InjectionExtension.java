@@ -23,7 +23,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 import org.junit.platform.commons.support.AnnotationSupport;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
-import org.junit.jupiter.api.extension.ExtensionContext.Store.CloseableResource;
 
 import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.MutableClassToInstanceMap;
@@ -57,7 +56,7 @@ public class InjectionExtension implements BeforeEachCallback, AfterEachCallback
 	/**
 	 * @since 2.24
 	 */
-	protected static class RegistryReset implements CloseableResource {
+	protected static class RegistryReset implements AutoCloseable {
 		protected final IRegistryConfigurator resetter;
 		protected boolean didSetup = false;
 
@@ -74,7 +73,7 @@ public class InjectionExtension implements BeforeEachCallback, AfterEachCallback
 		}
 
 		@Override
-		public void close() throws Throwable {
+		public void close() throws Exception {
 			if (didSetup) {
 				resetter.restoreRegistry();
 				didSetup = false;
