@@ -125,7 +125,6 @@ import org.eclipse.xtext.ide.server.codelens.ICodeLensResolver;
 import org.eclipse.xtext.ide.server.codelens.ICodeLensService;
 import org.eclipse.xtext.ide.server.commands.ExecutableCommandRegistry;
 import org.eclipse.xtext.ide.server.concurrent.IRequestManager;
-import org.eclipse.xtext.ide.server.concurrent.RequestManager;
 import org.eclipse.xtext.ide.server.contentassist.ContentAssistService;
 import org.eclipse.xtext.ide.server.findReferences.WorkspaceResourceAccess;
 import org.eclipse.xtext.ide.server.folding.FoldingRangeService;
