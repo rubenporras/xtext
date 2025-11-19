@@ -66,10 +66,8 @@ public class FormattingService {
 
 	public List<? extends TextEdit> format(Document document, XtextResource resource,
 			DocumentRangeFormattingParams params, CancelIndicator cancelIndicator) {
-		int startOffset = document.getOffSet(params.getRange().getStart());
-		int endOffset = document.getOffSet(params.getRange().getEnd());
-		int length = endOffset - startOffset;
-		return format(resource, document, startOffset, length, params.getOptions());
+		ITextRegion region = document.getTextRegion(params.getRange());
+		return format(resource, document, region.getOffset(), region.getLength(), params.getOptions());
 	}
 
 	/**

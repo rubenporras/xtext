@@ -17,11 +17,43 @@ public interface ITextRegion {
 
 	int getLength();
 
+	/**
+	 * @since 2.41
+	 */
+	default int getEndOffset() {
+		return getOffset() + getLength();
+	};
+
 	ITextRegion merge(ITextRegion region);
 	
 	boolean contains(ITextRegion other);
 	
 	boolean contains(int offset);
 
-	static ITextRegion EMPTY_REGION = ITextRegionWithLineInformation.EMPTY_REGION;
+	static ITextRegion EMPTY_REGION = new ITextRegion() {
+		@Override
+		public int getOffset() {
+			return 0;
+		}
+
+		@Override
+		public int getLength() {
+			return 0;
+		}
+
+		@Override
+		public ITextRegion merge(ITextRegion region) {
+			return region;
+		}
+
+		@Override
+		public boolean contains(ITextRegion other) {
+			return false;
+		}
+
+		@Override
+		public boolean contains(int offset) {
+			return false;
+		}
+	};
 }

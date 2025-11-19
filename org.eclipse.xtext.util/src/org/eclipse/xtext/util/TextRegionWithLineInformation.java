@@ -51,7 +51,7 @@ public class TextRegionWithLineInformation extends TextRegion implements ITextRe
 		if (other.contains(this))
 			return other;
 		int newOffset = Math.min(getOffset(), other.getOffset());
-		int newLength = Math.max(getOffset() + getLength(), other.getOffset() + other.getLength()) - newOffset;
+		int newLength = Math.max(getEndOffset(), other.getEndOffset()) - newOffset;
 		int newLineNumber = Math.min(getLineNumber(), other.getLineNumber());
 		int newEndLineNumber = Math.max(getEndLineNumber(), other.getEndLineNumber());
 		return new TextRegionWithLineInformation(newOffset, newLength, newLineNumber, newEndLineNumber);

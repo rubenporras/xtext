@@ -13,6 +13,8 @@ import org.eclipse.lsp4j.Position;
 import org.eclipse.lsp4j.Range;
 import org.eclipse.lsp4j.TextDocumentContentChangeEvent;
 import org.eclipse.lsp4j.TextEdit;
+import org.eclipse.xtext.util.ITextRegion;
+import org.eclipse.xtext.util.TextRegion;
 import org.eclipse.xtext.xbase.lib.util.ToStringBuilder;
 
 /**
@@ -20,6 +22,8 @@ import org.eclipse.xtext.xbase.lib.util.ToStringBuilder;
  * @since 2.11
  */
 public class Document {
+	private static final PositionWithDocumentOffset DOCUMENT_START_POSITION = new PositionWithDocumentOffset(new Position(0,0), 0);
+
 	private final Integer version;
 
 	private final String contents;
@@ -38,16 +42,31 @@ public class Document {
 		this.contents = contents;
 		this.printSourceOnError = printSourceOnError;
 	}
+	
+	private record PositionWithDocumentOffset(Position position, int offset) {};
+	
+	/**
+	 * @since 2.41
+	 */
+	public ITextRegion getTextRegion(Range range) {
+		PositionWithDocumentOffset start = getPostionWithDocumentOffset(range.getStart(), DOCUMENT_START_POSITION);
+		PositionWithDocumentOffset end = getPostionWithDocumentOffset(range.getEnd(), start);
+		return new TextRegion(start.offset, end.offset - start.offset);
+	}
 
 	public int getOffSet(Position position) throws IndexOutOfBoundsException {
+		return getPostionWithDocumentOffset(position, DOCUMENT_START_POSITION).offset;
+	}
+
+	private PositionWithDocumentOffset getPostionWithDocumentOffset(Position toSearch, PositionWithDocumentOffset start) {
 		int l = contents.length();
 		char NL = '\n';
-		int line = 0;
-		int column = 0;
-		for (int i = 0; i < l; i++) {
+		int line = start.position.getLine();
+		int column = start.position.getCharacter();
+		for (int i = start.offset; i < l; i++) {
 			char ch = contents.charAt(i);
-			if (position.getLine() == line && position.getCharacter() == column) {
-				return i;
+			if (toSearch.getLine() == line && toSearch.getCharacter() == column) {
+				return new PositionWithDocumentOffset(new Position(line, column), i);
 			}
 			if (ch == NL) {
 				line++;
@@ -56,10 +75,11 @@ public class Document {
 				column++;
 			}
 		}
-		if (position.getLine() == line && position.getCharacter() == column) {
-			return l;
+		if (toSearch.getLine() == line && toSearch.getCharacter() == column) {
+			return new PositionWithDocumentOffset(new Position(line, column), l);
 		}
-		throw new IndexOutOfBoundsException(position.toString() + getSourceOnError());
+		throw new IndexOutOfBoundsException(toSearch.toString() + getSourceOnError());
+		
 	}
 
 	public Position getPosition(int offset) throws IndexOutOfBoundsException {
@@ -136,9 +156,8 @@ public class Document {
 	}
 
 	public String getSubstring(Range range) {
-		int start = getOffSet(range.getStart());
-		int end = getOffSet(range.getEnd());
-		return contents.substring(start, end);
+		ITextRegion r = getTextRegion(range);
+		return contents.substring(r.getOffset(), r.getEndOffset());
 	}
 
 	/**
@@ -161,10 +180,10 @@ public class Document {
 			if (change.getRange() == null) {
 				newContent = change.getText();
 			} else {
-				int start = currentDocument.getOffSet(change.getRange().getStart());
-				int end = currentDocument.getOffSet(change.getRange().getEnd());
-				newContent = currentDocument.contents.substring(0, start) + change.getText()
-						+ currentDocument.contents.substring(end);
+				ITextRegion r = currentDocument.getTextRegion(change.getRange());
+
+				newContent = currentDocument.contents.substring(0, r.getOffset()) + change.getText()
+						+ currentDocument.contents.substring(r.getEndOffset());
 			}
 			currentDocument = new Document(newVersion, newContent, printSourceOnError);
 		}
@@ -182,9 +201,8 @@ public class Document {
 			if (change.getRange() == null) {
 				newContent = change.getNewText();
 			} else {
-				int start = getOffSet(change.getRange().getStart());
-				int end = getOffSet(change.getRange().getEnd());
-				newContent = newContent.substring(0, start) + change.getNewText() + newContent.substring(end);
+				ITextRegion r = getTextRegion(change.getRange());
+				newContent = newContent.substring(0, r.getOffset()) + change.getNewText() + newContent.substring(r.getEndOffset());
 			}
 		}
 		Integer newVersion = null;

@@ -13,6 +13,7 @@ import org.eclipse.lsp4j.Range;
 import org.eclipse.lsp4j.TextDocumentContentChangeEvent;
 import org.eclipse.lsp4j.TextEdit;
 import org.eclipse.xtext.ide.server.Document;
+import org.eclipse.xtext.util.ITextRegion;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,6 +23,31 @@ import com.google.common.collect.Lists;
  * @author efftinge - Initial contribution and API
  */
 public class DocumentTest {
+	
+	@Test
+	public void testRegion() {
+		String model =
+				"hello world\n" +
+				"foo\n" +
+				"bar\n";
+		Document document = new Document(1, model);
+		ITextRegion region0 = document.getTextRegion(new Range(position(0, 0),position(0, 0)));                               
+		ITextRegion region1 = document.getTextRegion(new Range(position(1, 0),position(1, 0)));
+		ITextRegion region2 = document.getTextRegion(new Range(position(1, 0),position(1, 1)));
+		ITextRegion region3 = document.getTextRegion(new Range(position(1, 1),position(1, 2)));
+		ITextRegion region4 = document.getTextRegion(new Range(position(1, 1),position(2, 1)));
+        Assert.assertEquals(0, region0.getOffset());
+        Assert.assertEquals(12, region1.getOffset());
+		Assert.assertEquals(12, region2.getOffset());
+		Assert.assertEquals(13, region3.getOffset());
+		Assert.assertEquals(13, region4.getOffset());
+        Assert.assertEquals(0, region0.getLength());
+        Assert.assertEquals(0, region1.getLength());
+		Assert.assertEquals(1, region2.getLength());
+		Assert.assertEquals(1, region3.getLength());
+		Assert.assertEquals(4, region4.getLength());
+	}
+
 	@Test
 	public void testOffSet() {
 		String model =

@@ -20,8 +20,6 @@ import org.eclipse.xtext.util.ITextRegion;
  * @since 2.8
  */
 public interface ITextSegment extends Comparable<ITextSegment>, ITextRegion {
-	int getEndOffset();
-
 	int getLineCount();
 
 	List<ILineRegion> getLineRegions();

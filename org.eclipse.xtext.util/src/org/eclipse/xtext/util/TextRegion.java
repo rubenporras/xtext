@@ -40,23 +40,23 @@ public class TextRegion implements ITextRegion {
 		if (other.contains(this))
 			return other;
 		int newOffset = Math.min(offset, other.getOffset());
-		int newLength = Math.max(offset + length, other.getOffset() + other.getLength()) - newOffset;
+		int newLength = Math.max(getEndOffset(), other.getEndOffset()) - newOffset;
 		return new TextRegion(newOffset, newLength);
 	}
 	
 	@Override
 	public boolean contains(ITextRegion other) {
-		return other == EMPTY_REGION || (other.getOffset() + other.getLength() <= offset + length && other.getOffset() >= offset); 
+		return other == EMPTY_REGION || (other.getEndOffset() <= getEndOffset() && other.getOffset() >= offset); 
 	}
 
 	@Override
 	public boolean contains(int offset) {
-		return offset >= this.offset && offset < this.offset + length;
+		return offset >= this.offset && offset < this.getEndOffset();
 	}
 	
 	@Override
 	public boolean equals(/* @Nullable */ Object obj) {
-		return obj instanceof ITextRegion && ((ITextRegion)obj).getOffset() == offset && ((ITextRegion)obj).getLength() ==length;
+		return obj instanceof ITextRegion textRegion && textRegion.getOffset() == offset && textRegion.getLength() == length;
 	}
 	
 	@Override
