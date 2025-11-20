@@ -365,7 +365,7 @@ public abstract class AbstractFormatter2 implements IFormatter2 {
 		int objEnd = nextHidden != null ? nextHidden.getEndOffset() : access.regionForRootEObject().getEndOffset();
 		for (ITextRegion region : regions) {
 			int regionOffset = region.getOffset();
-			int regionEnd = regionOffset + region.getLength();
+			int regionEnd = region.getEndOffset();
 			if (regionOffset <= objEnd && regionEnd >= objOffset)
 				return true;
 		}
@@ -377,7 +377,7 @@ public abstract class AbstractFormatter2 implements IFormatter2 {
 		if (regions.isEmpty())
 			return true;
 		for (org.eclipse.xtext.util.ITextRegion region : regions)
-			if (region.getOffset() <= offset && region.getOffset() + region.getLength() >= endOffset)
+			if (region.getOffset() <= offset && region.getEndOffset() >= endOffset)
 				return true;
 		return false;
 	}

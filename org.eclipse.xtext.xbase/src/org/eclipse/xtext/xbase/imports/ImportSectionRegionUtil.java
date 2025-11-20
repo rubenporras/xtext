@@ -66,7 +66,7 @@ public class ImportSectionRegionUtil {
 
 	public ITextRegion addTrailingSingleWhitespace(ITextRegion textRegion, String lineSeparator, XtextResource resource) {
 		String text = resource.getParseResult().getRootNode().getText();
-		String theFollowing = text.substring(textRegion.getOffset() + textRegion.getLength());
+		String theFollowing = text.substring(textRegion.getEndOffset());
 		if(!isEmpty(theFollowing)) { 
 			if(theFollowing.startsWith(lineSeparator)) 
 				return new TextRegion(textRegion.getOffset(), textRegion.getLength() + lineSeparator.length());

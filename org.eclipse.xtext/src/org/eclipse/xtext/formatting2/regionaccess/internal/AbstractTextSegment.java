@@ -57,11 +57,6 @@ public abstract class AbstractTextSegment implements ITextSegment {
 	}
 
 	@Override
-	public int getEndOffset() {
-		return getOffset() + getLength();
-	}
-
-	@Override
 	public int getLineCount() {
 		return Strings.countLineBreaks(getText()) + 1;
 	}

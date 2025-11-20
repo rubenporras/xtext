@@ -93,7 +93,7 @@ class XtendExpressionUtilTest extends AbstractXtendTestCase {
 		val selectedExpression = util.findSelectedExpression(expression.eResource as XtextResource, 
 			new TextSelection(selectionOffset, selectionLength))
 		val selectedRegion = locationInFileProvider.getFullTextRegion(selectedExpression)
-		assertEquals(expectedSelection, cleanedModel.substring(selectedRegion.offset, selectedRegion.offset + selectedRegion.length))
+		assertEquals(expectedSelection, cleanedModel.substring(selectedRegion.offset, selectedRegion.endOffset))
 	}
 
 	def protected parse(CharSequence string)  {

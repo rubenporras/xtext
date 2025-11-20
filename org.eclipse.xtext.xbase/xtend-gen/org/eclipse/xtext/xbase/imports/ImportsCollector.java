@@ -79,9 +79,7 @@ public class ImportsCollector {
     ILeafNode leafNodeAtOffset = NodeModelUtils.findLeafNodeAtOffset(rootNode, textRegion.getOffset());
     EObject semanticElementOffset = leafNodeAtOffset.getSemanticElement();
     ICompositeNode actualOffsetNode = NodeModelUtils.findActualNodeFor(semanticElementOffset);
-    int _offset = textRegion.getOffset();
-    int _length = textRegion.getLength();
-    final int endOffset = (_offset + _length);
+    final int endOffset = textRegion.getEndOffset();
     while (((actualOffsetNode.getParent() != null) && (actualOffsetNode.getTotalEndOffset() < endOffset))) {
       actualOffsetNode = actualOffsetNode.getParent();
     }

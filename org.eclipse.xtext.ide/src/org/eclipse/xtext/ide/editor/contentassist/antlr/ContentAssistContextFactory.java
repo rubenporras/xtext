@@ -210,7 +210,7 @@ public class ContentAssistContextFactory implements Function<ContentAssistContex
 
 	protected void initializeAndAdjustCompletionOffset(int offset) {
 		completionOffset = offset;
-		if (selection.getOffset() + selection.getLength() == offset)
+		if (selection.getEndOffset() == offset)
 			completionOffset = selection.getOffset();
 	}
 
@@ -271,7 +271,7 @@ public class ContentAssistContextFactory implements Function<ContentAssistContex
 			for (AbstractElement element: context.getFirstSetGrammarElements()) {
 				if (element instanceof Keyword) {
 					String keywordValue = ((Keyword) element).getValue();
-					String lastText = ((ILeafNode) lastCompleteNode).getText();
+					String lastText = lastCompleteNode.getText();
 					if (keywordValue.equals(lastText)) 
 						return true;
 				}
@@ -420,7 +420,7 @@ public class ContentAssistContextFactory implements Function<ContentAssistContex
 	public String getNodeTextUpToCompletionOffset(INode currentNode) {
 		int startOffset = currentNode.getOffset();
 		int length = completionOffset - startOffset;
-		String nodeText = ((ILeafNode) currentNode).getText();
+		String nodeText = currentNode.getText();
 		String trimmedNodeText = length > nodeText.length() ? nodeText : nodeText.substring(0, length);
 		try {
 			String text = document.substring(startOffset, startOffset + trimmedNodeText.length());
@@ -456,7 +456,7 @@ public class ContentAssistContextFactory implements Function<ContentAssistContex
 					}
 					hiddens.clear();
 					result.append(getNodeTextUpToCompletionOffset(leaf));
-					if (leafRegion.getOffset() + leafRegion.getLength() > completionOffset)
+					if (leafRegion.getEndOffset() > completionOffset)
 						return false;
 				}
 			}

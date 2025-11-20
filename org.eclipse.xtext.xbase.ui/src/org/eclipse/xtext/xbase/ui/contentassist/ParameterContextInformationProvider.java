@@ -74,7 +74,7 @@ public class ParameterContextInformationProvider implements IContextInformationP
 			ICompositeNode containerCallNode = NodeModelUtils.findActualNodeFor(containerCall);
 			ITextRegion containerCallRegion = containerCallNode.getTextRegion();
 			if(containerCallRegion.getOffset() > context.getOffset()
-					|| containerCallRegion.getOffset() + containerCallRegion.getLength() < context.getOffset()) 
+					|| containerCallRegion.getEndOffset() < context.getOffset()) 
 				return;
 			JvmIdentifiableElement calledFeature = getCalledFeature(containerCall);
 			if (calledFeature instanceof JvmExecutable) {

@@ -160,7 +160,7 @@ public class ClasspathBasedIdeTypesProposalProvider implements IIdeTypesProposal
 
 	protected boolean addImportDeclaration(ContentAssistEntry entry, ITextRegion importSectionRegion,
 			ITypeDescriptor typeDesc, String qualifiedName, ContentAssistContext context) {
-		int insertionOffset = importSectionRegion.getOffset() + importSectionRegion.getLength();
+		int insertionOffset = importSectionRegion.getEndOffset();
 		String declaration = "\nimport " + qualifiedName;
 		return entry.getTextReplacements().add(new ReplaceRegion(insertionOffset, 0, declaration));
 	}

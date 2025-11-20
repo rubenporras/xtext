@@ -61,7 +61,7 @@ public class DocumentExtensions {
 	public Range newRange(Resource resource, ITextRegion region) {
 		if (region == null)
 			return null;
-		return newRange(resource, region.getOffset(), region.getOffset() + region.getLength());
+		return newRange(resource, region.getOffset(), region.getEndOffset());
 	}
 
 	public Location newLocation(Resource resource, ITextRegion textRegion) {

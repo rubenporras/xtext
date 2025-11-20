@@ -70,7 +70,7 @@ class ImportsCollector {
 		var ILeafNode leafNodeAtOffset = NodeModelUtils.findLeafNodeAtOffset(rootNode, textRegion.offset)
 		var EObject semanticElementOffset = leafNodeAtOffset.getSemanticElement()
 		var ICompositeNode actualOffsetNode = NodeModelUtils.findActualNodeFor(semanticElementOffset)
-		val endOffset = textRegion.offset + textRegion.length
+		val endOffset = textRegion.endOffset
 		while (actualOffsetNode.getParent() !== null && actualOffsetNode.getTotalEndOffset() < endOffset) {
 			actualOffsetNode = actualOffsetNode.getParent()
 		}

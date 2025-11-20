@@ -103,11 +103,7 @@ public class XtendExpressionUtilTest extends AbstractXtendTestCase {
     TextSelection _textSelection = new TextSelection(selectionOffset, selectionLength);
     final XExpression selectedExpression = this.util.findSelectedExpression(((XtextResource) _eResource), _textSelection);
     final ITextRegion selectedRegion = this.locationInFileProvider.getFullTextRegion(selectedExpression);
-    int _offset = selectedRegion.getOffset();
-    int _offset_1 = selectedRegion.getOffset();
-    int _length = selectedRegion.getLength();
-    int _plus = (_offset_1 + _length);
-    Assert.assertEquals(expectedSelection, cleanedModel.substring(_offset, _plus));
+    Assert.assertEquals(expectedSelection, cleanedModel.substring(selectedRegion.getOffset(), selectedRegion.getEndOffset()));
   }
 
   protected XtendFile parse(final CharSequence string) {

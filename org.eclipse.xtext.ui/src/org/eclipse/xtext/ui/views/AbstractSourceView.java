@@ -318,7 +318,7 @@ public abstract class AbstractSourceView extends ViewPart implements IPartListen
 
 	protected void setSelection(ITextRegion textSelection, boolean reveal) {
 		StyledText text = getSourceViewer().getTextWidget();
-		if (text.getText().length() >= textSelection.getOffset() + textSelection.getLength()) {
+		if (text.getText().length() >= textSelection.getEndOffset()) {
 			getSourceViewer().setSelection(new TextSelection(textSelection.getOffset(), textSelection.getLength()),
 					reveal);
 		}

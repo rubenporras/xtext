@@ -106,7 +106,7 @@ public class DefaultFoldingRangeProvider implements IFoldingRangeProvider {
 			return null;
 		}
 		int offset = significantRegion.getOffset();
-		int endOffset = significantRegion.getOffset() + significantRegion.getLength();
+		int endOffset = significantRegion.getEndOffset();
 
 		int startLine;
 		int endLine;

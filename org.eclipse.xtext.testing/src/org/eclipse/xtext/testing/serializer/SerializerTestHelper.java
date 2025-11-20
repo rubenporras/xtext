@@ -117,7 +117,7 @@ public class SerializerTestHelper {
 
 				ITextRegion oldRegion = oldNode.getTextRegion();
 				String newtext = oldtext.substring(0, oldRegion.getOffset()) + serialized
-						+ oldtext.substring(oldRegion.getOffset() + oldRegion.getLength());
+						+ oldtext.substring(oldRegion.getEndOffset());
 				EObject newmodel = parseHelper.parse(newtext, semanticObject.eResource().getResourceSet());
 				parsed = newmodel.eResource().getEObject(oldURI);
 				reattachNodes(nodes);

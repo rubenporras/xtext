@@ -215,7 +215,7 @@ public class TextReplacerContext implements ITextReplacerContext {
 			return true;
 		for (org.eclipse.xtext.util.ITextRegion region : regions)
 			if (region.getOffset() <= repl.getOffset()
-					&& region.getOffset() + region.getLength() >= repl.getEndOffset())
+					&& region.getEndOffset() >= repl.getEndOffset())
 				return true;
 		return false;
 	}

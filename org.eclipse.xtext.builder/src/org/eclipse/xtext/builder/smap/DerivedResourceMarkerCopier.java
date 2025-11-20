@@ -135,7 +135,7 @@ public class DerivedResourceMarkerCopier {
 				ITextRegionWithLineInformation region = associatedLocation.getTextRegion();
 				xtendMarker.setAttribute(IMarker.LINE_NUMBER, region.getLineNumber());
 				xtendMarker.setAttribute(IMarker.CHAR_START, region.getOffset());
-				xtendMarker.setAttribute(IMarker.CHAR_END, region.getOffset() + region.getLength());
+				xtendMarker.setAttribute(IMarker.CHAR_END, region.getEndOffset());
 				xtendMarker.setAttribute(COPIED_FROM_FILE, javaFile.getFullPath().toString());
 			}
 		}

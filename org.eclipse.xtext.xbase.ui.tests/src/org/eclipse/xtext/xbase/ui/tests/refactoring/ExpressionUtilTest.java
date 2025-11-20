@@ -198,7 +198,7 @@ public class ExpressionUtilTest extends AbstractXbaseTestCase {
 				new TextSelection(selectionOffset, selectionLength));
 		ITextRegion selectedRegion = locationInFileProvider.getFullTextRegion(selectedExpression);
 		assertEquals(expectedSelection,
-				cleanedModel.substring(selectedRegion.getOffset(), selectedRegion.getOffset() + selectedRegion.getLength()));
+				cleanedModel.substring(selectedRegion.getOffset(), selectedRegion.getEndOffset()));
 	}
 
 	protected void assertSiblingExpressionsSelected(String modelWithSelectionMarkup, String expectedSelection) throws Exception {
@@ -211,7 +211,7 @@ public class ExpressionUtilTest extends AbstractXbaseTestCase {
 		List<ITextRegion> regions = ListExtensions.map(selectedExpressions, it -> locationInFileProvider.getFullTextRegion(it));
 		ITextRegion selectedRegion = IterableExtensions.reduce(regions, (a, b) -> a.merge(b));
 		assertEquals(expectedSelection,
-				cleanedModel.substring(selectedRegion.getOffset(), selectedRegion.getOffset() + selectedRegion.getLength()));
+				cleanedModel.substring(selectedRegion.getOffset(), selectedRegion.getEndOffset()));
 	}
 
 	protected void assertInsertionPoint(String modelWithInsertionMarkup, String expectedSuccessor) throws Exception {
@@ -227,7 +227,7 @@ public class ExpressionUtilTest extends AbstractXbaseTestCase {
 			assertNotNull(successor);
 			ITextRegion selectedRegion = locationInFileProvider.getFullTextRegion(successor);
 			assertEquals(expectedSuccessor,
-					cleanedModel.substring(selectedRegion.getOffset(), selectedRegion.getOffset() + selectedRegion.getLength()));
+					cleanedModel.substring(selectedRegion.getOffset(), selectedRegion.getEndOffset()));
 		}
 	}
 

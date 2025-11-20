@@ -202,7 +202,7 @@ public abstract class AbstractTraceRegionToString {
 
 	protected void add(File file, ITextRegion it, RegionHandle region, LocationHandle location) {
 		file.inserts.add(new Insert(it.getOffset(), true, region, location));
-		file.inserts.add(new Insert(it.getOffset() + it.getLength(), false, region, location));
+		file.inserts.add(new Insert(it.getEndOffset(), false, region, location));
 	}
 
 	protected int collect(AbstractTraceRegion reg, int nextID, File lFile, Map<SourceRelativeURI, File> rFiles,
@@ -265,7 +265,7 @@ public abstract class AbstractTraceRegionToString {
 				result.append(render(e.getValue(), width));
 				last = offset;
 			}
-			int end = frame.getOffset() + frame.getLength();
+			int end = frame.getEndOffset();
 			if (last < end) {
 				result.append(text.substring(last, end));
 			}

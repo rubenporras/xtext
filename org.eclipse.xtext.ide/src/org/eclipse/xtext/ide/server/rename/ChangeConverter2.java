@@ -118,7 +118,7 @@ public class ChangeConverter2 implements IAcceptor<IEmfResourceChange> {
 					List<TextEdit> textEdits = Lists.transform(change.getReplacements(),
 							(ITextReplacement replacement) -> {
 								Position start = document.getPosition(replacement.getOffset());
-								Position end = document.getPosition(replacement.getOffset() + replacement.getLength());
+								Position end = document.getPosition(replacement.getEndOffset());
 								Range range = new Range(start, end);
 								return new TextEdit(range, replacement.getReplacementText());
 							});
