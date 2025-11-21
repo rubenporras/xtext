@@ -716,7 +716,7 @@ public class ParserBasedContentAssistContextFactory extends AbstractContentAssis
 						}
 						hiddens.clear();
 						result.append(getNodeTextUpToCompletionOffset(leaf));
-						if (leafRegion.getOffset() + leafRegion.getLength() > completionOffset)
+						if (leafRegion.getEndOffset() > completionOffset)
 							return false;
 					}
 				}

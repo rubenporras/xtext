@@ -262,7 +262,7 @@ public class StringBasedTextRegionAccessDiffBuilder implements ITextRegionDiffBu
 	@Override
 	public boolean isModified(ITextRegion region) {
 		int offset = region.getOffset();
-		int endOffset = offset + region.getLength();
+		int endOffset = region.getEndOffset();
 		for (Rewrite action : rewrites) {
 			int rwOffset = action.originalFirst.getOffset();
 			int rwEndOffset = action.originalLast.getEndOffset();

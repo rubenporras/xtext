@@ -453,7 +453,7 @@ public class RewritableImportSection {
 			return;
 		importRegion = regionUtil.addLeadingWhitespace(importRegion, resource);
 		importRegion = regionUtil.addTrailingSingleWhitespace(importRegion, lineSeparator, resource);
-		int insertOffset = importRegion.getOffset() + importRegion.getLength();
+		int insertOffset = importRegion.getEndOffset();
 		if (insertOffset != 0 && originalImportDeclarations.isEmpty())
 			importDeclarationsToAppend.insert(0, lineSeparator);
 		importDeclarationsToAppend.append(lineSeparator);

@@ -206,8 +206,7 @@ public class DefaultCallHierarchyBuilder extends AbstractHierarchyBuilder implem
 		if (node == null) {
 			return "";
 		}
-		int endOffset = textRegion.getOffset() + textRegion.getLength();
-		return node.getRootNode().getText().substring(textRegion.getOffset(), endOffset);
+		return node.getRootNode().getText().substring(textRegion.getOffset(), textRegion.getEndOffset());
 	}
 
 	public ICallHierarchyBuilder.CallHierarchyType getHierarchyType() {

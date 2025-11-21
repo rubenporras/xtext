@@ -36,7 +36,7 @@ public class FlexTokenRegionProvider extends TokenRegionProvider {
 			int nextStart = flexer.getTokenLength();
 			
 			final int regionStartOffset = region.getOffset();
-			final int regionEnd = regionStartOffset + region.getLength();
+			final int regionEnd = region.getEndOffset();
 			while (token != Token.EOF && nextStart <= regionStartOffset) {
 				prevStart = nextStart;
 				token = flexer.advance();

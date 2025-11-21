@@ -40,7 +40,7 @@ public class TokenRegionProvider {
 		int currentEnd = 0;
 		CommonToken nextToken = (CommonToken) lexer.nextToken();
 		int regionStart = region.getOffset();
-		int regionEnd = regionStart + region.getLength();
+		int regionEnd = region.getEndOffset();
 		while (nextToken != Token.EOF_TOKEN && currentEnd <= regionStart) {
 			currentStart = nextToken.getStartIndex();
 			currentEnd = nextToken.getStopIndex() + 1;

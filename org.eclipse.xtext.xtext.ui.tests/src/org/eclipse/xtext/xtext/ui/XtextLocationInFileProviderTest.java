@@ -50,31 +50,31 @@ public class XtextLocationInFileProviderTest extends AbstractXtextTests {
 	@Test public void testAliasLocation() {
 		AbstractMetamodelDeclaration declaration = grammar.getMetamodelDeclarations().get(1);
 		ITextRegion region = locationInFileProvider.getSignificantTextRegion(declaration);
-		String alias = grammarText.substring(region.getOffset(), region.getOffset() + region.getLength());
+		String alias = grammarText.substring(region.getOffset(), region.getEndOffset());
 		assertEquals("alias", alias);
 	}
 	
 	@Test public void testMMNameLocation() {
 		AbstractMetamodelDeclaration declaration = grammar.getMetamodelDeclarations().get(0);
 		ITextRegion region = locationInFileProvider.getSignificantTextRegion(declaration);
-		String first = grammarText.substring(region.getOffset(), region.getOffset() + region.getLength());
+		String first = grammarText.substring(region.getOffset(), region.getEndOffset());
 		assertEquals("first", first);
 	}
 	
 	@Test public void testCardinalityLocation() {
 		AbstractElement body = grammar.getRules().get(0).getAlternatives();
 		ITextRegion region = locationInFileProvider.getSignificantTextRegion(body, XtextPackage.Literals.ABSTRACT_ELEMENT__CARDINALITY, 0);
-		String cardinality = grammarText.substring(region.getOffset(), region.getOffset() + region.getLength());
+		String cardinality = grammarText.substring(region.getOffset(), region.getEndOffset());
 		assertEquals("*", cardinality);
 	}
 	
 	@Test public void testKeywordLocation() {
 		Keyword keyword = (Keyword) grammar.getRules().get(0).getAlternatives();
 		ITextRegion region = locationInFileProvider.getFullTextRegion(keyword);
-		String fullRegion = grammarText.substring(region.getOffset(), region.getOffset() + region.getLength());
+		String fullRegion = grammarText.substring(region.getOffset(), region.getEndOffset());
 		assertEquals("'keyword'*", fullRegion);
 		region = locationInFileProvider.getSignificantTextRegion(keyword);
-		String significantRegion = grammarText.substring(region.getOffset(), region.getOffset() + region.getLength());
+		String significantRegion = grammarText.substring(region.getOffset(), region.getEndOffset());
 		assertEquals("'keyword'*", significantRegion);
 	}
 }

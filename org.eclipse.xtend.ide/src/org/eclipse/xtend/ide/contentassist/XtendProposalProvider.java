@@ -510,11 +510,11 @@ public class XtendProposalProvider extends AbstractXtendProposalProvider {
 		INode node = context.getCurrentNode();
 		ITextRegion textRegion = node.getTextRegion();
 		int offset = textRegion.getOffset();
-		int length = textRegion.getLength();
+		int endOffset = textRegion.getEndOffset();
 		String currentNodeText = node.getText();
 		if (currentNodeText.startsWith("\u00BB") && offset + 1 <= context.getOffset()
 				|| currentNodeText.startsWith("'''") && offset + 3 <= context.getOffset()) {
-			if (context.getOffset() > offset && context.getOffset() < offset + length)
+			if (context.getOffset() > offset && context.getOffset() < endOffset)
 				addGuillemotsProposal(context, acceptor);
 		} else if (currentNodeText.startsWith("\u00AB\u00AB")) {
 			try {

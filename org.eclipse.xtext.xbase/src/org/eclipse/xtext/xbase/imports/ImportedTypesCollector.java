@@ -40,7 +40,7 @@ public class ImportedTypesCollector extends TypeUsageCollector {
 			return false;
 		}
 		String completeText = parseResult.getRootNode().getText();
-		CharSequence refText = completeText.subSequence(refRegion.getOffset(), refRegion.getOffset() + refRegion.getLength());
+		CharSequence refText = completeText.subSequence(refRegion.getOffset(), refRegion.getEndOffset());
 		return type.getQualifiedName().equals(refText);
 	}
 

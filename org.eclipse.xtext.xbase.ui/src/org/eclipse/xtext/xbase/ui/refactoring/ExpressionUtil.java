@@ -142,18 +142,18 @@ public class ExpressionUtil {
 
 	protected boolean contains(ITextRegion textRegion, ITextSelection selection) {
 		return textRegion.getOffset() <= selection.getOffset()
-				&& textRegion.getOffset() + textRegion.getLength() >= selection.getOffset() + selection.getLength();
+				&& textRegion.getEndOffset() >= selection.getOffset() + selection.getLength();
 	}
 
 	protected boolean intersects(ITextRegion textRegion, ITextSelection trimmedSelection) {
 		if (textRegion.getOffset() == trimmedSelection.getOffset() + trimmedSelection.getLength()) {
 			return false;
 		}
-		if (textRegion.getOffset() + textRegion.getLength() == trimmedSelection.getOffset()) {
+		if (textRegion.getEndOffset() == trimmedSelection.getOffset()) {
 			return false;
 		}
 		return textRegion.getOffset() <= trimmedSelection.getOffset() + trimmedSelection.getLength()
-				&& textRegion.getOffset() + textRegion.getLength() >= trimmedSelection.getOffset();
+				&& textRegion.getEndOffset() >= trimmedSelection.getOffset();
 	}
 	
 	protected ITextRegion getTotalTextRegion(EObject element, INode node) {

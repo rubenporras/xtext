@@ -216,7 +216,7 @@ public class DefaultDocumentHighlightService implements IDocumentHighlightServic
 			return !isNullOrEmpty(region)
 					// Region is comparable to a selection in an editor,
 					// therefore the end position is exclusive.
-					&& (region.contains(offset) || (region.getOffset() + region.getLength()) == offset);
+					&& (region.contains(offset) || (region.getEndOffset()) == offset);
 		}
 
 		return true;

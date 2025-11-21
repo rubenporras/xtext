@@ -76,7 +76,7 @@ public interface ITextRegionTransformer {
 
 			final int offset = region.getOffset();
 			final Position start = document.getPosition(offset);
-			final Position end = document.getPosition(offset + region.getLength());
+			final Position end = document.getPosition(region.getEndOffset());
 
 			return new DocumentHighlight(new Range(start, end), kind);
 		}

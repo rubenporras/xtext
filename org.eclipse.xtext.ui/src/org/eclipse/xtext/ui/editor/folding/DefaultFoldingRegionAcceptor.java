@@ -42,7 +42,7 @@ public class DefaultFoldingRegionAcceptor implements IFoldingRegionAcceptorExten
 		try {
 			if (xtextDocument != null && significantRegion != null) {
 				int firstLine = xtextDocument.getLineOfOffset(significantRegion.getOffset());
-				int lastLine = xtextDocument.getLineOfOffset(significantRegion.getOffset()+significantRegion.getLength());
+				int lastLine = xtextDocument.getLineOfOffset(significantRegion.getEndOffset());
 				if (firstLine != lastLine) {
 					int endOffset = xtextDocument.getLineOffset(firstLine)+xtextDocument.getLineLength(firstLine);
 					significantRegion = new TextRegion(significantRegion.getOffset(), endOffset - significantRegion.getOffset());

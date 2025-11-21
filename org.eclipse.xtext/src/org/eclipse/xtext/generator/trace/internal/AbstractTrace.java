@@ -140,9 +140,9 @@ public abstract class AbstractTrace implements ITrace {
 
 	@Override
 	public ILocationInResource getBestAssociatedLocation(ITextRegion region) {
-		AbstractTraceRegion right = findTraceRegionAtRightOffset(region.getOffset() + region.getLength());
+		AbstractTraceRegion right = findTraceRegionAtRightOffset(region.getEndOffset());
 		if (right != null && encloses(right, region.getOffset(), true)) {
-			if (right.getMyOffset() + right.getMyLength() == region.getOffset() + region.getLength())
+			if (right.getMyOffset() + right.getMyLength() == region.getEndOffset())
 				return getMergedLocationInResource(right);
 		}
 		
@@ -308,7 +308,7 @@ public abstract class AbstractTrace implements ITrace {
 		IProjectConfig projectConfig = getLocalProjectConfig();
 		AbstractTraceRegion left = findTraceRegionAtLeftOffset(localRegion.getOffset());
 		left = findParentByURI(left, uri, projectConfig);
-		AbstractTraceRegion right = findTraceRegionAtRightOffset(localRegion.getOffset() + localRegion.getLength());
+		AbstractTraceRegion right = findTraceRegionAtRightOffset(localRegion.getEndOffset());
 		right = findParentByURI(right, uri, projectConfig);
 		return mergeRegions(left, right);
 	}
@@ -401,7 +401,7 @@ public abstract class AbstractTrace implements ITrace {
 
 	protected Iterable<AbstractTraceRegion> getAllTraceRegions(final ITextRegion localRegion) {
 		final AbstractTraceRegion left = findTraceRegionAtLeftOffset(localRegion.getOffset());
-		final int end = localRegion.getOffset() + localRegion.getLength();
+		final int end = localRegion.getEndOffset();
 		if (left == null) {
 			return Collections.emptyList();
 		}

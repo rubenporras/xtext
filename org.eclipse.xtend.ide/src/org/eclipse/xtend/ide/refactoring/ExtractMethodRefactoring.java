@@ -454,8 +454,8 @@ public class ExtractMethodRefactoring extends Refactoring {
 	protected ITextRegion getExpressionsRegion() {
 		ITextRegion firstRegion = expressionUtil.getTextRegion(firstExpression);
 		ITextRegion lastRegion = expressionUtil.getTextRegion(lastExpression);
-		ITextRegion expressionRegion = new TextRegion(firstRegion.getOffset(), lastRegion.getOffset()
-				+ lastRegion.getLength() - firstRegion.getOffset());
+		ITextRegion expressionRegion = new TextRegion(firstRegion.getOffset(), lastRegion.getEndOffset()
+				- firstRegion.getOffset());
 		return expressionRegion;
 	}
 	

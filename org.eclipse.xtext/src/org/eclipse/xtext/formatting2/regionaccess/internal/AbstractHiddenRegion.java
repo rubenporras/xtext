@@ -122,7 +122,7 @@ public abstract class AbstractHiddenRegion extends AbstractTextSegment implement
 	public int getOffset() {
 		if (hiddens.isEmpty()) {
 			if (previous != null)
-				return previous.getOffset() + previous.getLength();
+				return previous.getEndOffset();
 			return 0;
 		} else {
 			return hiddens.get(0).getOffset();
