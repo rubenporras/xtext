@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.xtend.lib,
  org.eclipse.xtext.xbase.testing,
  org.eclipse.jdt.core,
  org.eclipse.emf.codegen;bundle-version="2.23.0",
- org.objectweb.asm;bundle-version="[9.10.1,10.0.0)";resolution:=optional,
+ org.objectweb.asm;bundle-version="[9.11.1,10.0.0)";resolution:=optional,
  org.eclipse.equinox.common
 Export-Package: extract,
  i18n,
@@ -21,5 +21,5 @@ Export-Package: extract,
  observables
 Bundle-Vendor: Eclipse Xtext
 Automatic-Module-Name: xtend-annotation-examples
-Import-Package: org.apache.log4j;version="1.2.26"
+Import-Package: org.apache.log4j;version="1.2.27"
 

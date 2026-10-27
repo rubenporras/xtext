@@ -48,7 +48,7 @@ Apache Commons Lang (2.4)
 * License: Apache License, 2.0
 
 
-Apache Log4j / Reload4j (1.2.26)
+Apache Log4j / Reload4j (1.2.27)
 
 * License: Apache License 2.0
 
@@ -60,7 +60,7 @@ ASM (9.7.x)
 
 * License: BSD-3-Clause
 
-classgraph (4.8.x)
+classgraph (5.0.x)
 
 * License: MIT
 * Project: https://github.com/classgraph/classgraph

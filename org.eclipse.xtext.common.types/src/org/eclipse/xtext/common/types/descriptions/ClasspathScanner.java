@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, 2022 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2026 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -11,11 +11,11 @@ package org.eclipse.xtext.common.types.descriptions;
 import static java.util.stream.Collectors.*;
 
 import java.net.URI;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import org.eclipse.xtext.xbase.lib.util.ToStringBuilder;
 
@@ -117,7 +117,7 @@ public class ClasspathScanner {
 			.initialCapacity(8)
 			.concurrencyLevel(2)
 			.maximumSize(32)
-			.expireAfterAccess(5, TimeUnit.MINUTES)
+			.expireAfterAccess(Duration.ofMinutes(5))
 			.build();
 	}
 
@@ -149,8 +149,10 @@ public class ClasspathScanner {
 			return systemClasspath;
 		}
 		ClassGraph classGraph = classGraphProvider.get()
-			.enableSystemJarsAndModules()
-			.addClassLoader(ClassLoader.getSystemClassLoader());
+			.enableClassLoaders(ClassLoader.getSystemClassLoader())
+			.enableClasspath()
+			.enableSystemJars()
+			.enableSystemModules();
 		try (ScanResult scanResult = classGraph.scan()) {
 			List<URI> classpathURIs = scanResult.getClasspathURIs();
 			systemClasspath = classpathURIs.stream()
@@ -170,12 +172,13 @@ public class ClasspathScanner {
 	protected Iterable<ITypeDescriptor> loadDescriptors(ClassLoader classLoader, boolean bootstrap,
 			Collection<String> packagePrefixes) {
 		ClassGraph classGraph = classGraphProvider.get()
-			.ignoreClassVisibility()
+			.enableClassLoaders(classLoader)
+			.enableClasspath()
 			.enableClassInfo()
-			.acceptPackages(packagePrefixes.toArray(new String[packagePrefixes.size()]))
-			.addClassLoader(classLoader);
+			.ignoreClassVisibility()
+			.acceptPackages(packagePrefixes.toArray(new String[packagePrefixes.size()]));
 		if (bootstrap) {
-			classGraph.enableSystemJarsAndModules();
+			classGraph.enableSystemJars().enableSystemModules();
 		}
 		try (ScanResult scanResult = classGraph.scan()) {
 			return loadDescriptors(scanResult);
